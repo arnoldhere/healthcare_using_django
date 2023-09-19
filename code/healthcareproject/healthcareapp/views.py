@@ -24,28 +24,35 @@ def Auth(request):
         if request.method == "POST":
             email = request.POST['email']
             password = request.POST['password']
-
-            #retrive the user from the database
-            # user = db.users.find_one({'email' : email , 'password':password })
-            user = db.users.find_one({'email' : email  })
-            if user is not None :
-                print("fetched user successfully from the db " , user)
-                fetchpwd = user.get('password')
-                #authenticate the user 
-                if user is not None and check_password(password,fetchpwd):
-                    print("user validated in the db" , user)
-                    # save the session token of the user
-                    fullname = user['firstname'] + user['lastname']
-                    request.session['Logged_User'] = fullname 
-                    request.session['email_user'] = user['email']
-                    # Save session data explicitly (usually done automatically)
-                    request.session.save()
-                    # return HttpResponse("done authentication")
-                    return redirect('index')
-                else:
-                    return HttpResponse("Authentication failed")
-            else: 
-                return HttpResponse("User not found")
+            
+            # for admin authentication
+            if email == "admin@gmail.com" and password =="admin":
+                return HttpResponse("admin logged in")
+            else:
+                #retrive the user from the database
+                # user = db.users.find_one({'email' : email , 'password':password })
+                user = db.users.find_one({'email' : email  })
+                
+                if user is not None :
+                    print("fetched user successfully from the db " , user)
+                    fetchpwd = user.get('password')
+                    #authenticate the user 
+                    if user is not None and check_password(password,fetchpwd):
+                        print("user validated in the db" , user)
+    
+                        # save the session token of the user
+                        fullname = user['firstname'] + user['lastname']
+    
+                        request.session['Logged_User'] = fullname 
+                        request.session['email_user'] = user['email']
+                        # Save session data explicitly (usually done automatically)
+                        request.session.save()
+                        # return HttpResponse( request.session['Logged_User'])
+                        return redirect('index')
+                    else:
+                        return HttpResponse("Authentication failed")
+                else: 
+                    return HttpResponse("Invalid credentials !! Please try again") 
 
 def logout(request):
     request.session.clear()
@@ -61,27 +68,28 @@ def SignUp(request):
         phone = request.POST['phone']
         password = request.POST['password']
 
-        # Check if the email is already taken
+        # Check if the email 
         if db.users.find_one({'email': email}):
-            return render(request , 'auth/index.html' , {'error_message': "Email already taken"})
-
-        #encrypt the password
-        encrypt_password = make_password(password)
-        #create a document 
-        users_doc = {
-            'firstname' : firstname,
-            'lastname' : lastname,
-            'email' : email,
-            'dob' : dob,
-            'phone' : phone ,
-            'password' : encrypt_password
-        }
+            # return render(request , 'auth/index.html')
+            return HttpResponse("Email is already taken !! please try again")
+        else:
+            #encrypt the password
+            encrypt_password = make_password(password)
+            #create a document 
+            users_doc = {
+                'firstname' : firstname,
+                'lastname' : lastname,
+                'email' : email,
+                'dob' : dob,
+                'phone' : phone ,
+                'password' : encrypt_password
+            }
     
         try:
             db.users.insert_one(users_doc) # save the document into users collection
             return redirect("LoginPage")
         except DuplicateKeyError:
-            return render(request , 'auth/index.html' , {'error_message': 'error creating new user' })
+            return HttpResponse("Error in creating a new user !!" )
 
 
 

@@ -147,7 +147,7 @@ MEDIA_URL = '/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-LOGIN_REDIRECT_URL = 'userHome'
-LOGIN_URL = 'Login'  # Replace 'login' with your login URL name
+LOGIN_REDIRECT_URL = 'index'
+LOGIN_URL = 'LoginPage'  # Replace 'login' with your login URL name
 
 # APPEND_SLASH = False
