@@ -1,0 +1,19 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static "auth/css/style.css" %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock title %}</title>
+   </head>
+<body>
+    <div class="container">
+        {% block formcontent %}{% endblock formcontent %}
+    </div>
+    {% comment %} <script src="{% static " js/auth/main.js" %}"></script> {% endcomment %}
+</body>
+
+</html>
