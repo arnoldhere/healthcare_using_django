@@ -1,5 +1,4 @@
-{% extends "index.html" %} 
-{% block title %}Dashboard{% endblock title %}
+{% extends "index.html" %} {% block title %} Dashboard{% endblock title %}
 {%block content %}
 <div class="main--content">
 	<div class="overview">
@@ -7,7 +6,7 @@
 			<div class="card card-1">
 				<div class="card--data">
 					<div class="card--content">
-						<h5 class="card--title">Total Doctors</h5>
+						<h5 class="card--title">Total Staff</h5>
 						<h1>152</h1>
 					</div>
 					<i class="ri-user-2-line card--icon--lg"></i>
@@ -25,11 +24,12 @@
 			<div class="card card-2">
 				<div class="card--data">
 					<div class="card--content">
-						<h5 class="card--title">Total Patients</h5>
-						<h1>1145</h1>
+						<h5 class="card--title">Total Users <br />Logged In</h5>
+						<h1 class="text-dark text-center mx-5 my-4">{{ user_count }}</h1>
 					</div>
 					<i class="ri-user-line card--icon--lg"></i>
 				</div>
+				{% comment %}
 				<div class="card--stats">
 					<span
 						><i class="ri-bar-chart-fill card--icon stat--icon"></i>82%</span
@@ -41,6 +41,7 @@
 						><i class="ri-arrow-down-s-fill card--icon down--arrow"></i>45</span
 					>
 				</div>
+				{% endcomment %}
 			</div>
 			<div class="card card-3">
 				<div class="card--data">
@@ -60,10 +61,11 @@
 					>
 				</div>
 			</div>
+			{% comment %}
 			<div class="card card-4">
 				<div class="card--data">
 					<div class="card--content">
-						<h5 class="card--title">Beds Available</h5>
+						<h5 class="card--title">Total Users Logged in</h5>
 						<h1>15</h1>
 					</div>
 					<i class="ri-hotel-bed-line card--icon--lg"></i>
@@ -76,9 +78,10 @@
 					>
 				</div>
 			</div>
+			{% endcomment %}
 		</div>
 	</div>
-	<div class="doctors">
+	<!-- <div class="doctors">
 		<div class="title">
 			<h2 class="section--title">Doctors</h2>
 			<div class="doctors--right--btns">
@@ -148,103 +151,45 @@
 				<p class="scheduled">Scheduled</p>
 			</a>
 		</div>
-	</div>
+	</div> -->
 	<div class="recent--patients">
 		<div class="title">
-			<h2 class="section--title">Recent Patients</h2>
-			<button class="add"><i class="ri-add-line"></i>Add Doctor</button>
+			<h1 class="section--title text-info ">Users of the system</h1>
+			{% comment %} <button class="add"><i class="ri-add-line"></i>Add Doctor</button> {% endcomment %}
 		</div>
 		<div class="table">
-			<table>
-				<thead>
+			<table class="table table-hover table-striped">
+				<caption> Users</caption>
+				<thead class="table-dark">
 					<tr>
 						<th>Name</th>
-						<th>Date in</th>
-						<th>Gender</th>
-						<th>Age</th>
-						<th>Status</th>
-						<th>Settings</th>
+						<th>Email</th>
+						<th>Phone</th>
+						<th>DOB</th>
+						<th>Pincode</th>
+						<th>Location</th>
+						<th>Actions</th>
 					</tr>
 				</thead>
 				<tbody>
+					{% for user in users %}
 					<tr>
-						<td>Cameron Williamson</td>
-						<td>30/07/2022</td>
-						<td>Male</td>
-						<td>61</td>
-						<td class="pending">pending</td>
+						<td>{{ user.first_name }} {{user.last_name}}</td>
+						<td>{{user.email}}</td>
+						<td>{{user.phone}}</td>
+						<td>{{user.dob}}</td>
+						<td>{{user.pincode}}</td>
+						<td>{{user.state}} , {{user.city}}</td>
 						<td>
-							<span
-								><i class="ri-edit-line edit"></i
-								><i class="ri-delete-bin-line delete"></i
-							></span>
+							<form action="{% url "del_user" user.id %}" method="get">
+								{% csrf_token %}
+									<button type="submit" class="btn btn-md btn-danger" onclick="return confirm('Are you sure you want to delete this user?');">
+										<i class="fas fa-trash fa-lg"></i>	
+									</button>
+							</form>
 						</td>
 					</tr>
-					<tr>
-						<td>George Washington</td>
-						<td>30/07/2022</td>
-						<td>Male</td>
-						<td>54</td>
-						<td class="confirmed">Confirmed</td>
-						<td>
-							<span
-								><i class="ri-edit-line edit"></i
-								><i class="ri-delete-bin-line delete"></i
-							></span>
-						</td>
-					</tr>
-					<tr>
-						<td>John Adams</td>
-						<td>29/07/2022</td>
-						<td>Male</td>
-						<td>56</td>
-						<td class="confirmed">Confirmed</td>
-						<td>
-							<span
-								><i class="ri-edit-line edit"></i
-								><i class="ri-delete-bin-line delete"></i
-							></span>
-						</td>
-					</tr>
-					<tr>
-						<td>Thomas Jefferson</td>
-						<td>29/07/2022</td>
-						<td>Male</td>
-						<td>11</td>
-						<td class="rejected">Rejected</td>
-						<td>
-							<span
-								><i class="ri-edit-line edit"></i
-								><i class="ri-delete-bin-line delete"></i
-							></span>
-						</td>
-					</tr>
-					<tr>
-						<td>James Madison</td>
-						<td>29/07/2022</td>
-						<td>Male</td>
-						<td>69</td>
-						<td class="confirmed">Confirmed</td>
-						<td>
-							<span
-								><i class="ri-edit-line edit"></i
-								><i class="ri-delete-bin-line delete"></i
-							></span>
-						</td>
-					</tr>
-					<tr>
-						<td>Andrew Jackson</td>
-						<td>28/07/2022</td>
-						<td>Male</td>
-						<td>88</td>
-						<td class="confirmed">Confirmed</td>
-						<td>
-							<span
-								><i class="ri-edit-line edit"></i
-								><i class="ri-delete-bin-line delete"></i
-							></span>
-						</td>
-					</tr>
+					{% endfor %}
 				</tbody>
 			</table>
 		</div>
