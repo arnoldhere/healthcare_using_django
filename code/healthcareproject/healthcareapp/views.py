@@ -36,7 +36,7 @@ def Auth(request):
             # retrive the user from the database
             # user = db.users.find_one({'email': email})
             user = UserModel.objects.get(email=email)
-
+            print(user)
             if user is not None:
                 # print("fetched user successfully from the db ", user)
                 fetchpwd = user.password
@@ -53,7 +53,7 @@ def Auth(request):
                     # return HttpResponse( request.session['Logged_User'])
                     return redirect('index')
                 else:
-                    return HttpResponse("Authentication failed")
+                    return HttpResponse("Authentication failed !! Please enter details carefully ")
             else:
                 return HttpResponse("Invalid credentials !! Please try again")
 
@@ -74,14 +74,14 @@ def SignUp(request):
         phone = request.POST['phone']
         password = request.POST['password']
 
-        try:
-            print(firstname, lastname, email, phone, password)
-            # Check if the email already exists in the User model
-            user_exists = UserModel.objects.get(email=email)
-            print(user_exists)
-            if user_exists:
-                return HttpResponse("Email is already used!! try again with the different email")
+        print(firstname, lastname, email, phone, password)
+        # Check if the email already exists in the User model
+        user_exists = UserModel.objects.filter(email=email).first()
+        print(user_exists)
+        if user_exists:
+            return HttpResponse("Email is already used!! try again with the different email")
 
+        try:
             # encrypt the password
             encrypt_password = make_password(password)
 
@@ -100,7 +100,7 @@ def SignUp(request):
             print("user created successfully")
             return redirect('LoginPage')
         except Exception as e:
-            print("Error", e)
+            print(e)
             # return redirect("LoginPage")
             return HttpResponse("error in storing the user> ", e)
     else:
