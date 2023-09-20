@@ -7,8 +7,11 @@ from .views import *
 urlpatterns = [
     path('dashboard/', adminDashboard, name=("dashboard")),
     path("logout/", logout,  name="logout"),
-
-    path("deluser/<req_id>", del_user, name="del_user")
+    path("staff/", staffPage, name="staff"),
+    path("staffadd/",add_staff , name="addstaff"),
+    path("deluser/<req_id>", del_user, name="del_user"),
+    path("updatestaff/<req_id>", update_staff, name="update_staff"),
+    path("delstaff/<req_id>", del_staff, name="del_staff")
 ]
 
 if settings.DEBUG:
