@@ -29,7 +29,9 @@ def Auth(request):
         password = request.POST['password']
         # for admin authentication
         if email == "admin@gmail.com" and password == "admin":
-            return HttpResponse("admin logged in")
+            # return HttpResponse("admin logged in")
+            print("admin logged in")
+            return redirect("dashboard")
         else:
             # retrive the user from the database
             # user = db.users.find_one({'email': email})
