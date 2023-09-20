@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'healthcareapp', 
+    'customAdmin',
     'crispy_forms',
     'material',
 ]
@@ -78,7 +79,7 @@ WSGI_APPLICATION = 'healthcareproject.wsgi.application'
 
 
 
-# AUTH_USER_MODEL = 'healthcareapp.UserModel'
+AUTH_USER_MODEL = 'healthcareapp.UserModel'
 
 DATABASES = {
     'default': {

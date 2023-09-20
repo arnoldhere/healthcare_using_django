@@ -7,10 +7,10 @@ urlpatterns = [
     # render login page
     path("", Loginpage, name="LoginPage"),
     path("loginpage/", Loginpage, name="LoginPage"),
-    path("auth/", Auth, name="auth"), # login authentication
+    path("auth/", Auth, name="auth"),  # login authentication
     path("signup/", SignUp, name="SignUp"),  # sign up authentication
-
-    #user screens 
-    path('index/' , index , name="index"),
+    path("logout/", logout,  name="logout"),
+    # user screens
+    path('index/', index, name="index"),
 
 ]

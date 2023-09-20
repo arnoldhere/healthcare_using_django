@@ -49,7 +49,7 @@
           <div class="title">Signup</div>
           <form  method="post" enctype="multipart/form-data" action="{% url "SignUp" %}">
             {% csrf_token %}
-            {% comment %} {{ form.as_p }} {% endcomment %}
+            {{ form.as_p }}
             <div class="input-boxes">
               {% comment %} <div class="input-box">
                 <i class="fas fa-user"></i>
@@ -57,11 +57,11 @@
               </div> {% endcomment %}
               <div class="input-box">
                 <i class="fas fa-user"></i>
-                <input type="text" placeholder="Enter your first name" required name="firstname">
+                <input type="text" placeholder="Enter your first name" required name="first_name">
               </div>
               <div class="input-box">
                 <i class="fas fa-user"></i>
-                <input type="text" placeholder="Enter your last name" required name="lastname">
+                <input type="text" placeholder="Enter your last name" required name="last_name">
               </div>
               <div class="input-box">
                 <i class="fas fa-envelope"></i>
