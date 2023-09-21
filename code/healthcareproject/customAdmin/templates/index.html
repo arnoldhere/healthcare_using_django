@@ -54,7 +54,7 @@ rel="stylesheet"
         <div class="sidebar">
             <ul class="sidebar--items">
                 <li>
-                    <a href="#" id="active--link">
+                    <a href="{% url "dashboard" %}" id="">
                         <span class="icon icon-1"><i class="ri-layout-grid-line"></i></span>
                         <span class="sidebar--item">Dashboard</span>
                     </a>
@@ -72,9 +72,9 @@ rel="stylesheet"
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="{% url "test" %}">
                         <span class="icon icon-4"><i class="ri-user-line"></i></span>
-                        <span class="sidebar--item">Patients</span>
+                        <span class="sidebar--item">Medical Test</span>
                     </a>
                 </li>
                 <li>

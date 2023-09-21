@@ -3,9 +3,9 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.db.models.functions import TruncDate
 from django.db.models import Count
-from healthcareapp.models import UserModel, StaffModel
+from healthcareapp.models import UserModel, StaffModel , LabTestModel
 from bson.objectid import ObjectId
-
+from healthcareapp.urls import Loginpage
 # from ..healthcareapp.urls import
 
 
@@ -91,7 +91,7 @@ def update_staff(request, req_id):
     phone = request.POST['phone']
     specialization = request.POST['specialization']
     exp = request.POST['exp']
-
+    print(req_id)
     try:
         data = StaffModel.objects.filter(id=req_id).update(
             first_name=firstname,
@@ -109,6 +109,67 @@ def update_staff(request, req_id):
     except Exception as e:
         return HttpResponse(e)
 
+def testPage(request):
+    tests = LabTestModel.objects.all()
+    print(tests)
+    tests_count = LabTestModel.objects.count()
+    return render(request, 'test.html' , {'tests': tests , 'test_count': tests_count})
+
+
+def add_test(request):
+    if request.method == "POST":
+        name = request.POST['name']
+        cost = request.POST['cost']
+        duration = request.POST['duration']
+
+        test_exists = LabTestModel.objects.filter(name=name).first()
+        print(test_exists)
+
+        if test_exists:
+            return HttpResponse("test is already published !! try again")
+
+        try:
+            test = LabTestModel.objects.create(
+                name = name,
+                cost = cost,
+                result_duration = duration
+            )
+            test.save()
+            print("Test published !!")
+            return redirect('test')
+        except Exception as e:
+            return HttpResponse(e)
+
+def del_test(request, req_id):
+    print(req_id)
+    # res = db.healthcareapp_usermodel.delete_one({'id' : req_id})
+    res = LabTestModel.objects.get(id=req_id)
+    res.delete()
+    # check the deleted record
+    print("Test removed")
+    return redirect("test")
+
+def update_test(request, req_id):
+    id = request.POST['id']
+    name = request.POST['name']
+    cost = request.POST['cost']
+    duration = request.POST['duration']
+    print(name, cost, duration)
+    print(req_id)
+    try:
+        data = LabTestModel.objects.filter(id=req_id).update(
+            name = name,
+            cost = cost,
+            result_duration = duration
+        )
+        if data:
+            print("updated")
+            return redirect("test")
+        else:
+            return HttpResponse("Error in updating")
+    except Exception as e:
+        return HttpResponse(e)
+
 
 def logout(request):
-    return redirect("LoginPage")
+    return redirect(Loginpage)

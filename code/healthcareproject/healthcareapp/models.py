@@ -24,3 +24,9 @@ class StaffModel(models.Model):
     specialization = models.CharField(max_length=25)
     experience_years = models.PositiveIntegerField() 
     profile_photo = models.ImageField(upload_to="staff/profile/")
+
+
+class LabTestModel(models.Model):
+    name = models.CharField(max_length=20)
+    cost = models.PositiveIntegerField()
+    result_duration = models.PositiveIntegerField()
