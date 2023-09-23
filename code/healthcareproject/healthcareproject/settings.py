@@ -16,10 +16,6 @@ import pymongo
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
-
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-6iv17%asiv(a2e1$-(6oq%a!k(3p_r@s%$+m)pwzf%xseek3+z'
 
@@ -38,11 +34,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'healthcareapp', 
+    'healthcareapp',
     'customAdmin',
     'crispy_forms',
     'material',
+    'sweetify'
 ]
+
+# possible options: 'sweetalert', 'sweetalert2' - default is 'sweetalert2'
+SWEETIFY_SWEETALERT_LIBRARY = 'sweetalert2'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -77,10 +77,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'healthcareproject.wsgi.application'
 
-
-
 AUTH_USER_MODEL = 'healthcareapp.UserModel'
-
 DATABASES = {
     'default': {
         'ENGINE': 'djongo',
@@ -98,10 +95,6 @@ DATABASES = {
     }
 
 }
-
-
-# Password validation
-# https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -151,3 +144,17 @@ LOGIN_REDIRECT_URL = 'index'
 LOGIN_URL = 'LoginPage'  # Replace 'login' with your login URL name
 
 # APPEND_SLASH = False
+
+
+
+# EMAIL CONFIGURATION
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'  # use the SMTP for current email configs
+EMAIL_HOST = 'smtp.gmail.com'  # SMTP server for Gmail
+EMAIL_PORT = 587  # Port for TLS (587 for TLS, 465 for SSL)
+EMAIL_USE_TLS = True  # Use TLS for secure connection
+
+#EMAIL CREDENTIALS
+EMAIL_HOST_USER = "official.arnold.mac.2004@gmail.com"
+EMAIL_HOST_PASSWORD = "qkot kakm npxm jkic" # APP PASSWORD
+# DEFAULT_FROM_EMAIL = "official.arnold.mac.2004@gmail.com"

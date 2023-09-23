@@ -1,13 +1,16 @@
+import sweetify
 from django.shortcuts import render, redirect
-from pymongo.errors import DuplicateKeyError
-from pymongo.collection import ReturnDocument
 from django.contrib.auth.hashers import make_password, check_password
 from django.contrib.auth import login, logout, authenticate
 import pymongo
 from django.http import HttpResponse
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
-from .models import UserModel
+from .models import UserModel, passwordToken
+from django.core.mail import send_mail
+import random
+from django.utils import timezone
+import string
+
+
 # from .forms.register import signUpForm
 
 # Database configuration
@@ -51,11 +54,13 @@ def Auth(request):
                     # Save session data explicitly (usually done automatically)
                     request.session.save()
                     # return HttpResponse( request.session['Logged_User'])
+                    sweetify.success(request, "Login successful",
+                                   icon="success", timer=5000)
                     return redirect('index')
                 else:
-                    return HttpResponse("Authentication failed !! Please enter details carefully ")
+                    return HttpResponse("Invalid credentials !! Please try again")
             else:
-                return HttpResponse("Invalid credentials !! Please try again")
+                return HttpResponse("Authentication failed !! User not found ")
 
 
 def logout(request):
@@ -87,7 +92,7 @@ def SignUp(request):
 
             # create a document for usermodel
             user = UserModel.objects.create(
-                username = email,
+                username=email,
                 first_name=firstname,
                 last_name=lastname,
                 email=email,
@@ -106,8 +111,77 @@ def SignUp(request):
     else:
         return HttpResponse("Error in fetching the form data ")
 
-######    USER LOGIN   #####
+########################  PASSWORD RESET ########################
 
+
+def forgotpwdPage(request):
+    return render(request, "auth/forgotpwd.html")
+
+
+def OTP_generate():
+    # token = ''.join(random.choices(string.ascii_letters + string.digits, k=6))
+    # return token
+    return str(random.randint(100000, 999999))
+
+
+def reset_password(request):
+    if request.method == 'POST':
+        email = request.POST['email']
+        print(email)
+
+        user = UserModel.objects.filter(email=email).first()
+        if user:
+            otp = OTP_generate()
+            user = UserModel.objects.get(email=email)
+            token = passwordToken.objects.create(
+                email=user.email,
+                otp=otp,
+            )
+            token.save()
+            print(otp)
+            # send the otp in email
+            subject = "OTP for reset the password"
+            message = f"Please verify and check the OTP for reset the password is {otp}"
+            from_email = "official.arnold.mac.2004@gmail.com"
+            recivers = [user]
+
+            send_mail(subject, message, from_email, recivers)
+            # return HttpResponse(f"OTP SENT >>>{otp}")
+            return render(request, 'auth/otp.html', {'email': user.email})
+
+        else:
+            msg = "Provide valid email address"
+            # return render(request,'auth/forgotpwd.html' , msg)
+            return HttpResponse("Email does not exists !!")
+
+
+def verify_otp(request, email):
+    if request.method == 'POST':
+        otp = request.POST['otp']
+        user = passwordToken.objects.filter(email=email).first()
+        email = user.email
+        if user.otp == otp:
+            print("OTP matched")
+            return render(request, 'auth/resetpwd.html', {'email': email})
+        else:
+            return HttpResponse("Entered OTP is not valid !! try again")
+
+
+def new_password(request, email):
+    if request.method == 'POST':
+        password = request.POST['password']
+        user = UserModel.objects.filter(email=email).first()
+        pwd = make_password(password)
+        chnge = UserModel.objects.filter(email=user.email).update(password=pwd)
+
+        if chnge:
+            passwordToken.objects.filter(email=email).delete()
+            return HttpResponse("Password changed")
+        else:
+            return HttpResponse("Unable to reset password")
+
+
+######    USER LOGIN   #####
 
 def index(request):
     if request.session['email_user'] is not None:
