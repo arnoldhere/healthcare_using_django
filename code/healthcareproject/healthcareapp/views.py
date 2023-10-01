@@ -10,7 +10,6 @@ from django.utils import timezone
 from django.contrib import messages
 
 
-
 # Database configuration
 MONGODB_HOST = "localhost"
 MONGODB_PORT = 27017
@@ -21,46 +20,53 @@ db = client[MONGODB_DATABASE]
 
 ###########     Authentication views     ###########
 def Loginpage(request):
+    if request.session.get('username'):
+        return redirect('index')
     return render(request, 'auth/index.html')
 
 
 def Auth(request):
-    if request.method == "POST":
-        email = request.POST['email']
-        password = request.POST['password']
-        # for admin authentication
-        if email == "admin@gmail.com" and password == "admin":
+    if request.session.get('username'):
+        return redirect('index')
+    else:
+        if request.method == "POST":
+            email = request.POST['email']
+            password = request.POST['password']
+            # for admin authentication
+            if email == "admin@gmail.com" and password == "admin":
                 # return HttpResponse("admin logged in")
-            print("admin logged in")    
-            messages.success(request,"Admin Login successful")
-            return redirect("dashboard")
-#######################################################################
-        elif email != "admin@gmail.com" and password != "admin":
-            # retrive the user from the database
-            user = UserModel.objects.get(email=email)
-            print(user)
-            if user is not None:
-                print("fetched user successfully from the db ", user)
-                fetchpwd = user.password
-                # authenticate the user
-                if user is not None and check_password(password, fetchpwd):
-                    print("user validated in the db")
-                    # save the session token of the user
-                    fullname = user.first_name + user.last_name
+                print("admin logged in")
+                messages.success(request, "Admin Login successful")
+                return redirect("dashboard")
+    #######################################################################
+            elif email != "admin@gmail.com" and password != "admin":
+                # retrive the user from the database
+                user = UserModel.objects.get(email=email)
+                print(user)
+                if user is not None:
+                    print("fetched user successfully from the db ", user)
+                    fetchpwd = user.password
+                    # authenticate the user
+                    if user is not None and check_password(password, fetchpwd):
+                        print("user validated in the db")
+                        # save the session token of the user
+                        fullname = user.first_name + user.last_name
 
-                    request.session['Logged_User'] = fullname
-                    request.session['email_user'] = user.email
-                    # Save session data explicitly (usually done automatically)
-                    request.session.save()
-                    messages.success(request , "User logged in successfully")
-                    # return HttpResponse( request.session['Logged_User'])
-                    return redirect('index')
+                        request.session['username'] = fullname.title()
+                        request.session['email_user'] = user.email
+                        # Save session data explicitly (usually done automatically)
+                        request.session.save()
+                        messages.success(
+                            request, "User logged in successfully")
+                        # return HttpResponse( request.session['Logged_User'])
+                        return redirect('index')
+                    else:
+                        messages.error(
+                            request, "User not logged in successfully")
+                        return redirect("LoginPage")
+    ###################################################################
                 else:
-                    messages.error(request , "User not logged in successfully")
-                    return redirect("LoginPage")
-###################################################################
-            else:
-                return HttpResponse("Authentication failed !! User not found ")
+                    return HttpResponse("Authentication failed !! User not found ")
 
 
 def logout(request):
@@ -70,48 +76,51 @@ def logout(request):
 
 
 def SignUp(request):
-    if request.method == 'POST':
 
-        firstname = request.POST['first_name']
-        lastname = request.POST['last_name']
-        email = request.POST['email']
-        dob = request.POST['dob']
-        phone = request.POST['phone']
-        password = request.POST['password']
-        ## transform the inputs 
-        str(firstname).title
-        str(lastname).title
-        print(firstname, lastname, email, phone, password)
-        # Check if the email already exists in the User model
-        user_exists = UserModel.objects.filter(email=email).first()
-        print(user_exists)
-        if user_exists:
-            return HttpResponse("Email is already used!! try again with the different email")
-
-        try:
-            # encrypt the password
-            encrypt_password = make_password(password)
-
-            # create a document for usermodel
-            user = UserModel.objects.create(
-                username=email,
-                first_name=firstname,
-                last_name=lastname,
-                email=email,
-                dob=dob,
-                phone=phone,
-                password=encrypt_password
-            )
-            # user.save()
-            user.save()
-            print("user created successfully")
-            return redirect('LoginPage')
-        except Exception as e:
-            print(e)
-            # return redirect("LoginPage")
-            return HttpResponse("error in storing the user> ", e)
+    if request.session.get('username'):
+        return redirect("index")
     else:
-        return HttpResponse("Error in fetching the form data ")
+        if request.method == 'POST':
+            firstname = request.POST['first_name']
+            lastname = request.POST['last_name']
+            email = request.POST['email']
+            dob = request.POST['dob']
+            phone = request.POST['phone']
+            password = request.POST['password']
+            # transform the inputs
+            str(firstname).title
+            str(lastname).title
+            print(firstname, lastname, email, phone, password)
+            # Check if the email already exists in the User model
+            user_exists = UserModel.objects.filter(email=email).first()
+            print(user_exists)
+            if user_exists:
+                return HttpResponse("Email is already used!! try again with the different email")
+
+            try:
+                # encrypt the password
+                encrypt_password = make_password(password)
+
+                # create a document for usermodel
+                user = UserModel.objects.create(
+                    username=email,
+                    first_name=firstname,
+                    last_name=lastname,
+                    email=email,
+                    dob=dob,
+                    phone=phone,
+                    password=encrypt_password
+                )
+                # user.save()
+                user.save()
+                print("user created successfully")
+                return redirect('LoginPage')
+            except Exception as e:
+                print(e)
+                # return redirect("LoginPage")
+                return HttpResponse("error in storing the user> ", e)
+        else:
+            return HttpResponse("Error in fetching the form data ")
 
 ########################  PASSWORD RESET ########################
 
@@ -187,7 +196,7 @@ def new_password(request, email):
 ######    USER LOGIN   #####
 
 def index(request):
-    if request.session['email_user'] is not None:
+    if request.session['username'] is not None:
         return render(request, "userend/home.html")
     else:
         return redirect("LoginPage")
