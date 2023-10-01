@@ -1,4 +1,3 @@
-import sweetify
 from django.shortcuts import render, redirect
 from django.contrib.auth.hashers import make_password, check_password
 from django.contrib.auth import login, logout, authenticate
@@ -8,10 +7,9 @@ from .models import UserModel, passwordToken
 from django.core.mail import send_mail
 import random
 from django.utils import timezone
-import string
+from django.contrib import messages
 
 
-# from .forms.register import signUpForm
 
 # Database configuration
 MONGODB_HOST = "localhost"
@@ -32,20 +30,21 @@ def Auth(request):
         password = request.POST['password']
         # for admin authentication
         if email == "admin@gmail.com" and password == "admin":
-            # return HttpResponse("admin logged in")
-            print("admin logged in")
+                # return HttpResponse("admin logged in")
+            print("admin logged in")    
+            messages.success(request,"Admin Login successful")
             return redirect("dashboard")
-        else:
+#######################################################################
+        elif email != "admin@gmail.com" and password != "admin":
             # retrive the user from the database
-            # user = db.users.find_one({'email': email})
             user = UserModel.objects.get(email=email)
             print(user)
             if user is not None:
-                # print("fetched user successfully from the db ", user)
+                print("fetched user successfully from the db ", user)
                 fetchpwd = user.password
                 # authenticate the user
                 if user is not None and check_password(password, fetchpwd):
-                    # print("user validated in the db" + user)
+                    print("user validated in the db")
                     # save the session token of the user
                     fullname = user.first_name + user.last_name
 
@@ -53,12 +52,13 @@ def Auth(request):
                     request.session['email_user'] = user.email
                     # Save session data explicitly (usually done automatically)
                     request.session.save()
+                    messages.success(request , "User logged in successfully")
                     # return HttpResponse( request.session['Logged_User'])
-                    sweetify.success(request, "Login successful",
-                                   icon="success", timer=5000)
                     return redirect('index')
                 else:
-                    return HttpResponse("Invalid credentials !! Please try again")
+                    messages.error(request , "User not logged in successfully")
+                    return redirect("LoginPage")
+###################################################################
             else:
                 return HttpResponse("Authentication failed !! User not found ")
 
@@ -78,7 +78,9 @@ def SignUp(request):
         dob = request.POST['dob']
         phone = request.POST['phone']
         password = request.POST['password']
-
+        ## transform the inputs 
+        str(firstname).title
+        str(lastname).title
         print(firstname, lastname, email, phone, password)
         # Check if the email already exists in the User model
         user_exists = UserModel.objects.filter(email=email).first()
@@ -162,6 +164,7 @@ def verify_otp(request, email):
         email = user.email
         if user.otp == otp:
             print("OTP matched")
+            user.delete()
             return render(request, 'auth/resetpwd.html', {'email': email})
         else:
             return HttpResponse("Entered OTP is not valid !! try again")

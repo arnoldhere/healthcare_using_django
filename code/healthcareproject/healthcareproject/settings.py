@@ -38,12 +38,9 @@ INSTALLED_APPS = [
     'customAdmin',
     'crispy_forms',
     'material',
-    'sweetify'
 ]
 
-# possible options: 'sweetalert', 'sweetalert2' - default is 'sweetalert2'
-SWEETIFY_SWEETALERT_LIBRARY = 'sweetalert2'
-
+    
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',

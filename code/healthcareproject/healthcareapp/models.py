@@ -32,8 +32,6 @@ class LabTestModel(models.Model):
     result_duration = models.PositiveIntegerField()
 
 class passwordToken(models.Model):
-    # user = models.ForeignKey(UserModel, on_delete=models.CASCADE, null=True)
-    # tid = models.AutoField(primary_key=True)
     email = models.EmailField(max_length=30)
     otp = models.CharField(max_length=8, unique=False)
     timestamp = models.DateTimeField(auto_now_add=True)

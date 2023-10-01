@@ -22,7 +22,6 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='passwordToken',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('email', models.EmailField(max_length=30)),
                 ('otp', models.CharField(max_length=8)),
                 ('timestamp', models.DateTimeField(auto_now_add=True)),
