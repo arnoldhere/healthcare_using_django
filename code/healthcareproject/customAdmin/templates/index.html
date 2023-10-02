@@ -10,7 +10,7 @@
 		/>
 		<link rel="apple-touch-icon" sizes="76x76" href=" /img/apple-icon.png" />
 		<link rel="icon" type="image/png" href=" /img/favicon.png" />
-		<title>Admin Dashboard</title>
+		<title>Admin  {% block title %}{% endblock title %}</title>
 		<!--     Fonts and icons     -->
 		<link
 			href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700"
@@ -105,7 +105,7 @@
 							<span class="nav-link-text ms-1">Virtual Reality</span>
 						</a>
 					</li>
-					<li class="nav-item">
+					{% comment %} <li class="nav-item">
 						<a class="nav-link" href="pages/rtl.html">
 							<div
 								class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center"
@@ -114,14 +114,14 @@
 							</div>
 							<span class="nav-link-text ms-1">RTL</span>
 						</a>
-					</li>
-					<li class="nav-item mt-3">
+					</li> {% endcomment %}
+					{% comment %} <li class="nav-item mt-3">
 						<h6
 							class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6"
 						>
 							Account pages
 						</h6>
-					</li>
+					</li> {% endcomment %}
 					<li class="nav-item">
 						<a class="nav-link" href="pages/profile.html">
 							<div
@@ -337,7 +337,10 @@
 				</div>
 			</nav>
 			<!-- End Navbar -->
+			{% block content %}{% endblock content %}
 		</main>
+
+
 		<div class="fixed-plugin">
 			<a class="fixed-plugin-button text-dark position-fixed px-3 py-2">
 				<i class="fa fa-cog py-2"> </i>
