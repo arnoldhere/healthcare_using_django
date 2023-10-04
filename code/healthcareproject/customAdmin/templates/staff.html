@@ -1,0 +1,197 @@
+{% extends "index.html" %}
+{% block title %}Staff Control{% endblock title %}
+{% block content %}
+<div class="container-fluid py-4">
+    <div class="row">
+      <div class="col-12">
+        <div class="card mb-4">
+          <div class="card-header pb-0">
+            <h6>Staff Panel</h6>
+          </div>
+          <div class="card-body px-0 pt-0 pb-2">
+            <div class="table-responsive p-3">
+              <table class="table align-items-center mb-0 table-hover table-stripped">
+                <thead class="table-dark">
+					<tr>
+						<th>Name</th>
+						<th>Email</th>
+						<th>Phone</th>
+						<th>Expertise</th>
+						<th>Experience</th>
+						<th>Photo</th>
+						<th>Actions</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for user in staff %}
+					<tr class="text-center">
+						<td>{{ user.first_name }} {{user.last_name}}</td>
+						<td>{{user.email}}</td>
+						<td>{{user.phone}}</td>
+						<td>{{user.specialization}}</td>
+						<td>{{user.experience_years}}</td>
+						<td>{{user.profile_photo}}</td>
+						<td class="d-flex">
+							<form action="{% url "del_staff" user.id %}" method="get">
+								{% csrf_token %}
+									<button type="submit" class="btn btn-sm btn-danger px-3 m-2" onclick="return confirm('Are you sure you want to delete this ?');">
+										<i class="fas fa-trash fa-lg  "></i>	
+									</button>
+							</form>
+                            <button type="button" class="btn btn-sm btn-danger px-3 m-2"   data-mdb-toggle="modal" data-mdb-target="#exampleModal1{{ user.id }}">
+                                <i class="fas fa-edit fa-lg  "></i>	
+                            </button>
+                            <div class="modal fade" id="exampleModal1{{ user.id }}" tabindex="-1"     aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <h3 class="modal-title text-danger text-center"  id="exampleModalLabel">Fill the Form</h3>
+                                      <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body p-3">
+                                        <form method="post" action="{% url "update_staff" user.id %}">
+                                            {% csrf_token %}
+  
+                                            <div class="row mb-4">
+                                              <div class="col">
+                                                <div class="form-outline">
+                                                  <input type="text" id="form6Example1" class="form-control" name="firstname" value="{{user.first_name}}"/>
+                                                  <label class="form-label" for="form6Example1">First name</label>
+                                                </div>
+                                              </div>
+                                              <div class="col">
+                                                <div class="form-outline">
+                                                  <input type="text" id="form6Example2" class="form-control" name="lastname" value="{{user.last_name}}"/>
+                                                  <label class="form-label" for="form6Example2">Last name</label>
+                                                </div>
+                                              </div>
+                                            </div>
+                                          
+                                            <!-- Text input -->
+                                            <div class="form-outline mb-4">
+                                              <input type="text" id="form6Example3" class="form-control" name="phone" value="{{user.phone}}"/>
+                                              <label class="form-label" for="form6Example3">Phone</label>
+                                            </div>
+                                          
+                                            <!-- Text input -->
+                                            <div class="form-outline mb-4">
+                                              <input type="number" id="form6Example4" class="form-control" name="exp" value="{{user.experience_years}}"/>
+                                              <label class="form-label" for="form6Example4">Experience</label>
+                                            </div>
+                                          
+                                            <!-- Email input -->
+                                            <div class="form-outline mb-4">
+                                              <input type="email" id="form6Example5" class="form-control" name="email" disabled value="{{user.email}}"/>
+                                              <label class="form-label" for="form6Example5">You can't change email</label>
+                                            </div>
+                                          
+                                            <!-- Number input -->
+                                            <div class="form-outline mb-4">
+                                                <input type="text" id="form6Example6" class="form-control" name="specialization" value="{{user.specialization}}"/>
+                                                <label class="form-label" for="form6Example6">Specialization</label>
+                                            </div>
+                                          
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-danger" data-mdb-dismiss="modal">Close</button>
+                                            <button type="submit" class="btn btn-success">Update</button>
+                                        </div>
+                                    </form>
+                                  </div>
+                                </div>
+                              </div>
+						</td>
+					</tr>
+					{% endfor %}
+				</tbody>
+              </table>
+              {% comment %} Control button panel {% endcomment %}
+              <div class="d-flex p-1 justify-content-left  my-2 border-rounded">
+                <a href="">
+                    <button class="btn btn-sm btn-success mx-2" type="button" >
+                        <i class="ri-add-line"></i>Download 
+                    </button>
+                </a>
+                <a href = ""> 
+                    <button class="btn btn-sm btn-warning mx-2" type="button" >
+                        <i class="ri-add-line"></i>Upload
+                    </button>
+                </a>
+                  
+                <button class="btn btn-sm btn-info" type="button" data-mdb-toggle="modal" data-mdb-target="#exampleModal">
+                    <i class="ri-add-line"></i>Add Staff
+                </button>
+                  
+                <!-- Modal to add staff-->
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                        <h3 class="modal-title text-danger text-center"  id="exampleModalLabel">Fill the Form</h3>
+                        <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body p-3">
+                            <form method="post" action="{% url "addstaff" %}">
+                                {% csrf_token %}
+                                <!-- 2 column grid layout with text inputs for the first and last names -->
+                                <div class="row mb-4">
+                                <div class="col">
+                                    <div class="form-outline">
+                                    <input type="text" id="form6Example1" class="form-control" name="firstname"/>
+                                    <label class="form-label" for="form6Example1">First name</label>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-outline">
+                                    <input type="text" id="form6Example2" class="form-control" name="lastname"/>
+                                    <label class="form-label" for="form6Example2">Last name</label>
+                                    </div>
+                                </div>
+                                </div>
+                            
+                                <!-- Text input -->
+                                <div class="form-outline mb-4">
+                                <input type="text" id="form6Example3" class="form-control" name="phone" />
+                                <label class="form-label" for="form6Example3">Phone</label>
+                                </div>
+                            
+                                <!-- Text input -->
+                                <div class="form-outline mb-4">
+                                <input type="number" id="form6Example4" class="form-control" name="exp"/>
+                                <label class="form-label" for="form6Example4">Experience</label>
+                                </div>
+                            
+                                <!-- Email input -->
+                                <div class="form-outline mb-4">
+                                <input type="email" id="form6Example5" class="form-control" name="email"/>
+                                <label class="form-label" for="form6Example5">Email</label>
+                                </div>
+                            
+                                <!-- Number input -->
+                                <div class="form-outline mb-4">
+                                    <input type="text" id="form6Example6" class="form-control" name="specialization"/>
+                                    <label class="form-label" for="form6Example6">Specialization</label>
+                                </div>
+                            
+                                <label class="form-label" for="form6Example6">  Profile Photo</label>
+                                <div class="form-outline mb-4">
+                                    <input type="file" id="form6Example6" class="form-control" name="profile"/>
+                                </div>
+                            
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-mdb-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-success">Create</button>
+                            </div>
+                        </form>
+                    </div>
+                    </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock content %}

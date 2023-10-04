@@ -171,5 +171,8 @@ def update_test(request, req_id):
         return HttpResponse(e)
 
 
+
 def logout(request):
-    return redirect(Loginpage)
+    request.session.clear()
+    logout(request)
+    return redirect('LoginPage')

@@ -3,7 +3,6 @@ from .views import *
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
-    # render login page
     path("", Loginpage, name="LoginPage"),
     path("loginpage/", Loginpage, name="LoginPage"),
     path("auth/", Auth, name="auth"),  # login authentication
@@ -15,5 +14,7 @@ urlpatterns = [
     path("newpassword/<str:email>", new_password, name="newpassword"),
     # user screens
     path('index/', index, name="index"),
+    path("admin/", adminloginpage, name="adminloginpage"),
+    path("adminlogin/",adminlogin, name="adminlogin"),
 
 ]

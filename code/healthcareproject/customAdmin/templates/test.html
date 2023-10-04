@@ -1,0 +1,147 @@
+{% extends "index.html" %}
+{% block title %}Lab tests{% endblock title %}
+{% block content %}
+<div class="container-fluid py-4">
+    <div class="row">
+      <div class="col-12">
+        <div class="card mb-4">
+          <div class="card-header pb-0">
+            <h6>Staff Panel</h6>
+          </div>
+          <div class="card-body px-0 pt-0 pb-2">
+            <div class="table-responsive p-3">
+              <table class="table  table-bordered align-items-center mb-0 table-hover table-stripped">
+                <thead class="table-dark">
+                    <tr>
+                            <th>Name</th>
+                        <th>Cost</th>
+                        <th>Result(hours)</th>
+                        <th>Actions</th>
+                    </tr>
+				</thead>
+                <tbody>
+                    {% for user in tests %}
+                        <tr class="">
+                            <td>{{ user.name}}</td>
+                            <td>{{user.cost}}</td>
+                            <td>{{user.result_duration}} </td>
+                            <td>
+                              <div class="d-flex justify-content-center">
+        
+                                <form action="{% url "del_test" user.id %}" method="get" class="">
+                                  {% csrf_token %}
+                                      <button type="submit" class="btn btn-sm btn-danger px-3 m-2" onclick="return confirm('Are you sure you want to delete this user?');"><i class="fa-solid fa-trash"></i>
+                                      </button>
+                              </form>
+                                  <button type="button" class="btn btn-sm btn-danger px-3 m-2"   data-mdb-toggle="modal" data-mdb-target="#exampleModal1{{ user.id }}">
+                                      <i class="fas fa-pen-to-square fa-lg"></i>	
+                                  </button>
+                                  <div class="modal fade" id="exampleModal1{{ user.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                      <div class="modal-dialog">
+                                        <div class="modal-content">
+                                          <div class="modal-header">
+                                            <h3 class="modal-title text-danger text-center"  id="exampleModalLabel">Fill the Form</h3>
+                                            <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+                                          </div>
+                                          <div class="modal-body p-3">
+                                              <form method="post" action="{% url "update_test" user.id %}">
+                                                  {% csrf_token %}
+        
+                                                  <input type="hidden" value="{{user.id}}" name="id">
+                                                
+                                                  <!-- Text input -->
+                                                  <div class="form-outline mb-4">
+                                                    <input type="text" id="form6Example3" class="form-control" name="name" value="{{user.name}}"/>
+                                                    <label class="form-label" for="form6Example3">Name</label>
+                                                  </div>
+                                                
+                                                  <!-- Text input -->
+                                                  <div class="form-outline mb-4">
+                                                    <input type="number" id="form6Example4" class="form-control" name="cost" value="{{user.cost}}"/>
+                                                    <label class="form-label" for="form6Example4">Cost</label>
+                                                  </div>
+        
+                                                  <!-- Number input -->
+                                                  <div class="form-outline mb-4">
+                                                      <input type="text" id="form6Example6" class="form-control"  value="{{user.result_duration}}" name="duration"/>
+                                                      <label class="form-label" for="form6Example6">Result</label>
+                                                  </div>
+                                                
+                                                  <div class="modal-footer">
+                                                          <button type="button" class="btn btn-danger" data-mdb-dismiss="modal">Close</button>
+                                                      <button type="submit" class="btn btn-success">Update</button>
+                                                  </div>
+                                          </form>
+                                        </div>
+                                      </div>
+                                    </div>        
+                          
+                              </div>
+                            </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+              </table>
+              {% comment %} Control button panel {% endcomment %}
+              <div class="d-flex p-1 justify-content-left  my-2 border-rounded">
+                <a href="">
+                    <button class="btn btn-sm btn-success mx-2" type="button" >
+                        <i class="ri-add-line"></i>Download 
+                    </button>
+                </a>
+                <a href = ""> 
+                    <button class="btn btn-sm btn-warning mx-2" type="button" >
+                        <i class="ri-add-line"></i>Upload
+                    </button>
+                </a>
+                  
+                <button class="btn btn-sm btn-info" type="button" data-mdb-toggle="modal" data-mdb-target="#exampleModal">
+                    <i class="ri-add-line"></i>Add
+                </button>
+                  
+        <!-- Modal Create-->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title text-danger text-center"  id="exampleModalLabel">Fill the Form</h3>
+          <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body p-3">
+            <form method="post" action="{% url "add_test" %}">
+                {% csrf_token %}
+              
+                <!-- Text input -->
+                <div class="form-outline mb-4">
+                  <input type="text" id="form6Example3" class="form-control" name="name" />
+                  <label class="form-label" for="form6Example3">Name</label>
+                </div>
+              
+                <!-- Text input -->
+                <div class="form-outline mb-4">
+                  <input type="number" id="form6Example4" class="form-control" name="cost"/>
+                  <label class="form-label" for="form6Example4">Cost</label>
+                </div>
+              
+                <div class="form-outline mb-4">
+                  <input type="number" id="form6Example5" class="form-control" name="duration"/>
+                  <label class="form-label" for="form6Example5">Expected Result(hours) </label>
+                </div>
+              
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-mdb-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-success">Create</button>
+            </div>
+        </form>
+      </div>
+    </div>
+  </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock content %}

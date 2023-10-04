@@ -1,0 +1,109 @@
+<div>
+	{% comment %} Flash alerts messages {% endcomment %}
+{% if messages  %} 
+<div class="messages">
+  {% for message in messages %}
+	  <div role="alert"  class="alert alert-dismissible alert-danger fade show {% if message.tags %}alert-{{ message.tags }}"{% endif %}>
+	{{ message }}
+	<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+	  <span aria-hidden="true">&times;</span>
+	</button>
+  {% endfor %}
+</div> 
+{% endif %}
+</div>
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Admin login Screen</title>
+		<meta charset="utf-8" />
+	<link rel="stylesheet" href="{% static "auth_superuser/css/style.css"%}">
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1, shrink-to-fit=no"
+		/>
+
+		<link
+			href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap"
+			rel="stylesheet"
+		/>
+
+		<link
+			rel="stylesheet"
+			href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+		/>
+
+	</head>
+	<body class="bg-dark">
+		<section class="ftco-section">
+			<div class="container">
+				<div class="row justify-content-center">
+					<div class="col-md-6 text-center mb-5">
+						<h1 class="heading-section text-light">Welcome ! Admin</h1>
+					</div>
+				</div>
+				<div class="row justify-content-center">
+					<div class="col-md-6 col-lg-5">
+						<div class="login-wrap p-4 p-md-5">
+							<div
+								class="icon d-flex align-items-center justify-content-center"
+							>
+								<span class="fa fa-user-o"></span>
+							</div>
+							<h3 class="text-center mb-4">Fill the Admin Credentials</h3>
+							<form action="{% url "adminlogin" %}" class="login-form" method="post">
+								{% csrf_token %}
+								<div class="form-group">
+									<input
+										type="text"
+										class="form-control rounded-left"
+										placeholder="Enter email"
+										name="email"
+										required
+									/>
+								</div>
+								<div class="form-group d-flex">
+									<input
+										type="password"
+										name="password"
+										class="form-control rounded-left"
+										placeholder="Enter password"
+										required
+									/>
+								</div>
+								<div class="form-group d-md-flex">
+									<div class="w-50">
+										<label class="checkbox-wrap checkbox-primary"
+											>Remember Me
+											<input type="checkbox" checked />
+											<span class="checkmark"></span>
+										</label>
+									</div>
+									{% comment %}
+									<div class="w-50 text-md-right">
+										<a href="#">Forgot Password</a>
+									</div>
+									{% endcomment %}
+								</div>
+								<div class="form-group">
+									<button
+										type="submit"
+										class="btn btn-primary rounded submit p-3 px-5"
+									>
+										login
+									</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		
+	<script src="js/jquery.min.js"></script>
+	<script src="js/popper.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	</body>
+</html>

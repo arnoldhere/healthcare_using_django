@@ -2,13 +2,14 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.hashers import make_password, check_password
 from django.contrib.auth import login, logout, authenticate
 import pymongo
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
+from django.urls import reverse
 from .models import UserModel, passwordToken
 from django.core.mail import send_mail
 import random
 from django.utils import timezone
 from django.contrib import messages
-
+from .forms import LoginForm
 
 # Database configuration
 MONGODB_HOST = "localhost"
@@ -18,6 +19,21 @@ client = pymongo.MongoClient(host=MONGODB_HOST, port=MONGODB_PORT)
 db = client[MONGODB_DATABASE]
 
 
+########### ADMIN LOGIN   #########
+def adminloginpage(request):
+    return render(request, 'auth/superuser_login.html')
+
+def adminlogin(request):
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+
+        if email == 'admin@gmail.com' and password == "admin":
+            messages.success(request , "Admin login successful")
+            return redirect('dashboard')
+        else:
+            messages.error(request,"Invalid credenetials !! try again")
+            return redirect("adminloginpage")
 ###########     Authentication views     ###########
 def Loginpage(request):
     if request.session.get('username'):
@@ -26,48 +42,42 @@ def Loginpage(request):
 
 
 def Auth(request):
-    if request.session.get('username'):
-        return redirect('index')
-    else:
-        if request.method == "POST":
-            email = request.POST['email']
-            password = request.POST['password']
-            # for admin authentication
-            if email == "admin@gmail.com" and password == "admin":
-                # return HttpResponse("admin logged in")
-                print("admin logged in")
-                messages.success(request, "Admin Login successful")
-                return redirect("dashboard")
-    #######################################################################
-            elif email != "admin@gmail.com" and password != "admin":
-                # retrive the user from the database
-                user = UserModel.objects.get(email=email)
-                print(user)
-                if user is not None:
-                    print("fetched user successfully from the db ", user)
-                    fetchpwd = user.password
-                    # authenticate the user
-                    if user is not None and check_password(password, fetchpwd):
-                        print("user validated in the db")
-                        # save the session token of the user
-                        fullname = user.first_name + user.last_name
-
-                        request.session['username'] = fullname.title()
-                        request.session['email_user'] = user.email
-                        # Save session data explicitly (usually done automatically)
-                        request.session.save()
-                        messages.success(
-                            request, "User logged in successfully")
-                        # return HttpResponse( request.session['Logged_User'])
-                        return redirect('index')
-                    else:
-                        messages.error(
-                            request, "User not logged in successfully")
-                        return redirect("LoginPage")
-    ###################################################################
+    if request.method == "POST":
+        email = request.POST['email']
+        password = request.POST['password']
+        # retrive the user from the database
+        print(email, password)
+        # print(user)
+        try:
+            user = UserModel.objects.get(email=email)
+            if user is not None:
+                print("fetched user successfully from the db ", user)
+                fetchpwd = user.password
+                # authenticate the user
+                # validate the password
+                if user is not None and check_password(password, fetchpwd):
+                    print("user validated in the db")
+    
+                    # save the session token of the user
+                    fullname = user.first_name + user.last_name
+                    request.session['username'] = fullname
+                    request.session['email_user'] = user.email
+                    # Save session data explicitly (usually done automatically)
+                    request.session.save()
+    
+                    messages.success(request, "User logged in successfully")
+                    return HttpResponseRedirect(reverse('index'))
                 else:
-                    return HttpResponse("Authentication failed !! User not found ")
-
+                    messages.error(request , "Authentication failed ! Invalid credentials ")
+                    # return HttpResponse("invalid credentials !! try again")
+                    return redirect("LoginPage")
+            elif user is None:
+                messages.error(request, "User not found !!")
+                return HttpResponse("User not found !! try again")
+        except Exception as e:
+                print("User not found !! try again" , e)
+                messages.error(request, "User not found !!")
+                return redirect("LoginPage")
 
 def logout(request):
     request.session.clear()

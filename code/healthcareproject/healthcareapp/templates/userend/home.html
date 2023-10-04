@@ -92,7 +92,7 @@
 				>
 					<span class="fa fa-bars"></span> Menu
 				</button>
-				<div class="order-lg-last">
+				<div class="order-xl-last">
 					<a href="#" class="btn btn-primary">Make an appointment</a>
 					<a href="{% url "logout" %}" class="btn btn-danger">Logout</a>
 				</div>
@@ -129,7 +129,7 @@
 		<!-- END nav -->
 		<div class="hero-wrap">
 			<div class="home-slider owl-carousel">
-				<div class="slider-item" style="background-image: url(images/bg_1.jpg)">
+				<div class="slider-item" style="background-image: url({% static 'user/images/bg_1.jpg'%})">
 					<div class="overlay"></div>
 					<div class="container">
 						<div
@@ -1150,7 +1150,7 @@
 				<div class="row mb-5">
 					<div class="col-md-6 col-lg">
 						<div class="ftco-footer-widget py-4 py-md-5">
-							<h2 class="logo"><a href="#">Chiropractic</a></h2>
+							<h2 class="logo"><a href="#">HEALTHCAREonHAND</a></h2>
 							<p>
 								Far far away, behind the word mountains, far from the countries
 								Vokalia and Consonantia, there live the blind texts.
@@ -1240,18 +1240,10 @@
 					</div>
 					<div class="col-md-6 col-lg">
 						<div class="ftco-footer-widget bg-primary p-4 py-5">
-							<h2 class="ftco-heading-2">Business Hours</h2>
+							<h2 class="ftco-heading-2">Logins</h2>
 							<div class="opening-hours">
-								<h4>Opening Days:</h4>
-								<p class="pl-3">
-									<span>Monday – Friday : 9am to 20 pm</span>
-									<span>Saturday : 9am to 17 pm</span>
-								</p>
-								<h4>Vacations:</h4>
-								<p class="pl-3">
-									<span>All Sunday Days</span>
-									<span>All Official Holidays</span>
-								</p>
+								<h4><a href="{% url "adminloginpage" %}"> Admin</a></h4>
+								<h4><a href="">Staff</a></h4>
 							</div>
 						</div>
 					</div>
@@ -1260,14 +1252,11 @@
 					<div class="col-md-12 text-center">
 						<p>
 							<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-							Copyright &copy;
+							 &copy;
 							<script>
 								document.write(new Date().getFullYear());
 							</script>
-							All rights reserved | This template is made with
-							<i class="fa fa-heart" aria-hidden="true"></i> by
-							<a href="https://colorlib.com" target="_blank">Colorlib</a>
-							<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+							All rights reserved | Developed by LJSCA student
 						</p>
 					</div>
 				</div>

@@ -1,3 +1,4 @@
+
 {% load static %}
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
@@ -10,7 +11,7 @@
 <link
   href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
   rel="stylesheet"
-/>
+/> 
 <!-- Google Fonts -->
 <link
   href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
@@ -24,6 +25,20 @@
     <title>Login | Connect with the system</title>
    </head>
    <body>
+<div>
+      {% comment %} Flash alerts messages {% endcomment %}
+  {% if messages  %} 
+  <div class="messages">
+    {% for message in messages %}
+        <div role="alert"  class="alert alert-dismissible alert-danger fade show {% if message.tags %}alert-{{ message.tags }}"{% endif %}>
+      {{ message }}
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    {% endfor %}
+  </div> 
+  {% endif %}
+</div>
 
   <div class="container">
     <input type="checkbox" id="flip">
@@ -49,7 +64,6 @@
             <div class="title">Login</div>
           <form method="post"  action="{% url "auth" %}">
             {% csrf_token %}
-            {{ form.as_p }}
             <div class="input-boxes">
               <div class="input-box">
                 <i class="fas fa-envelope"></i>
@@ -71,7 +85,6 @@
           <div class="title">Signup</div>
           <form  method="post" enctype="multipart/form-data" action="{% url "SignUp" %}">
             {% csrf_token %}
-            {{ form.as_p }}
             <div class="input-boxes">
               <div class="input-box">
                 <i class="fas fa-user"></i>
@@ -111,5 +124,11 @@
     </div>
     </div>
   </div>
+
+<!-- MDB -->
+<script
+  type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.2/mdb.min.js"
+></script>
 </body>
 </html>

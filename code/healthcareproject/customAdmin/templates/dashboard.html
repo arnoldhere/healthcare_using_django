@@ -313,9 +313,9 @@
 						<td>
 							<form action="{% url "del_user" user.id %}" method="get">
 								{% csrf_token %}
-									<button type="submit" class="btn btn-md btn-danger" onclick="return confirm('Are you sure you want to delete this user?');">
-										<i class="fas fa-trash fa-lg"></i>	
-									</button>
+								<button type="submit" class="btn btn-md btn-danger" onclick="return confirm('Are you sure you want to delete this user?');">
+									<i class="fas fa-trash fa-lg"></i>	
+								</button>
 							</form>
 						</td>
 					</tr>
