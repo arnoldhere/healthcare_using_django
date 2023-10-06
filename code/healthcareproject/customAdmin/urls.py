@@ -9,13 +9,15 @@ urlpatterns = [
     path("logout/", logout,  name="logout"),
     path("staff/", staffPage, name="staff"),
     path("staffadd/",add_staff , name="addstaff"),
-    path("deluser/<req_id>", del_user, name="del_user"),
     path("updatestaff/<req_id>", update_staff, name="update_staff"),
     path("delstaff/<req_id>", del_staff, name="del_staff"),
+    path("deluser/<req_id>", del_user, name="del_user"),
     path("deltest/<req_id>", del_test, name="del_test"),
     path("updatetest/<req_id>", update_test, name="update_test"),
     path("addtest", add_test, name="add_test"),
-    path("test/", testPage, name="test")
+    path("test/", testPage, name="test"),
+    path("download_excel_staff/",download_staff_data , name="download_staff_data"),
+    path("download_excel_lab/",download_labtest_data , name="download_labtest_data"),
 
 ]
 

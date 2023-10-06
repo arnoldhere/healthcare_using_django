@@ -1,48 +1,29 @@
-
+{% if messages  %} 
+<div class="messages">
+  {% for message in messages %}
+	  <div role="alert"  class="alert alert-dismissible alert-danger fade show {% if message.tags %}alert-{{ message.tags }}"{% endif %}>
+	{{ message }}
+	<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+	  <span aria-hidden="true">&times;</span>
+	</button>
+  {% endfor %}
+  {% endif %}
+{% load toastmessage %}
 {% load static %}
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="{% static "auth/css/style.css" %}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Font Awesome -->
-<link
-  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-  rel="stylesheet"
-/> 
-<!-- Google Fonts -->
-<link
-  href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
-  rel="stylesheet"
-/>
-<!-- MDB -->
-<link
-  href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.2/mdb.min.css"
-  rel="stylesheet"
-/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
     <title>Login | Connect with the system</title>
-   </head>
-   <body>
-<div>
-      {% comment %} Flash alerts messages {% endcomment %}
-  {% if messages  %} 
-  <div class="messages">
-    {% for message in messages %}
-        <div role="alert"  class="alert alert-dismissible alert-danger fade show {% if message.tags %}alert-{{ message.tags }}"{% endif %}>
-      {{ message }}
-      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    {% endfor %}
-  </div> 
-  {% endif %}
-</div>
-
-  <div class="container">
-    <input type="checkbox" id="flip">
-    <div class="cover">
+  </head>
+  <body>
+    
+    <div class="container">
+      {% comment %} {% render_messages %} {% endcomment %}
+      <input type="checkbox" id="flip">
+      <div class="cover">
       <div class="front">
         <img src="{% static "auth/imgs/frontImg.jpg" %}" alt="">
         <div class="text">
@@ -79,6 +60,7 @@
               </div>
               <div class="text sign-up-text">Don't have an account? <label for="flip">Sigup now</label></div>
             </div>
+              {% comment %} <a href="{% url "adminloginpage" %}" class="button" >Admin Login</a> {% endcomment %}
         </form>
       </div>
         <div class="signup-form">
@@ -124,11 +106,5 @@
     </div>
     </div>
   </div>
-
-<!-- MDB -->
-<script
-  type="text/javascript"
-  src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.2/mdb.min.js"
-></script>
 </body>
 </html>

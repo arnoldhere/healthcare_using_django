@@ -1,14 +1,9 @@
 import pymongo
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from django.db.models.functions import TruncDate
-from django.db.models import Count
 from healthcareapp.models import UserModel, StaffModel , LabTestModel
-from bson.objectid import ObjectId
-from healthcareapp.urls import Loginpage
-# from ..healthcareapp.urls import
-
-
+import xlsxwriter 
+import tempfile
 # Database configuration
 MONGODB_HOST = "localhost"
 MONGODB_PORT = 27017
@@ -37,12 +32,12 @@ def del_user(request, req_id):
     print("User deleted")
     return redirect("dashboard")
 
+### STAFF CRUD ###
 
 def staffPage(request):
     staff_count = StaffModel.objects.count()
     staff = StaffModel.objects.all()
     return render(request, 'staff.html', {'staff_count': staff_count , 'staff': staff})
-
 
 def add_staff(request):
     if request.method == "POST":
@@ -176,3 +171,67 @@ def logout(request):
     request.session.clear()
     logout(request)
     return redirect('LoginPage')
+
+
+################################################################
+#excel file upload & download
+#data in excel format
+def download_staff_data(request):
+    data = StaffModel.objects.all()
+    output = tempfile.NamedTemporaryFile(delete=False)
+    workbook = xlsxwriter.Workbook(output , {'remove_time': True})
+    worksheet = workbook.add_worksheet('staff') 
+    row , col = 0 , 0
+    #column headers 
+    headers = ['First Name', 'Last Name', 'Email', 'Phone', 'Experience' , 'Specialization' , 'date_of_joined']
+    for header in headers:
+        worksheet.write(row, col, header)
+        col+=1
+    row+=1
+    # write the data 
+    for i in data:
+        worksheet.write(row , 0 , str(i.first_name))
+        worksheet.write(row , 1 , str(i.last_name))
+        worksheet.write(row , 2 , str(i.email))
+        worksheet.write(row , 3 , str(i.phone))
+        worksheet.write(row , 4 , str(i.experience_years))
+        worksheet.write(row , 5 , str(i.specialization))
+        worksheet.write(row , 6 , str(i.date_joined))
+        row+=1
+    
+    workbook.close()
+    output.seek(0)
+    response = HttpResponse(output.read() , content_type = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+    response['Content-Disposition'] = 'attachment; filename=staff_data.xlsx'
+    print("downloaded successfully")
+    return response
+    # return redirect('dashboard')
+
+
+def download_labtest_data(request):
+    data = LabTestModel.objects.all()
+    output = tempfile.NamedTemporaryFile(delete=False)
+    workbook = xlsxwriter.Workbook(output , {'remove_time': True})
+    worksheet = workbook.add_worksheet('lab test') 
+    row , col = 0 , 0
+    #column headers 
+    headers = ['NAME', 'COST', 'Result In']
+    for header in headers:
+        worksheet.write(row, col, header)
+        col+=1
+    row+=1
+    # write the data 
+    for i in data:
+        worksheet.write(row , 0 , str(i.name))
+        worksheet.write(row , 1 , str(i.cost))
+        worksheet.write(row , 2 , str(i.result_duration))
+        row+=1
+    
+    workbook.close()
+    output.seek(0)
+    response = HttpResponse(output.read() , content_type = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+    response['Content-Disposition'] = 'attachment; filename=staff_data.xlsx'
+    print("downloaded successfully")
+    return response
+    # return redirect('dashboard')
+

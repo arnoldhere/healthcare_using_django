@@ -36,8 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'healthcareapp',
     'customAdmin',
-    'crispy_forms',
-    'material',
+    'toastmessage',
 ]
 
     

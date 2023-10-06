@@ -1,10 +1,13 @@
+import pandas as pd
+import xlsxwriter
+import tempfile
 from django.shortcuts import render, redirect
 from django.contrib.auth.hashers import make_password, check_password
 from django.contrib.auth import login, logout, authenticate
 import pymongo
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
-from .models import UserModel, passwordToken
+from .models import UserModel, passwordToken , StaffModel
 from django.core.mail import send_mail
 import random
 from django.utils import timezone
