@@ -12,7 +12,7 @@ urlpatterns = [
     path("forgotpassword/", forgotpwdPage, name="forgotpassword"),
     path("verify_otp/<str:email>", verify_otp, name="verify_otp"),
     path("newpassword/<str:email>", new_password, name="newpassword"),
-    # user screens
+    path("appointment/", saveappointment, name="appointment"),
     path('index/', index, name="index"),
     path("admin/", adminloginpage, name="adminloginpage"),
     path("adminlogin/",adminlogin, name="adminlogin"),

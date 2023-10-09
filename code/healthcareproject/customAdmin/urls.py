@@ -18,7 +18,8 @@ urlpatterns = [
     path("test/", testPage, name="test"),
     path("download_excel_staff/",download_staff_data , name="download_staff_data"),
     path("download_excel_lab/",download_labtest_data , name="download_labtest_data"),
-
+    path("upload_excel_staff/", upload_file_staff, name="upload_file_staff"),
+    path("upload_excel_lab/", upload_file_labtest, name="upload_file_labtest"),
 ]
 
 if settings.DEBUG:

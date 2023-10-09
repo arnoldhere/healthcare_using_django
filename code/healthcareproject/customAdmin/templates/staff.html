@@ -107,16 +107,37 @@
               </table>
               {% comment %} Control button panel {% endcomment %}
               <div class="d-flex p-1 justify-content-left  my-2 border-rounded">
-                <a href="">
                     <button class="btn btn-sm btn-success mx-2" type="button" >
                         <i class="ri-add-line"></i> <a href="{% url "download_staff_data" %}">Download </a>
                     </button>
-                </a>
-                <a href = ""> 
-                    <button class="btn btn-sm btn-warning mx-2" type="button" >
-                        <i class="ri-add-line"></i>Upload
-                    </button>
-                </a>
+                  <button class="btn btn-sm btn-danger mx-2" type="button" data-mdb-toggle="modal" data-mdb-target="#exampleModal3">
+                    <i class="ri-add-line"></i>Upload
+                </button>
+                       <!-- Modal to add staff by excel-->
+                <div class="modal fade" id="exampleModal3" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                  <div class="modal-content">
+                      <div class="modal-header">
+                      <h3 class="modal-title text-danger text-center"  id="exampleModalLabel">EXCEL UPLOAD</h3>
+                      <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body p-3">
+                          <form method="post" action="{% url "upload_file_staff" %}" enctype="multipart/form-data">
+                              {% csrf_token %}
+                              <label class="form-label" for="form6Example6"> SELECT THE FILE</label>
+                              <div class="form-outline mb-4">
+                                  <input type="file" id="form6Example6" class="form-control" name="xlsxfile" />
+                              </div>
+                          
+                          </div>
+                          <div class="modal-footer">
+                              <button type="button" class="btn btn-danger" data-mdb-dismiss="modal">Close</button>
+                              <button type="submit" class="btn btn-success">Create</button>
+                          </div>
+                      </form>
+                  </div>
+                  </div>
+              </div>
                   
                 <button class="btn btn-sm btn-info" type="button" data-mdb-toggle="modal" data-mdb-target="#exampleModal">
                     <i class="ri-add-line"></i>Add Staff

@@ -7,7 +7,7 @@ from django.contrib.auth import login, logout, authenticate
 import pymongo
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
-from .models import UserModel, passwordToken , StaffModel
+from .models import UserModel, passwordToken , StaffModel  ,appointment
 from django.core.mail import send_mail
 import random
 from django.utils import timezone
@@ -147,7 +147,7 @@ def OTP_generate():
     # return token
     return str(random.randint(100000, 999999))
 
-
+ 
 def reset_password(request):
     if request.method == 'POST':
         email = request.POST['email']
@@ -213,3 +213,29 @@ def index(request):
         return render(request, "userend/home.html")
     else:
         return redirect("LoginPage")
+
+
+#### SAVE APPOINTMENT #####
+def saveappointment(request):
+    if request.method == "POST":
+        email = request.POST['email']
+        phone = request.POST['phone']
+        service = request.POST['services']
+        provider = request.POST['staff']
+        date = request.POST['date']
+        time = request.POST['time']
+        
+        try:
+            query  = appointment.objects.create(
+                email=email,
+                phone=phone,
+                service=service,
+                provider=provider,
+                time=time,
+                date = date,
+            )
+            query.save()
+            print("appointment created !!")
+            return redirect('index')
+        except Exception as e:
+            return HttpResponse(e)

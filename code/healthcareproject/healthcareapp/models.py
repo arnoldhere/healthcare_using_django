@@ -38,3 +38,13 @@ class passwordToken(models.Model):
     email = models.EmailField(max_length=30)
     otp = models.CharField(max_length=8, unique=False)
     timestamp = models.DateTimeField(auto_now_add=True)
+
+
+class appointment(models.Model):
+    email = models.EmailField(max_length=50)
+    phone = models.CharField(max_length=10) 
+    service = models.CharField(max_length=25)
+    provider = models.CharField(max_length=25)
+    date = models.DateField()
+    time = models.TimeField()
+    created = timezone.now()

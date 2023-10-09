@@ -129,7 +129,7 @@
 		<!-- END nav -->
 		<div class="hero-wrap">
 			<div class="home-slider owl-carousel">
-				<div class="slider-item" style="background-image: url({% static 'user/images/bg_1.jpg'%})">
+				<div class="slider-item" style="background-image: url('https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1932&q=80')">
 					<div class="overlay"></div>
 					<div class="container">
 						<div
@@ -152,7 +152,7 @@
 					</div>
 				</div>
 
-				<div class="slider-item" style="background-image: url(images/bg_2.jpg)">
+				<div class="slider-item" style="background-image: url('https://images.unsplash.com/photo-1579684385127-1ef15d508118?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1780&q=80')">
 					<div class="overlay"></div>
 					<div class="container">
 						<div
@@ -188,23 +188,26 @@
 							>
 								<span class="subheading">Booking an Appointment</span>
 								<h2 class="mb-4">Free Consultation</h2>
-								<form action="#" class="appointment">
+								<form action="{% url "appointment" %}" method="post"  class="appointment">
+									{% csrf_token %}
 									<div class="row justify-content-center">
 										<div class="col-md-6">
 											<div class="form-group">
 												<input
-													type="text"
+													type="email"
 													class="form-control"
-													placeholder="Your Name"
+													placeholder="email"
+													name="email"
 												/>
 											</div>
 										</div>
 										<div class="col-md-6">
 											<div class="form-group">
 												<input
-													type="text"
+													type="tel"
 													class="form-control"
 													placeholder="Phone number"
+													name="phone"
 												/>
 											</div>
 										</div>
@@ -215,14 +218,14 @@
 														<div class="icon">
 															<span class="fa fa-chevron-down"></span>
 														</div>
-														<select name="" id="" class="form-control">
-															<option value="">Select Services</option>
-															<option value="">Spinal Manupulation</option>
-															<option value="">Electrotherapy</option>
-															<option value="">Manual Lymphatic</option>
-															<option value="">Medical Acupuncture</option>
-															<option value="">Therapeutic Exercise</option>
-															<option value="">Joint Mobilization</option>
+														<select name="" id="" class="form-control" >
+															<option value="" selected disabled>Select Services</option>
+															{% comment %} <option value="Spinal Manupulation">Spinal Manupulation</option> {% endcomment %}
+															<option value="Electrotherapy" name="services">Electrotherapy</option>
+															<option value="Manual Lymphatic" name="services">Manual Lymphatic</option>
+															<option value="Medical Acupuncture" name="services">Medical Acupuncture</option>
+															<option value="Therapeutic Exercise" name="services">Therapeutic Exercise</option>
+															<option value="Joint Mobilization" name="services">Joint Mobilization</option>
 														</select>
 													</div>
 												</div>
@@ -235,12 +238,12 @@
 														<div class="icon">
 															<span class="fa fa-chevron-down"></span>
 														</div>
-														<select name="" id="" class="form-control">
-															<option value="">Select Chiropractor</option>
-															<option value="">John Doe</option>
-															<option value="">William Smith</option>
-															<option value="">Danny Green</option>
-															<option value="">Jason Thompson</option>
+														<select name="staff" id="" class="form-control">
+															<option value="" selected disabled>Select service provider</option>
+															<option value="John Doe">John Doe</option>
+															<option value="William Smith">William Smith</option>
+															<option value="Danny Green">Danny Green</option>
+															<option value="Jason Thompson">Jason Thompson</option>
 														</select>
 													</div>
 												</div>
@@ -253,8 +256,9 @@
 														<span class="fa fa-calendar"></span>
 													</div>
 													<input
-														type="text"
-														class="form-control appointment_date"
+														type="date"
+														name="date"
+														class="form-control "
 														placeholder="Date"
 													/>
 												</div>
@@ -267,20 +271,22 @@
 														<span class="fa fa-clock-o"></span>
 													</div>
 													<input
-														type="text"
+														type="time"
 														class="form-control appointment_time"
 														placeholder="Time"
+														name="time"
 													/>
 												</div>
 											</div>
 										</div>
 										<div class="col-md-6">
 											<div class="form-group">
-												<input
+												{% comment %} <input
 													type="submit"
-													value="Send message"
+													value="Done"
 													class="btn btn-secondary py-3 px-4"
-												/>
+												/> {% endcomment %}
+												<button class="btn btn-lg btn-info" type="submit">Submit </button>
 											</div>
 										</div>
 									</div>

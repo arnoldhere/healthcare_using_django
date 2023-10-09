@@ -2,8 +2,14 @@ import pymongo
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from healthcareapp.models import UserModel, StaffModel , LabTestModel
+import pandas as pd
 import xlsxwriter 
+from django.contrib import messages
 import tempfile
+from django.utils import timezone 
+from django.utils.dateparse import parse_datetime
+
+
 # Database configuration
 MONGODB_HOST = "localhost"
 MONGODB_PORT = 27017
@@ -110,7 +116,6 @@ def testPage(request):
     tests_count = LabTestModel.objects.count()
     return render(request, 'test.html' , {'tests': tests , 'test_count': tests_count})
 
-
 def add_test(request):
     if request.method == "POST":
         name = request.POST['name']
@@ -164,8 +169,6 @@ def update_test(request, req_id):
             return HttpResponse("Error in updating")
     except Exception as e:
         return HttpResponse(e)
-
-
 
 def logout(request):
     request.session.clear()
@@ -230,8 +233,62 @@ def download_labtest_data(request):
     workbook.close()
     output.seek(0)
     response = HttpResponse(output.read() , content_type = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
-    response['Content-Disposition'] = 'attachment; filename=staff_data.xlsx'
+    response['Content-Disposition'] = 'attachment; filename=labtest_data.xlsx'
     print("downloaded successfully")
     return response
     # return redirect('dashboard')
+
+def upload_file_staff(request):
+    if request.method == 'POST' :
+        file = request.FILES['xlsxfile']
+        # check the file
+        if file.name.endswith('.xlsx') and file is not None:
+            #process the file
+            df = pd.read_excel(file)
+            
+            for _ , row in df.iterrows():
+              firstname = row['FirstName']  
+              lastname = row['LastName']  
+              phone = row['Phone']  
+              email = row['Email']  
+              experience = row['Experience']  
+              specialization = row['Specialization']  
+            #   doj = row['date_joined']  
+            #   if doj.lower() == "nan":
+            #         # Handle empty or "nan" values by setting a default datetime
+            #         date_joined = timezone.now()  # Default to current datetime
+            #   else:
+            #         date_joined = parse_datetime(doj)
+                #   insert all rows into db
+              StaffModel.objects.create(first_name=firstname , last_name = lastname , email = email,phone = phone , experience_years = experience ,specialization = specialization , date_joined = timezone.now())
+            
+            print("uploaded successfully")
+            messages.success(request , "Data Uploaded succesfully !!")
+            return redirect('dashboard')
+        else:
+            messages.error(request , "Can't upload file")
+            return redirect('staff')
+        
+
+def upload_file_labtest(request):
+    if request.method == 'POST' :
+        file = request.FILES['xlsxfile']
+        # check the file
+        if file.name.endswith('.xlsx') and file is not None:
+            #process the file
+            df = pd.read_excel(file)
+            
+            for _ , row in df.iterrows():
+              name = row['NAME']  
+              cost = row['COST']  
+              result_duration = row['Result In']  
+                #   insert all rows into db
+              LabTestModel.objects.create(name=name , cost=cost , result_duration =result_duration  )
+            
+            print("uploaded successfully")
+            messages.success(request , "Data Uploaded succesfully !!")
+            return redirect('test')
+        else:
+            messages.error(request , "Can't upload file")
+            return redirect('test')
 
