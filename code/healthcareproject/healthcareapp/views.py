@@ -201,9 +201,14 @@ def new_password(request, email):
 
         if chnge:
             passwordToken.objects.filter(email=email).delete()
-            return HttpResponse("Password changed")
+            print("Password changed")
+            return redirect('show_succes')
         else:
             return HttpResponse("Unable to reset password")
+
+def show_msg_pwd(request):
+    return render(request , 'auth/pwdmsg.html')
+
 
 
 ######    USER LOGIN   #####

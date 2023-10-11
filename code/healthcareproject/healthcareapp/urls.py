@@ -5,6 +5,7 @@ from django.contrib.auth import views as auth_views
 urlpatterns = [
     path("", Loginpage, name="LoginPage"),
     path("loginpage/", Loginpage, name="LoginPage"),
+    path("pwdchanged/",show_msg_pwd, name="show_succes"),
     path("auth/", Auth, name="auth"),  # login authentication
     path("signup/", SignUp, name="SignUp"),  # sign up authentication
     path("logout/", logout,  name="logout"),
