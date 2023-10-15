@@ -1,5 +1,7 @@
+from django.conf import settings
 import pandas as pd
 import xlsxwriter
+import os
 import tempfile
 from django.shortcuts import render, redirect
 from django.contrib.auth.hashers import make_password, check_password
@@ -42,7 +44,6 @@ def Loginpage(request):
     if request.session.get('username'):
         return redirect('index')
     return render(request, 'auth/index.html')
-
 
 def Auth(request):
     if request.method == "POST":
@@ -87,9 +88,7 @@ def logout(request):
     # logout(request)
     return redirect('LoginPage')
 
-
 def SignUp(request):
-
     if request.session.get('username'):
         return redirect("index")
     else:
@@ -141,12 +140,10 @@ def SignUp(request):
 def forgotpwdPage(request):
     return render(request, "auth/forgotpwd.html")
 
-
 def OTP_generate():
     # token = ''.join(random.choices(string.ascii_letters + string.digits, k=6))
     # return token
     return str(random.randint(100000, 999999))
-
  
 def reset_password(request):
     if request.method == 'POST':
@@ -218,6 +215,76 @@ def index(request):
         return render(request, "userend/home.html")
     else:
         return redirect("LoginPage")
+
+def userProfile(request):
+    if request.session['username'] is not None:
+        email = request.session['email_user']
+        user = UserModel.objects.filter(email=email).first()
+        doj = user.date_joined
+        img = user.userProfile
+        return render(request, 'userend/profile.html' ,{'doj':doj , 'img' : img})
+    else:
+        return redirect("LoginPage")
+
+def completeProfile(request):
+    if request.session['username'] is not None:
+        return render(request, "userend/completeProfile.html")
+    else:
+        return redirect("LoginPage")
+
+def editProfile(request):
+    if request.method == "POST":
+        if request.method == 'POST':
+            firstname = request.POST['firstname']
+            lastname = request.POST['lastname']
+            phone = request.POST['phone']
+            pincode = request.POST['pincode']
+            state = request.POST['state']
+            city = request.POST['city']
+            landmark = request.POST['landmark']
+            house = request.POST['house']
+            img = request.FILES['photo']
+
+
+            if img.name.endswith(".jpg"):
+                filename = img.name
+                # Define the folder where you want to save the image.
+                upload_folder = os.path.join(settings.MEDIA_ROOT, 'userProfiles')
+                os.makedirs(upload_folder, exist_ok=True)
+               # Construct the file path and save the image.
+                file_path = os.path.join(upload_folder, filename)
+                with open(file_path, 'wb+') as destination:
+                    for chunk in img.chunks():
+                        destination.write(chunk)
+            else:
+                return HttpResponse("Not valid image")           
+            # transform the inputs
+            str(firstname).title
+            str(lastname).title
+            # print(firstname, lastname, email, phone)
+            try:
+                email = request.session['email_user']
+                # update a document for usermodel
+                user = UserModel.objects.filter(email=email).update(
+                    username=email,
+                    first_name=firstname,
+                    last_name=lastname,
+                    phone=phone,
+                    pincode = pincode,
+                    state = state,
+                    city = city,
+                    landmark = landmark,
+                    house = house,
+                    userProfile = img
+                )
+                # user.save()
+                print("user updated successfully")
+                return redirect('LoginPage')
+            except Exception as e:
+                # return redirect("LoginPage")
+                return HttpResponse("error in storing >> " , e)
+        else:
+            return HttpResponse("Error in fetching the form data ")
 
 
 #### SAVE APPOINTMENT #####

@@ -12,9 +12,11 @@ class UserModel(AbstractUser):
     pincode = models.CharField(max_length=8)
     state = models.CharField(max_length=20)
     city = models.CharField(max_length=20)
+    landmark = models.CharField(max_length=25 , null=True)
+    house = models.CharField(max_length=35 , null=True)
     dob = models.DateField(blank=False)
     date_joined = models.DateTimeField(default=timezone.now)
-    userProfile = models.ImageField(upload_to="userProfile")
+    userProfile = models.ImageField(upload_to="userProfiles")
 
 
 class StaffModel(models.Model):
@@ -41,6 +43,7 @@ class passwordToken(models.Model):
 
 
 class appointment(models.Model):
+    aid = models.AutoField(primary_key=True)
     email = models.EmailField(max_length=50)
     phone = models.CharField(max_length=10) 
     service = models.CharField(max_length=25)

@@ -1,0 +1,66 @@
+{% extends "userend/base.html" %} 
+{% block title %}Complete Your Profile{% endblock title %}
+{% block content %}
+<div class="container-fluid p-2"> 
+    <form action="{% url "editProfile" %}" method="post" enctype="multipart/form-data" >
+        {% csrf_token %}
+        <h1>Complete Your Profile</h1>
+        
+        <fieldset>
+          
+          <legend><span class="number">1</span> Your basic info</legend>
+          
+          <label for="name">First Name:</label>
+          <input type="text" id="name" name="firstname">
+          
+          
+          <label for="name">Last Name:</label>
+          <input type="text"  name="lastname">
+          
+
+          <label for="mail">Email:(You can't modified)</label>
+          <input type="email" id="mail" name="email" disabled value="{{request.session.email_user}}">
+
+          <label for="mail">Phone:</label>
+          <input type="tel" id="" name="phone">
+
+        </fieldset>
+        
+        <fieldset>
+          
+          <legend><span class="number">2</span> Your Residencial info </legend>
+          
+          
+          <label for="Pincode">Pincode:</label>
+          <input type="number" name="pincode">
+
+          
+          <label for="">State:</label>
+          <input type="text" name="state">
+
+          <label for="">City:</label>
+          <input type="text" name="city">
+
+          <label for="">Landmark:</label>
+          <input type="text" name="landmark">
+
+          
+          <label for="">House no./Society:</label>
+          <input type="text" name="house">
+          
+        </fieldset>
+      
+        <fieldset>
+  
+          <legend><span class="number">3</span> Profile Picture[only jpg formart] </legend>
+          <input type="file" name="photo" class="form-control">
+          
+        </fieldset>
+        
+        <button type="submit" class="btn-sm btn-dark text-white">Submit</button>
+        <button type="reset" class="btn-sm btn-info text-white">Reset</button>
+        
+      </form>
+      
+</div>
+{% endblock content %}
