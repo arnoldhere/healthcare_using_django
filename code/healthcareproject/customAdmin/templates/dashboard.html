@@ -180,9 +180,10 @@
 			</div>
 		  </div>
 		  <div class="table-responsive">
-			<table class="table align-items-center ">
+			<table class="table align-items-center  table-hover table-bordered">
 				<thead class="table-dark">
 					<tr>
+						<th>User</th>
 						<th>Name</th>
 						<th>Email</th>
 						<th>Phone</th>
@@ -192,9 +193,10 @@
 						<th>Actions</th>
 					</tr>
 				</thead>
-				<tbody>
+				<tbody class="table-bordered">
 					{% for user in users %}
 					<tr>
+						<td><img src="/media/userProfiles/{{user.userProfile}}" alt="Profile Not set" width="100px" height="100px"  class="img img-fluid img-thumbnail"></td>
 						<td>{{ user.first_name }} {{user.last_name}}</td>
 						<td>{{user.email}}</td>
 						<td>{{user.phone}}</td>

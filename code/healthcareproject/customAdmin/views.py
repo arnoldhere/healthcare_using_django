@@ -1,7 +1,8 @@
 import pymongo
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from healthcareapp.models import UserModel, StaffModel , LabTestModel
+from healthcareapp.models import UserModel, StaffModel , LabTestModel 
+from .models import Services
 import pandas as pd
 import xlsxwriter 
 from django.contrib import messages
@@ -170,6 +171,65 @@ def update_test(request, req_id):
     except Exception as e:
         return HttpResponse(e)
 
+def services(request):
+    services = Services.objects.all()
+    return render(request , 'services.html' , {'services':services })
+
+def add_services(request):
+    if request.method == "POST":
+        name = request.POST['name']
+        type = request.POST['type']
+        charge = request.POST['charge']
+    
+        service_exists = Services.objects.filter(name=name).first()
+        print(service_exists)
+
+        if service_exists:
+            return HttpResponse("Service is already added")
+
+        try:
+            Services.objects.create(
+                name =name,
+                type = type,
+                charge = charge
+            ) 
+            # q.save()
+            print("Service added !!")
+            return redirect('services')
+        except Exception as e:
+            print("error >> " , e)
+            return HttpResponse(e)
+
+def update_service(request, req_id):
+    sid = request.POST['id']
+    name = request.POST['name']
+    type = request.POST['type']
+    charge = request.POST['charge']
+    print(req_id)
+    try:
+        data = Services.objects.filter(sid=req_id).update(
+            name = name,
+            type = type,
+            charge = charge
+        )
+        if data:
+            print("updated")
+            return redirect("services")
+        else:
+            return HttpResponse("Error in updating")
+    except Exception as e:
+        return HttpResponse(e)
+
+def delete_service(request, req_id):
+    print(req_id)
+    # res = db.healthcareapp_usermodel.delete_one({'id' : req_id})
+    res = Services.objects.get(id=req_id)
+    res.delete()
+    # check the deleted record
+    print("removed")
+    return redirect("services")
+
+
 def logout(request):
     request.session.clear()
     logout(request)
@@ -209,7 +269,6 @@ def download_staff_data(request):
     print("downloaded successfully")
     return response
     # return redirect('dashboard')
-
 
 def download_labtest_data(request):
     data = LabTestModel.objects.all()
@@ -269,7 +328,6 @@ def upload_file_staff(request):
             messages.error(request , "Can't upload file")
             return redirect('staff')
         
-
 def upload_file_labtest(request):
     if request.method == 'POST' :
         file = request.FILES['xlsxfile']
@@ -291,4 +349,3 @@ def upload_file_labtest(request):
         else:
             messages.error(request , "Can't upload file")
             return redirect('test')
-

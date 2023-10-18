@@ -18,6 +18,8 @@
 	<head>
 		<title>myHealthCare | {% block title %}Home{% endblock title %}</title>
 		<meta charset="utf-8" />
+		<script src="https://kit.fontawesome.com/24b1cc3df5.js" crossorigin="anonymous"></script>
+    
 		<meta
 			name="viewport"
 			content="width=device-width, initial-scale=1, shrink-to-fit=no"
@@ -43,18 +45,18 @@
 					<div class="col-md-4">
 						<div class="row">
 							<div class="col-md-8 mb-md-0 mb-3">
+								<a href="{% url "userProfile" %}">
 								<div class="top-wrap d-flex">
 									<div
 										class="icon d-flex align-items-center justify-content-center"
 									>
 									<i class="fa-solid fa-user"></i>
 								</div>
-								<a href="{% url "userProfile" %}">
 									<div class="text">
 										<span><b> Profile {{ request.session.username }}</b> </span>
 									</div>
-								</a>
 								</div>
+							</a>
 							</div>
 						</div>
 					</div>
@@ -78,7 +80,6 @@
 					<span class="fa fa-bars"></span> Menu
 				</button>
 				<div class="order-xl-last">
-					<a href="#" class="btn btn-primary">Make an appointment</a>
 					<a href="{% url "logout" %}" class="btn btn-danger">Logout</a>
 				</div>
 				<div class="collapse navbar-collapse" id="ftco-nav">
@@ -152,7 +153,6 @@
 										texts.
 									</p>
 									<p>
-										<a href="#" class="btn btn-primary">Book an appointment</a>
 									</p>
 								</div>
 							</div>
@@ -176,27 +176,17 @@
 								<form action="{% url "appointment" %}" method="post"  class="appointment">
 									{% csrf_token %}
 									<div class="row justify-content-center">
-										<div class="col-md-6">
-											<div class="form-group">
-												<input
-													type="email"
-													class="form-control"
-													placeholder="email"
-													name="email"
-												/>
-											</div>
-										</div>
-										<div class="col-md-6">
+										<div class="col-md">
 											<div class="form-group">
 												<input
 													type="tel"
 													class="form-control"
-													placeholder="Phone number"
+													placeholder="Phone number to contact"
 													name="phone"
 												/>
 											</div>
 										</div>
-										<div class="col-md-6">
+										<div class="col-md-12">
 											<div class="form-group">
 												<div class="form-field">
 													<div class="select-wrap">
@@ -218,28 +208,7 @@
 										</div>
 										<div class="col-md-6">
 											<div class="form-group">
-												<div class="form-field">
-													<div class="select-wrap">
-														<div class="icon">
-															<span class="fa fa-chevron-down"></span>
-														</div>
-														<select name="staff" id="" class="form-control">
-															<option value="" selected disabled>Select service provider</option>
-															<option value="John Doe">John Doe</option>
-															<option value="William Smith">William Smith</option>
-															<option value="Danny Green">Danny Green</option>
-															<option value="Jason Thompson">Jason Thompson</option>
-														</select>
-													</div>
-												</div>
-											</div>
-										</div>
-										<div class="col-md-6">
-											<div class="form-group">
 												<div class="input-wrap">
-													<div class="icon">
-														<span class="fa fa-calendar"></span>
-													</div>
 													<input
 														type="date"
 														name="date"
@@ -252,9 +221,6 @@
 										<div class="col-md-6">
 											<div class="form-group">
 												<div class="input-wrap">
-													<div class="icon">
-														<span class="fa fa-clock-o"></span>
-													</div>
 													<input
 														type="time"
 														class="form-control appointment_time"
