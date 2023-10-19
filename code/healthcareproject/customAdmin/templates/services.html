@@ -24,8 +24,8 @@
                 {% for item in services %}
                 <tr class="">
                   <td>{{ item.name }}</td>
-                  <td>{{ item.cost }}</td>
-                  <td>{{ item.result_duration }} </td>
+                  <td>{{ item.type }}</td>
+                  <td>{{ item.charge }} </td>
                   <td>
                     <div class="d-flex justify-content-center">
 
@@ -64,16 +64,16 @@
 
                                 <!-- Text input -->
                                 <div class="form-outline mb-4">
-                                  <input type="number" id="form6Example4" class="form-control" name="cost"
-                                    value="{{ item.cost }}" />
-                                  <label class="form-label" for="form6Example4">Cost</label>
+                                  <input type="number" id="form6Example4" class="form-control" name="type"
+                                    value="{{ item.type }}" />
+                                  <label class="form-label" for="form6Example4">Type</label>
                                 </div>
 
                                 <!-- Number input -->
                                 <div class="form-outline mb-4">
                                   <input type="text" id="form6Example6" class="form-control"
-                                    value="{{ item.result_duration }}" name="duration" />
-                                  <label class="form-label" for="form6Example6">Result</label>
+                                    value="{{ item.charge }}" name="charge" />
+                                  <label class="form-label" for="form6Example6">charge</label>
                                 </div>
 
                                 <div class="modal-footer">
@@ -165,7 +165,7 @@
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-danger" data-mdb-dismiss="modal">Close</button>
-                      <button type="submit" class="btn btn-success">Create</button>
+                      <button type="submit" class="btn btn-success">Add</button>
                     </div>
                     </form>
                   </div>

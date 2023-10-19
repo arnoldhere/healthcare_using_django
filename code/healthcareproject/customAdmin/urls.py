@@ -22,8 +22,8 @@ urlpatterns = [
     path("upload_excel_lab/", upload_file_labtest, name="upload_file_labtest"),
     path("services/", services, name="services"),
     path("add_services/", add_services, name="add_services"),
-    path("updateservice/<req_id>", update_service, name="update_service"),
-    path("delete_service/<req_id>", delete_service, name="delete_service"),
+    path("updateservice/<id>", update_service, name="update_service"),
+    path("delete_service/<id>", delete_service, name="delete_service"),
 ]
 
 if settings.DEBUG:

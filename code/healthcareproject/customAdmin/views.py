@@ -151,7 +151,7 @@ def del_test(request, req_id):
     return redirect("test")
 
 def update_test(request, req_id):
-    id = request.POST['id']
+    # id = request.POST['id']
     name = request.POST['name']
     cost = request.POST['cost']
     duration = request.POST['duration']
@@ -185,7 +185,9 @@ def add_services(request):
         print(service_exists)
 
         if service_exists:
-            return HttpResponse("Service is already added")
+            messages.error(request , "Service already exists")
+            return redirect("services")
+            # return HttpResponse("Service is already added")
 
         try:
             Services.objects.create(
@@ -200,31 +202,38 @@ def add_services(request):
             print("error >> " , e)
             return HttpResponse(e)
 
-def update_service(request, req_id):
+def update_service(request, id):
     sid = request.POST['id']
     name = request.POST['name']
     type = request.POST['type']
     charge = request.POST['charge']
-    print(req_id)
+    print(id)
     try:
-        data = Services.objects.filter(sid=req_id).update(
+        data = Services.objects.filter(id=id).update(
             name = name,
             type = type,
             charge = charge
         )
         if data:
             print("updated")
+            messages.success(request , "Service updated")
             return redirect("services")
         else:
+            messages.error(request , "Service not updated")
             return HttpResponse("Error in updating")
     except Exception as e:
         return HttpResponse(e)
 
-def delete_service(request, req_id):
-    print(req_id)
-    # res = db.healthcareapp_usermodel.delete_one({'id' : req_id})
-    res = Services.objects.get(id=req_id)
-    res.delete()
+def delete_service(request, id):
+    print(id)
+    try:
+        # res = db.customAdmin_services.delete_one({'name' : nm})
+        res = Services.objects.get(id=id).delete()
+        if res:
+            messages.success(request , "Successfully deleted")
+            return redirect("services")
+    except Exception as e:
+        return HttpResponse(e)
     # check the deleted record
     print("removed")
     return redirect("services")
