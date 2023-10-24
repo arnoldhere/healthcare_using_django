@@ -18,12 +18,17 @@ urlpatterns = [
     path("test/", testPage, name="test"),
     path("download_excel_staff/",download_staff_data , name="download_staff_data"),
     path("download_excel_lab/",download_labtest_data , name="download_labtest_data"),
+    path("download_appointment/",download_appointment_data , name="download_appointment_data"),
     path("upload_excel_staff/", upload_file_staff, name="upload_file_staff"),
     path("upload_excel_lab/", upload_file_labtest, name="upload_file_labtest"),
     path("services/", services, name="services"),
     path("add_services/", add_services, name="add_services"),
-    path("updateservice/<id>", update_service, name="update_service"),
-    path("delete_service/<id>", delete_service, name="delete_service"),
+    path("updateservice/<nm>", update_service, name="update_service"),
+    path("delete_service/<nm>", delete_service, name="delete_service"),
+    path("delete_app/<aid>", del_appointments, name="delete_appointment"),
+    path("appointmentpage/", appointmentPage, name="appointmentpage"),
+    path("appointmentstatus/<aid>", appointment_status, name="appointment_status"),
+
 ]
 
 if settings.DEBUG:

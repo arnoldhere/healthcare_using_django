@@ -1,7 +1,7 @@
 import pymongo
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from healthcareapp.models import UserModel, StaffModel , LabTestModel 
+from healthcareapp.models import UserModel, StaffModel , LabTestModel , Appointment
 from .models import Services
 import pandas as pd
 import xlsxwriter 
@@ -111,6 +111,8 @@ def update_staff(request, req_id):
     except Exception as e:
         return HttpResponse(e)
 
+### lab test CRUD ###
+
 def testPage(request):
     tests = LabTestModel.objects.all()
     print(tests)
@@ -171,6 +173,8 @@ def update_test(request, req_id):
     except Exception as e:
         return HttpResponse(e)
 
+### service CRUD ###
+
 def services(request):
     services = Services.objects.all()
     return render(request , 'services.html' , {'services':services })
@@ -202,14 +206,14 @@ def add_services(request):
             print("error >> " , e)
             return HttpResponse(e)
 
-def update_service(request, id):
+def update_service(request,nm):
     sid = request.POST['id']
     name = request.POST['name']
     type = request.POST['type']
     charge = request.POST['charge']
     print(id)
     try:
-        data = Services.objects.filter(id=id).update(
+        data = Services.objects.filter(name=nm).update(
             name = name,
             type = type,
             charge = charge
@@ -224,26 +228,58 @@ def update_service(request, id):
     except Exception as e:
         return HttpResponse(e)
 
-def delete_service(request, id):
-    print(id)
+def delete_service(request, nm):
     try:
         # res = db.customAdmin_services.delete_one({'name' : nm})
-        res = Services.objects.get(id=id).delete()
+        res = Services.objects.get(name=nm)
+        res.delete()
         if res:
             messages.success(request , "Successfully deleted")
             return redirect("services")
     except Exception as e:
+        print("Error in deleting")
         return HttpResponse(e)
     # check the deleted record
     print("removed")
     return redirect("services")
-
 
 def logout(request):
     request.session.clear()
     logout(request)
     return redirect('LoginPage')
 
+def appointmentPage(request):
+    appointments = Appointment.objects.all()
+    return render(request, 'appointment.html' , {'appointments':appointments})
+
+def appointment_status(request,aid):
+    a = Appointment.objects.filter(aid=aid).first()
+    if a.status == 'PENDING':
+        a.objects.filter(aid=aid).update(
+            status = "CONFIRMED"
+        )
+    else:
+        Appointment.objects.filter(aid=aid).update(
+            status = "PENDING"
+        ) 
+
+    print("done")
+    return redirect('appointmentpage')
+
+def del_appointments(request,aid):
+    try:
+        # res = db.customAdmin_services.delete_one({'name' : nm})
+        res = Appointment.objects.get(aid=aid)
+        res.delete()
+        if res:
+            messages.success(request , "Successfully deleted")
+            return redirect("appointmentpage")
+    except Exception as e:
+        print("Error in deleting")
+        return HttpResponse(e)
+    # check the deleted record
+    print("removed")
+    return redirect("appointmentpage")
 
 ################################################################
 #excel file upload & download
@@ -305,6 +341,37 @@ def download_labtest_data(request):
     print("downloaded successfully")
     return response
     # return redirect('dashboard')
+
+
+def download_appointment_data(request):
+    data = Appointment.objects.all()
+    output = tempfile.NamedTemporaryFile(delete=False)
+    workbook = xlsxwriter.Workbook(output , {'remove_time': True})
+    worksheet = workbook.add_worksheet('lab test') 
+    row , col = 0 , 0
+    #column headers 
+    headers = ['Phone', 'Service','Date', 'Time' , 'Status']
+    for header in headers:
+        worksheet.write(row, col, header)
+        col+=1
+    row+=1
+    # write the data 
+    for i in data:
+        worksheet.write(row , 0 , str(i.phone))
+        worksheet.write(row , 1 , str(i.service))
+        worksheet.write(row , 2 , str(i.date))
+        worksheet.write(row , 3 , str(i.time))
+        worksheet.write(row , 4 , str(i.status))
+        row+=1
+    
+    workbook.close()
+    output.seek(0)
+    response = HttpResponse(output.read() , content_type = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+    response['Content-Disposition'] = 'attachment; filename=appointment_data.xlsx'
+    print("downloaded successfully")
+    return response
+    # return redirect('dashboard')
+
 
 def upload_file_staff(request):
     if request.method == 'POST' :

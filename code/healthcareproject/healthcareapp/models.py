@@ -42,13 +42,11 @@ class passwordToken(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
 
 
-class appointment(models.Model):
+class Appointment(models.Model):
     aid = models.AutoField(primary_key=True)
-    email = models.EmailField(max_length=50)
     phone = models.CharField(max_length=10) 
     service = models.CharField(max_length=25)
-    provider = models.CharField(max_length=25 , null=True)
     date = models.DateField()
-    time = models.TimeField()
+    time = models.CharField(max_length=20 , null=True)
     created = timezone.now()
     status = models.CharField(max_length=15 , default="PENDING")

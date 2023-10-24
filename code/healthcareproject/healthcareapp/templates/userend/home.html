@@ -173,7 +173,7 @@
 							>
 								<span class="subheading">Booking an Appointment</span>
 								<h2 class="mb-4">Free Consultation</h2>
-								<form action="{% url "appointment" %}" method="post"  class="appointment">
+								<form action="{% url "bookappointment" %}" method="post"  class="appointment">
 									{% csrf_token %}
 									<div class="row justify-content-center">
 										<div class="col-md">
@@ -193,7 +193,7 @@
 														<div class="icon">
 															<span class="fa fa-chevron-down"></span>
 														</div>
-														<select name="" id="" class="form-control" >
+														<select class="form-control" name="services_list">
 															<option value="" selected disabled>Select Services</option>
 															{% comment %} <option value="Spinal Manupulation">Spinal Manupulation</option> {% endcomment %}
 															<option value="Electrotherapy" name="services">Electrotherapy</option>
@@ -221,23 +221,19 @@
 										<div class="col-md-6">
 											<div class="form-group">
 												<div class="input-wrap">
-													<input
-														type="time"
-														class="form-control appointment_time"
-														placeholder="Time"
-														name="time"
-													/>
+													<select class="form-control" name="time">
+														<option value="" selected disabled>Select Timings</option>
+														{% comment %} <option value="Spinal Manupulation">Spinal Manupulation</option> {% endcomment %}
+														<option value="morning">Morning</option>
+														<option value="noon">Noon</option>
+														<option value="evening">Evening</option>
+													</select>
 												</div>
 											</div>
 										</div>
-										<div class="col-md-6">
+										<div class="col-md text-center">
 											<div class="form-group">
-												{% comment %} <input
-													type="submit"
-													value="Done"
-													class="btn btn-secondary py-3 px-4"
-												/> {% endcomment %}
-												<button class="btn btn-lg btn-info" type="submit">Submit </button>
+												<button class="btn-lg px-2 btn-info" type="submit">Submit </button>
 											</div>
 										</div>
 									</div>

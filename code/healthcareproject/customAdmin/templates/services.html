@@ -31,14 +31,14 @@
 
                       <form action="{% url "delete_service" item.id %}" method="get" class="">
                         {% csrf_token %}
-                        <button type="submit" class="btn btn-sm btn-danger px-3 m-2"
-                          onclick="return confirm('Are you sure you want to delete this item?');"><i
-                            class="fa-solid fa-trash"></i>
+                        <button type="submit" class="btn-md py-2 m-2 btn btn-danger"
+                          onclick="return confirm('Are you sure you want to delete this item?');">
+                          <i class="fas fa-trash-can"></i>
                         </button>
                       </form>
-                      <button type="button" class="btn btn-sm btn-danger px-3 m-2" data-mdb-toggle="modal"
+                      <button type="button" class="btn btn-md m-2 p-2 btn-danger" data-mdb-toggle="modal"
                         data-mdb-target="#exampleModal1{{ item.id }}">
-                        <i class="fas fa-pen-to-square fa-lg"></i>
+                        <i class="fas fa-pen-nib"></i>
                       </button>
                       <div class="modal fade" id="exampleModal1{{ item.id }}" tabindex="-1"
                         aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -50,7 +50,7 @@
                                 aria-label="Close"></button>
                             </div>
                             <div class="modal-body p-3">
-                              <form method="post" action="{% url "update_service" item.id %}">
+                              <form method="post" action="{% url "update_service" item.name %}">
                                 {% csrf_token %}
 
                                 <input type="hidden" value="{{ item.id }}" name="id">
@@ -64,7 +64,7 @@
 
                                 <!-- Text input -->
                                 <div class="form-outline mb-4">
-                                  <input type="number" id="form6Example4" class="form-control" name="type"
+                                  <input type="text" id="form6Example4" class="form-control" name="type"
                                     value="{{ item.type }}" />
                                   <label class="form-label" for="form6Example4">Type</label>
                                 </div>

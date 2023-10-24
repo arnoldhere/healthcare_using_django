@@ -15,13 +15,14 @@ urlpatterns = [
     path("forgotpassword/", forgotpwdPage, name="forgotpassword"),
     path("verify_otp/<str:email>", verify_otp, name="verify_otp"),
     path("newpassword/<str:email>", new_password, name="newpassword"),
-    path("appointment/", saveappointment, name="appointment"),
     path('index/', index, name="index"),
     path("admin/", adminloginpage, name="adminloginpage"),
     path("adminlogin/",adminlogin, name="adminlogin"),
     path("profile/", userProfile, name="userProfile"),
     path("completeprofile/", completeProfile, name="completeProfile"),
     path("editProfile/", editProfile, name="editProfile"),
+    #### appointment
+    path("appointment/", saveappointment, name="bookappointment"),
 
 ]
 

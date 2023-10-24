@@ -9,7 +9,7 @@ from django.contrib.auth import login, logout, authenticate
 import pymongo
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
-from .models import UserModel, passwordToken , StaffModel  ,appointment
+from .models import UserModel, passwordToken , StaffModel  ,Appointment
 from django.core.mail import send_mail
 import random
 from django.utils import timezone
@@ -39,6 +39,7 @@ def adminlogin(request):
         else:
             messages.error(request,"Invalid credenetials !! try again")
             return redirect("adminloginpage")
+
 ###########     Authentication views     ###########
 def Loginpage(request):
     if request.session.get('username'):
@@ -290,24 +291,22 @@ def editProfile(request):
 #### SAVE APPOINTMENT #####
 def saveappointment(request):
     if request.method == "POST":
-        email = request.POST['email']
         phone = request.POST['phone']
-        service = request.POST['services']
-        provider = request.POST['staff']
+        service = request.POST['services_list']
         date = request.POST['date']
         time = request.POST['time']
         
         try:
-            query  = appointment.objects.create(
-                email=email,
+            query  = Appointment.objects.create(
                 phone=phone,
                 service=service,
-                provider=provider,
                 time=time,
                 date = date,
+                status = "PENDING",
             )
             query.save()
             print("appointment created !!")
+            messages.success(request , "Appointment saved - We will contact you soon !!")
             return redirect('index')
         except Exception as e:
             return HttpResponse(e)
