@@ -170,11 +170,11 @@ def reset_password(request):
             send_mail(subject, message, from_email, recivers)
             # return HttpResponse(f"OTP SENT >>>{otp}")
             return render(request, 'auth/otp.html', {'email': user.email})
-
         else:
             msg = "Provide valid email address"
-            # return render(request,'auth/forgotpwd.html' , msg)
-            return HttpResponse("Email does not exists !!")
+            messages.error(request,msg)
+            return render(request,'auth/forgotpwd.html' )
+            # return HttpResponse("Email does not exists !!")
 
 def verify_otp(request, email):
     if request.method == 'POST':
@@ -186,7 +186,8 @@ def verify_otp(request, email):
             user.delete()
             return render(request, 'auth/resetpwd.html', {'email': email})
         else:
-            return HttpResponse("Entered OTP is not valid !! try again")
+            messages.error(request,"Entered OTP is not valid !!")
+            return render(request, 'auth/otp.html', {'email': user.email})
 
 def new_password(request, email):
     if request.method == 'POST':

@@ -7,20 +7,24 @@ from django.conf.urls.static import static
 urlpatterns = [
     path("", Loginpage, name="LoginPage"),
     path("loginpage/", Loginpage, name="LoginPage"),
-    path("pwdchanged/",show_msg_pwd, name="show_succes"),
     path("auth/", Auth, name="auth"),  # login authentication
     path("signup/", SignUp, name="SignUp"),  # sign up authentication
     path("logout/", logout,  name="logout"),
+
+    path("pwdchanged/",show_msg_pwd, name="show_succes"),
     path("reset/", reset_password,  name="reset_password"),
     path("forgotpassword/", forgotpwdPage, name="forgotpassword"),
     path("verify_otp/<str:email>", verify_otp, name="verify_otp"),
     path("newpassword/<str:email>", new_password, name="newpassword"),
-    path('index/', index, name="index"),
+    
     path("admin/", adminloginpage, name="adminloginpage"),
     path("adminlogin/",adminlogin, name="adminlogin"),
+
+    path('index/', index, name="index"),
     path("profile/", userProfile, name="userProfile"),
     path("completeprofile/", completeProfile, name="completeProfile"),
     path("editProfile/", editProfile, name="editProfile"),
+    
     #### appointment
     path("appointment/", saveappointment, name="bookappointment"),
 
