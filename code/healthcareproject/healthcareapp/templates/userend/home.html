@@ -196,11 +196,10 @@
 														<select class="form-control" name="services_list">
 															<option value="" selected disabled>Select Services</option>
 															{% comment %} <option value="Spinal Manupulation">Spinal Manupulation</option> {% endcomment %}
-															<option value="Electrotherapy" name="services">Electrotherapy</option>
-															<option value="Manual Lymphatic" name="services">Manual Lymphatic</option>
-															<option value="Medical Acupuncture" name="services">Medical Acupuncture</option>
-															<option value="Therapeutic Exercise" name="services">Therapeutic Exercise</option>
-															<option value="Joint Mobilization" name="services">Joint Mobilization</option>
+															{% for item in services  %}
+															<option value="{{item.name}}" name="services">{{item.name}}</option>
+															
+															{% endfor %}
 														</select>
 													</div>
 												</div>

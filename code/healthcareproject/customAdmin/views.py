@@ -80,7 +80,6 @@ def add_staff(request):
 
 def del_staff(request, req_id):
     print(req_id)
-    # res = db.healthcareapp_usermodel.delete_one({'id' : req_id})
     res = StaffModel.objects.get(id=req_id)
     res.delete()
     # check the deleted record
@@ -207,7 +206,7 @@ def add_services(request):
             return HttpResponse(e)
 
 def update_service(request,nm):
-    sid = request.POST['id']
+    # sid = request.POST['id']
     name = request.POST['name']
     type = request.POST['type']
     charge = request.POST['charge']
@@ -290,12 +289,14 @@ def download_staff_data(request):
     workbook = xlsxwriter.Workbook(output , {'remove_time': True})
     worksheet = workbook.add_worksheet('staff') 
     row , col = 0 , 0
+
     #column headers 
     headers = ['First Name', 'Last Name', 'Email', 'Phone', 'Experience' , 'Specialization' , 'date_of_joined']
     for header in headers:
         worksheet.write(row, col, header)
         col+=1
     row+=1
+    
     # write the data 
     for i in data:
         worksheet.write(row , 0 , str(i.first_name))
@@ -321,6 +322,7 @@ def download_labtest_data(request):
     workbook = xlsxwriter.Workbook(output , {'remove_time': True})
     worksheet = workbook.add_worksheet('lab test') 
     row , col = 0 , 0
+
     #column headers 
     headers = ['NAME', 'COST', 'Result In']
     for header in headers:
@@ -382,8 +384,8 @@ def upload_file_staff(request):
             df = pd.read_excel(file)
             
             for _ , row in df.iterrows():
-              firstname = row['FirstName']  
-              lastname = row['LastName']  
+              firstname = row['First Name']  
+              lastname = row['Last Name']  
               phone = row['Phone']  
               email = row['Email']  
               experience = row['Experience']  

@@ -9,7 +9,8 @@ from django.contrib.auth import login, logout, authenticate
 import pymongo
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
-from .models import UserModel, passwordToken , StaffModel  ,Appointment
+from .models import UserModel, passwordToken , StaffModel  ,Appointment 
+from customAdmin.models import Services
 from django.core.mail import send_mail
 import random
 from django.utils import timezone
@@ -137,7 +138,6 @@ def SignUp(request):
 
 ########################  PASSWORD RESET ########################
 
-
 def forgotpwdPage(request):
     return render(request, "auth/forgotpwd.html")
 
@@ -176,7 +176,6 @@ def reset_password(request):
             # return render(request,'auth/forgotpwd.html' , msg)
             return HttpResponse("Email does not exists !!")
 
-
 def verify_otp(request, email):
     if request.method == 'POST':
         otp = request.POST['otp']
@@ -188,7 +187,6 @@ def verify_otp(request, email):
             return render(request, 'auth/resetpwd.html', {'email': email})
         else:
             return HttpResponse("Entered OTP is not valid !! try again")
-
 
 def new_password(request, email):
     if request.method == 'POST':
@@ -207,13 +205,12 @@ def new_password(request, email):
 def show_msg_pwd(request):
     return render(request , 'auth/pwdmsg.html')
 
-
-
 ######    USER LOGIN   #####
 
 def index(request):
     if request.session['username'] is not None:
-        return render(request, "userend/home.html")
+        services = Services.objects.all()
+        return render(request, "userend/home.html" , {'services': services})
     else:
         return redirect("LoginPage")
 
@@ -286,7 +283,6 @@ def editProfile(request):
                 return HttpResponse("error in storing >> " , e)
         else:
             return HttpResponse("Error in fetching the form data ")
-
 
 #### SAVE APPOINTMENT #####
 def saveappointment(request):
