@@ -11,18 +11,18 @@
           <legend><span class="number">1</span> Your basic info</legend>
           
           <label for="name">First Name:</label>
-          <input type="text" id="name" name="firstname">
+          <input type="text" id="name" name="firstname" value="{{firstname}}">
           
           
           <label for="name">Last Name:</label>
-          <input type="text"  name="lastname">
+          <input type="text"  name="lastname" value="{{lastname}}">
           
 
           <label for="mail">Email:(You can't modified)</label>
           <input type="email" id="mail" name="email" disabled value="{{request.session.email_user}}">
 
           <label for="mail">Phone:</label>
-          <input type="tel" id="" name="phone">
+          <input type="tel" id="" name="phone" value="{{phone}}">
 
         </fieldset>
         
@@ -32,28 +32,27 @@
           
           
           <label for="Pincode">Pincode:</label>
-          <input type="number" name="pincode">
+          <input type="number" name="pincode" value="{{pincode}}">
 
           
           <label for="">State:</label>
-          <input type="text" name="state">
+          <input type="text" name="state" value="{{state}}">
 
           <label for="">City:</label>
-          <input type="text" name="city">
+          <input type="text" name="city" value="{{city}}">
 
           <label for="">Landmark:</label>
-          <input type="text" name="landmark">
+          <input type="text" name="landmark" value="{{landmark}}">
 
-          
           <label for="">House no./Society:</label>
-          <input type="text" name="house">
+          <input type="text" name="house" value="{{house}}">
           
         </fieldset>
       
         <fieldset>
   
           <legend><span class="number">3</span> Profile Picture[only jpg formart] </legend>
-          <input type="file" name="photo" class="form-control">
+          <input type="file" name="photo" class="form-control" required>
           
         </fieldset>
         

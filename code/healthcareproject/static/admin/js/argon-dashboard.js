@@ -586,7 +586,7 @@ function darkMode(el) {
   const cardNavSpan = document.querySelectorAll('.card .nav .nav-link span');
 
 
-  if (!el.getAttribute("checked")) {
+  if (!el.getAttribute("checked")==false) {
     body.classList.add('dark-version');
     if (navbarBrandImg.includes('logo-ct-dark.png')) {
       var navbarBrandImgNew = navbarBrandImg.replace("logo-ct-dark", "logo-ct");
@@ -667,7 +667,7 @@ function darkMode(el) {
     for (var i = 0; i < card_border.length; i++) {
       card_border[i].classList.add('border-dark');
     }
-    el.setAttribute("checked", "true");
+    el.setAttribute("checked", "false");
   } else {
     body.classList.remove('dark-version');
     sidebar.classList.add('bg-white');

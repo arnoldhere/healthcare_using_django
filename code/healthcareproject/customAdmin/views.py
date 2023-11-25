@@ -1,7 +1,8 @@
 import pymongo
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from healthcareapp.models import UserModel, StaffModel , LabTestModel , Appointment
+from healthcareapp.models import UserModel, LabTestModel , Appointment
+from staffApp.models import *
 from .models import Services
 import pandas as pd
 import xlsxwriter 
@@ -26,7 +27,7 @@ def adminDashboard(request):
     print(staff_count)
     users = UserModel.objects.all()
     print(users)
-    print("Dashboard aa gya vhayyyy")
+    print("Dashboard doneee !")
     return render(request, 'dashboard.html', {'user_count': user_count, 'users': users, 'staff_count': staff_count})
 
 

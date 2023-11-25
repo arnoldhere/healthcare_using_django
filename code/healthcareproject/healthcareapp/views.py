@@ -9,7 +9,7 @@ from django.contrib.auth import login, logout, authenticate
 import pymongo
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
-from .models import UserModel, passwordToken , StaffModel  ,Appointment 
+from .models import UserModel,passwordToken,Appointment 
 from customAdmin.models import Services
 from django.core.mail import send_mail
 import random
@@ -209,14 +209,11 @@ def show_msg_pwd(request):
 ######    USER LOGIN   #####
 
 def index(request):
-    if request.session['username'] is not None:
-        services = Services.objects.all()
-        return render(request, "userend/home.html" , {'services': services})
-    else:
-        return redirect("LoginPage")
+    services = Services.objects.all()
+    return render(request, "userend/home.html" , {'services': services})
 
 def userProfile(request):
-    if request.session['username'] is not None:
+    if request.session.get('username') is not None:
         email = request.session['email_user']
         user = UserModel.objects.filter(email=email).first()
         doj = user.date_joined
@@ -227,63 +224,73 @@ def userProfile(request):
 
 def completeProfile(request):
     if request.session['username'] is not None:
-        return render(request, "userend/completeProfile.html")
+        email = request.session['email_user']
+        user = UserModel.objects.filter(email=email).first()
+        firstname = user.first_name
+        lastname = user.last_name
+        phone = user.phone
+        pincode = user.pincode
+        state = user.state
+        city = user.city
+        landmark = user.landmark
+        house = user.house
+        return render(request, "userend/completeProfile.html",{'firstname':firstname , 'lastname':lastname ,'phone':phone , 'landmark':landmark , 'house':house , 'pincode':pincode , 'state':state , 'city':city})
     else:
         return redirect("LoginPage")
 
 def editProfile(request):
     if request.method == "POST":
-        if request.method == 'POST':
-            firstname = request.POST['firstname']
-            lastname = request.POST['lastname']
-            phone = request.POST['phone']
-            pincode = request.POST['pincode']
-            state = request.POST['state']
-            city = request.POST['city']
-            landmark = request.POST['landmark']
-            house = request.POST['house']
-            img = request.FILES['photo']
-
-
-            if img.name.endswith(".jpg"):
-                filename = img.name
-                # Define the folder where you want to save the image.
-                upload_folder = os.path.join(settings.MEDIA_ROOT, 'userProfiles')
-                os.makedirs(upload_folder, exist_ok=True)
-               # Construct the file path and save the image.
-                file_path = os.path.join(upload_folder, filename)
-                with open(file_path, 'wb+') as destination:
-                    for chunk in img.chunks():
-                        destination.write(chunk)
-            else:
-                return HttpResponse("Not valid image")           
-            # transform the inputs
-            str(firstname).title
-            str(lastname).title
-            # print(firstname, lastname, email, phone)
-            try:
-                email = request.session['email_user']
-                # update a document for usermodel
-                user = UserModel.objects.filter(email=email).update(
-                    username=email,
-                    first_name=firstname,
-                    last_name=lastname,
-                    phone=phone,
-                    pincode = pincode,
-                    state = state,
-                    city = city,
-                    landmark = landmark,
-                    house = house,
-                    userProfile = img
-                )
-                # user.save()
-                print("user updated successfully")
-                return redirect('LoginPage')
-            except Exception as e:
-                # return redirect("LoginPage")
-                return HttpResponse("error in storing >> " , e)
+        firstname = request.POST['firstname']
+        lastname = request.POST['lastname']
+        phone = request.POST['phone']
+        pincode = request.POST['pincode']
+        state = request.POST['state']
+        city = request.POST['city']
+        landmark = request.POST['landmark']
+        house = request.POST['house']
+        img = request.FILES['photo']
+        email = request.session.get('email_user')
+    
+        if img.name.endswith(".jpg"):
+            imgnameext = email.split('@')
+            filename = img.name + '-' + str(imgnameext[0]) 
+            # Define the folder where you want to save the image.
+            upload_folder = os.path.join(settings.MEDIA_ROOT, 'userProfiles')
+            os.makedirs(upload_folder, exist_ok=True)
+        # Construct the file path and save the image.
+            file_path = os.path.join(upload_folder, filename)
+            with open(file_path, 'wb+') as destination:
+                for chunk in img.chunks():
+                    destination.write(chunk)
         else:
-            return HttpResponse("Error in fetching the form data ")
+            return HttpResponse("Not valid image")           
+        # transform the inputs
+        str(firstname).title
+        str(lastname).title
+        # print(firstname, lastname, email, phone)
+        try:
+            email = request.session['email_user']
+            # update a document for usermodel
+            user = UserModel.objects.filter(email=email).update(
+                username=email,
+                first_name=firstname,
+                last_name=lastname,
+                phone=phone,
+                pincode = pincode,
+                state = state,
+                city = city,
+                landmark = landmark,
+                house = house,
+                userProfile = filename
+            )
+            # user.save()
+            print("user updated successfully")
+            return redirect('LoginPage')
+        except Exception as e:
+            # return redirect("LoginPage")
+            return HttpResponse("error in storing >> " , e)
+    else:
+        return HttpResponse("Error in fetching the form data ")
 
 #### SAVE APPOINTMENT #####
 def saveappointment(request):

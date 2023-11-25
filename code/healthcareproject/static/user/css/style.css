@@ -11820,7 +11820,7 @@ h5,
 .searchform .form-control {
   width: calc(100% - 46px);
   border: none;
-  color: rgba(0, 0, 0, 0.7) !important;
+  color: rgba(0, 0, 0, 0.08) !important;
   font-size: 14px;
 }
 
@@ -11900,6 +11900,7 @@ h5,
   background: -ms-linear-gradient(45deg, #01d28c 0%, #6d5ce7 100%);
   background: linear-gradient(45deg, #01d28c 0%, #6d5ce7 100%);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#01d28c', endColorstr='#6d5ce7', GradientType=1);
+  /* filter: grayscale(1); */
 }
 
 .hero-wrap.hero-wrap-2 {
@@ -11945,7 +11946,7 @@ h5,
 }
 
 .hero-wrap .slider-text p {
-  font-size: 18px;
+  font-size: 20px;
   line-height: 1.5;
   color: rgba(255, 255, 255, 0.7);
 }
@@ -12337,7 +12338,7 @@ h5,
   box-shadow: none !important;
   font-size: 11px;
   text-transform: uppercase;
-  letter-spacing: 1px;
+  /* letter-spacing: 1px; */
   font-weight: 600;
 }
 
@@ -12345,6 +12346,13 @@ h5,
 .btn:active,
 .btn:focus {
   outline: none;
+}
+
+.btn-md{
+  border-radius: 4px;
+  padding: 7px 15px;
+  font-weight: bold;
+  text-transform: uppercase;
 }
 
 .btn.btn-primary {

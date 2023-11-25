@@ -36,39 +36,39 @@
         <link rel="stylesheet" href="{% static "user/css/style.css"%}">
 	</head>
 	<body>
-		<div class="wrap">
-			<div class="container">
-				<div class="row justify-content-between">
-					<div class="col-md-3 mb-md-0 mb-4 d-flex align-items-center">
-						<a class="navbar-brand" href="{% url "index" %}"> Healthcare </a>
-					</div>
-					<div class="col-md-4">
-						<div class="row">
-							<div class="col-md-8 mb-md-0 mb-3">
-								<a href="{% url "userProfile" %}">
-								<div class="top-wrap d-flex">
-									<div
-										class="icon d-flex align-items-center justify-content-center"
-									>
-									<i class="fa-solid fa-user"></i>
-								</div>
-									<div class="text">
-										<span><b> Profile {{ request.session.username }}</b> </span>
+		
+		{% if request.session.username %}
+			<div class="wrap">
+				<div class="container">
+					<div class="row justify-content-between">
+						<div class="col-md-3 mb-md-0 mb-4 d-flex align-items-center">
+							<a class="navbar-brand" href="{% url "index" %}"> Healthcare </a>
+						</div>
+						<div class="col-md-4">
+							<div class="row">
+								<div class="col-md-8 mb-md-0 mb-3">
+									<a href="{% url "userProfile" %}">
+									<div class="top-wrap d-flex">
+										<div
+											class="icon d-flex align-items-center justify-content-center"
+										>
+										<i class="fa-solid fa-user"></i>
 									</div>
+										<div class="text">
+											<span><b> Profile {{ request.session.username }}</b> </span>
+										</div>
+									</div>
+								</a>
 								</div>
-							</a>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-		<nav
-			class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light"
-			id="ftco-navbar"
-		>
-			<div class="container">
-				<button
+			<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light"
+				id="ftco-navbar">
+				<div class="container">
+					<button
 					class="navbar-toggler"
 					type="button"
 					data-toggle="collapse"
@@ -79,9 +79,9 @@
 				>
 					<span class="fa fa-bars"></span> Menu
 				</button>
-				<div class="order-xl-last">
-					<a href="{% url "logout" %}" class="btn btn-danger">Logout</a>
-				</div>
+					<div class="order-xl-last">
+						<a href="{% url "logout" %}" class="btn-md btn-danger">Logout</a>
+					</div>
 				<div class="collapse navbar-collapse" id="ftco-nav">
 					<ul class="navbar-nav mr-auto">
 						<li class="nav-item active">
@@ -112,6 +112,79 @@
 				</div>
 			</div>
 		</nav>
+		{% else %} 
+		<div class="wrap">
+			<div class="container">
+				<div class="row justify-content-between">
+					<div class="col-md-3 mb-md-0 mb-4 d-flex align-items-center">
+						<a class="navbar-brand" href="{% url "index" %}"> Healthcare </a>
+					</div>
+					<div class="col-md-4">
+						<div class="row">
+							<div class="col-md-8 mb-md-0 mb-3">
+								<a href="{% url "LoginPage" %}">
+								<div class="top-wrap d-flex">
+									<div
+										class="icon d-flex align-items-center justify-content-center"
+									>
+									<i class="fa-solid fa-user"></i>
+								</div>
+									<div class="text">
+										<button class="btn-md btn-warning">Login</button>
+									</div>
+								</div>
+							</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light"
+			id="ftco-navbar">
+			<div class="container">
+				<button
+				class="navbar-toggler"
+				type="button"
+				data-toggle="collapse"
+				data-target="#ftco-nav"
+				aria-controls="ftco-nav"
+				aria-expanded="false"
+				aria-label="Toggle navigation"
+			>
+				<span class="fa fa-bars"></span> Menu
+			</button>
+			<div class="collapse navbar-collapse" id="ftco-nav">
+				<ul class="navbar-nav mr-auto">
+					<li class="nav-item active">
+						<a href="" class="nav-link">Home</a>
+					</li>
+					<li class="nav-item">
+						<a href="about.html" class="nav-link">About</a>
+					</li>
+					<li class="nav-item">
+						<a href="team.html" class="nav-link">Team</a>
+					</li>
+					<li class="nav-item">
+						<a href="services.html" class="nav-link">Services</a>
+					</li>
+					<li class="nav-item">
+						<a href="department.html" class="nav-link">Departments</a>
+					</li>
+					<li class="nav-item">
+						<a href="gallery.html" class="nav-link">Gallery</a>
+					</li>
+					<li class="nav-item">
+						<a href="blog.html" class="nav-link">Blog</a>
+					</li>
+					<li class="nav-item">
+						<a href="contact.html" class="nav-link">Contact</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+		{% endif %}
 		<!-- END nav -->
 		<div class="hero-wrap">
 			<div class="home-slider owl-carousel">
@@ -123,14 +196,9 @@
 						>
 							<div class="col-md-6 ftco-animate">
 								<div class="text w-100">
-									<h1 class="mb-4">Welcome to our chiropractic centre</h1>
+									<h1 class="mb-4">Welcome to our healthcare </h1>
 									<p>
-										Far far away, behind the word mountains, far from the
-										countries Vokalia and Consonantia, there live the blind
-										texts.
-									</p>
-									<p>
-										{% comment %} <a href="#" class="btn btn-primary">Book an appointment</a> {% endcomment %}
+										system make arrangements of staff for you at your home to get assessed diagnosed and provide basic treatment at your home.
 									</p>
 								</div>
 							</div>
@@ -146,11 +214,9 @@
 						>
 							<div class="col-md-6 ftco-animate">
 								<div class="text w-100">
-									<h1 class="mb-4">Chiropractic care for the whole family</h1>
+									<h1 class="mb-4">Best services</h1>
 									<p>
-										Far far away, behind the word mountains, far from the
-										countries Vokalia and Consonantia, there live the blind
-										texts.
+										 System will provide highly trained staff to provide realtime  nursing care at home. They can perform assessment of the patient, monitoring the patient condition and provide the care.
 									</p>
 									<p>
 									</p>
@@ -232,7 +298,7 @@
 										</div>
 										<div class="col-md text-center">
 											<div class="form-group">
-												<button class="btn-lg px-2 btn-info" type="submit">Submit </button>
+												<button class="btn-md btn-info" type="submit">Submit </button>
 											</div>
 										</div>
 									</div>
@@ -267,7 +333,7 @@
 			</div>
 		</section>
 
-		<section class="ftco-section">
+		{% comment %} <section class="ftco-section">
 			<div class="container">
 				<div class="row justify-content-center pb-5 mb-3">
 					<div class="col-md-7 heading-section text-center ftco-animate">
@@ -375,14 +441,14 @@
 					</div>
 				</div>
 			</div>
-		</section>
+		</section> {% endcomment %}
 
 		<section class="ftco-section ftco-no-pb ftco-no-pt">
 			<div class="container-fluid px-md-0">
-				<div class="row no-gutters justify-content-center pb-5 mb-3">
-					<div class="col-md-7 heading-section text-center ftco-animate">
+				<div class="row no-gutters justify-content-center pb-5 mx-3">
+					<div class="col-md-7 mx-5 heading-section text-center ftco-animate">
 						<span class="subheading">Team &amp; Staff</span>
-						<h2>Our Experts Chiropractor / Therapist</h2>
+						<h2>Our Experts </h2>
 					</div>
 				</div>
 				<div class="row no-gutters">
