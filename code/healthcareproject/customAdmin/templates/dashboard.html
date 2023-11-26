@@ -211,11 +211,11 @@
 						<td>{{user.dob}}</td>
 						<td>{{user.pincode}}</td>
 						<td>{{user.state}} , {{user.city}}</td>
-						<td>
+						<td class="d-flex justify-content-center">
 							<form action="{% url "del_user" user.id %}" method="get">
 								{% csrf_token %}
 									<button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this user?');">
-										<i class="fas fa-trash fa-md"></i>	
+										<i class="fas fa-trash fa-sm p-0"></i>	
 									</button>
 							</form>
 						</td>

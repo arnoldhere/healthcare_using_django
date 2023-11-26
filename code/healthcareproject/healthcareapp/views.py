@@ -1,11 +1,7 @@
 from django.conf import settings
-import pandas as pd
-import xlsxwriter
 import os
-import tempfile
 from django.shortcuts import render, redirect
 from django.contrib.auth.hashers import make_password, check_password
-from django.contrib.auth import login, logout, authenticate
 import pymongo
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
@@ -13,9 +9,7 @@ from .models import UserModel,passwordToken,Appointment
 from customAdmin.models import Services
 from django.core.mail import send_mail
 import random
-from django.utils import timezone
 from django.contrib import messages
-from .forms import LoginForm
 
 # Database configuration
 MONGODB_HOST = "localhost"

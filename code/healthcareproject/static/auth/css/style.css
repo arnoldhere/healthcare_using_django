@@ -214,3 +214,24 @@ body{
     display: none;
   }
 }
+
+.btn-admin{
+  background-color: #254ebf;
+  color: #f6f6f6 !important;
+  border-radius: 4px;
+}
+
+.btn-admin:hover{
+  background-color: #1a335b;
+}
+
+
+.btn-staff{
+  background-color: #54B4D3;
+  color: #f6f6f6 !important;
+  border-radius: 4px;
+}
+
+.btn-staff:hover{
+  background-color: #1a335b;
+}
