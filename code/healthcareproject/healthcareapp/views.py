@@ -251,7 +251,7 @@ def editProfile(request):
             # Define the folder where you want to save the image.
             upload_folder = os.path.join(settings.MEDIA_ROOT, 'userProfiles')
             os.makedirs(upload_folder, exist_ok=True)
-        # Construct the file path and save the image.
+            # Construct the file path and save the image.
             file_path = os.path.join(upload_folder, filename)
             with open(file_path, 'wb+') as destination:
                 for chunk in img.chunks():

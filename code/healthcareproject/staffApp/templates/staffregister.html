@@ -1,6 +1,22 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en-US" class="supernova">
 	<head>
+		<!-- Font Awesome -->
+<link
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+rel="stylesheet"
+/>
+<!-- Google Fonts -->
+<link
+href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+rel="stylesheet"
+/>
+<!-- MDB -->
+<link
+  href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.0.0/mdb.min.css"
+  rel="stylesheet"
+/>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<link
 			rel="alternate"
@@ -41,10 +57,6 @@
 			href="https://cdn01.jotfor.ms/themes/CSS/form-common.css?v=9b5ac39"/>
 		<style type="text/css">
 			@media print {
-				* {
-					-webkit-print-color-adjust: exact !important;
-					color-adjust: exact !important;
-				}
 				.form-section {
 					display: inline !important;
 				}
@@ -605,9 +617,6 @@
 				color: #2462b9;
 			}
 
-			input::placeholder {
-			}
-
 			/* NEW THEME STYLE */
 			/*PREFERENCES STYLE*/
 			/*PREFERENCES STYLE*/
@@ -729,7 +738,6 @@
 			/*PREFERENCES STYLE*/ /*__INSPECT_SEPERATOR__*/
 			.form-label.form-label-auto {
 				display: inline-block;
-				float: left;
 				text-align: left;
 			}
 			/* Injected CSS Code */
@@ -1244,7 +1252,7 @@
 		<form
 			class="jotform-form"
 			onsubmit="return typeof testSubmitFunction !== 'undefined' && testSubmitFunction();"
-			action=""
+			action="{% url "staffRegistration" %}"
 			method="post"
 			enctype="multipart/form-data"
 			name="form_233290707346457"
@@ -1252,29 +1260,7 @@
 			accept-charset="utf-8"
 			autocomplete="on"
 		>
-			<input type="hidden" name="formID" value="233290707346457" /><input
-				type="hidden"
-				id="JWTContainer"
-				value=""
-			/>
-      <input type="hidden" id="cardinalOrderNumber" value="" /><input
-				type="hidden"
-				id="jsExecutionTracker"
-				name="jsExecutionTracker"
-				value="build-date-1700982973180"
-			/>
-      <input
-				type="hidden"
-				id="submitSource"
-				name="submitSource"
-				value="unknown"
-			/>
-      <input
-				type="hidden"
-				id="buildDate"
-				name="buildDate"
-				value="1700982973180"
-			/>
+		{% csrf_token %}
 			<div role="main" class="form-all">
 				<ul class="form-section page-section">
 					<li id="cid_1" class="form-input-wide" data-type="control_head">
@@ -1318,10 +1304,11 @@
 									class="form-sub-label-container"
 									style="vertical-align: top"
 									data-input-type="first"
-									><input
+									>
+									<input
 										type="text"
 										id="first_3"
-										name="q3_name[first]"
+										name="firstname"
 										class="form-textbox validate[required]"
 										data-defaultvalue=""
 										size="10"
@@ -1329,22 +1316,24 @@
 										aria-labelledby="label_3 sublabel_3_first"
 										required=""
 										value=""
-									/><label
+									/>
+									<label
 										class="form-sub-label"
 										for="first_3"
 										id="sublabel_3_first"
 										style="min-height: 13px"
 										aria-hidden="false"
-										>First Name</label
-									></span
-								><span
+										>First Name</label>
+									</span>
+								<span
 									class="form-sub-label-container"
 									style="vertical-align: top"
 									data-input-type="last"
-									><input
+									>
+									<input
 										type="text"
 										id="last_3"
-										name="q3_name[last]"
+										name="lastname"
 										class="form-textbox validate[required]"
 										data-defaultvalue=""
 										size="15"
@@ -1352,7 +1341,8 @@
 										aria-labelledby="label_3 sublabel_3_last"
 										required=""
 										value=""
-									/><label
+									/>
+									<label
 										class="form-sub-label"
 										for="last_3"
 										id="sublabel_3_last"
@@ -1379,242 +1369,12 @@
 						</label>
 						<div id="cid_6" class="form-input jf-required" data-layout="full">
 							<div data-wrapper-react="true">
-								<span
-									class="form-sub-label-container"
-									style="vertical-align: top"
-									><select
-										name="q6_dateOf[day]"
-										id="input_6_day"
-										class="form-dropdown validate[required]"
-										data-component="birthdate-day"
-										aria-labelledby="label_6 sublabel_6_day"
-									>
-										<option></option>
-										<option value="1">1</option>
-										<option value="2">2</option>
-										<option value="3">3</option>
-										<option value="4">4</option>
-										<option value="5">5</option>
-										<option value="6">6</option>
-										<option value="7">7</option>
-										<option value="8">8</option>
-										<option value="9">9</option>
-										<option value="10">10</option>
-										<option value="11">11</option>
-										<option value="12">12</option>
-										<option value="13">13</option>
-										<option value="14">14</option>
-										<option value="15">15</option>
-										<option value="16">16</option>
-										<option value="17">17</option>
-										<option value="18">18</option>
-										<option value="19">19</option>
-										<option value="20">20</option>
-										<option value="21">21</option>
-										<option value="22">22</option>
-										<option value="23">23</option>
-										<option value="24">24</option>
-										<option value="25">25</option>
-										<option value="26">26</option>
-										<option value="27">27</option>
-										<option value="28">28</option>
-										<option value="29">29</option>
-										<option value="30">30</option>
-										<option value="31">31</option></select
-									><label
-										class="form-sub-label"
-										for="input_6_day"
-										id="sublabel_6_day"
-										style="min-height: 13px"
-										aria-hidden="false"
-										>Day</label
-									></span
-								><span
-									class="form-sub-label-container"
-									style="vertical-align: top"
-									><select
-										name="q6_dateOf[month]"
-										id="input_6_month"
-										class="form-dropdown validate[required]"
-										data-component="birthdate-month"
-										aria-labelledby="label_6 sublabel_6_month"
-									>
-										<option></option>
-										<option value="January">January</option>
-										<option value="February">February</option>
-										<option value="March">March</option>
-										<option value="April">April</option>
-										<option value="May">May</option>
-										<option value="June">June</option>
-										<option value="July">July</option>
-										<option value="August">August</option>
-										<option value="September">September</option>
-										<option value="October">October</option>
-										<option value="November">November</option>
-										<option value="December">December</option></select
-									><label
-										class="form-sub-label"
-										for="input_6_month"
-										id="sublabel_6_month"
-										style="min-height: 13px"
-										aria-hidden="false"
-										>Month</label
-									></span
-								><span
-									class="form-sub-label-container"
-									style="vertical-align: top"
-									><select
-										name="q6_dateOf[year]"
-										id="input_6_year"
-										class="form-dropdown validate[required]"
-										data-component="birthdate-year"
-										aria-labelledby="label_6 sublabel_6_year"
-									>
-										<option></option>
-										<option value="2023">2023</option>
-										<option value="2022">2022</option>
-										<option value="2021">2021</option>
-										<option value="2020">2020</option>
-										<option value="2019">2019</option>
-										<option value="2018">2018</option>
-										<option value="2017">2017</option>
-										<option value="2016">2016</option>
-										<option value="2015">2015</option>
-										<option value="2014">2014</option>
-										<option value="2013">2013</option>
-										<option value="2012">2012</option>
-										<option value="2011">2011</option>
-										<option value="2010">2010</option>
-										<option value="2009">2009</option>
-										<option value="2008">2008</option>
-										<option value="2007">2007</option>
-										<option value="2006">2006</option>
-										<option value="2005">2005</option>
-										<option value="2004">2004</option>
-										<option value="2003">2003</option>
-										<option value="2002">2002</option>
-										<option value="2001">2001</option>
-										<option value="2000">2000</option>
-										<option value="1999">1999</option>
-										<option value="1998">1998</option>
-										<option value="1997">1997</option>
-										<option value="1996">1996</option>
-										<option value="1995">1995</option>
-										<option value="1994">1994</option>
-										<option value="1993">1993</option>
-										<option value="1992">1992</option>
-										<option value="1991">1991</option>
-										<option value="1990">1990</option>
-										<option value="1989">1989</option>
-										<option value="1988">1988</option>
-										<option value="1987">1987</option>
-										<option value="1986">1986</option>
-										<option value="1985">1985</option>
-										<option value="1984">1984</option>
-										<option value="1983">1983</option>
-										<option value="1982">1982</option>
-										<option value="1981">1981</option>
-										<option value="1980">1980</option>
-										<option value="1979">1979</option>
-										<option value="1978">1978</option>
-										<option value="1977">1977</option>
-										<option value="1976">1976</option>
-										<option value="1975">1975</option>
-										<option value="1974">1974</option>
-										<option value="1973">1973</option>
-										<option value="1972">1972</option>
-										<option value="1971">1971</option>
-										<option value="1970">1970</option>
-										<option value="1969">1969</option>
-										<option value="1968">1968</option>
-										<option value="1967">1967</option>
-										<option value="1966">1966</option>
-										<option value="1965">1965</option>
-										<option value="1964">1964</option>
-										<option value="1963">1963</option>
-										<option value="1962">1962</option>
-										<option value="1961">1961</option>
-										<option value="1960">1960</option>
-										<option value="1959">1959</option>
-										<option value="1958">1958</option>
-										<option value="1957">1957</option>
-										<option value="1956">1956</option>
-										<option value="1955">1955</option>
-										<option value="1954">1954</option>
-										<option value="1953">1953</option>
-										<option value="1952">1952</option>
-										<option value="1951">1951</option>
-										<option value="1950">1950</option>
-										<option value="1949">1949</option>
-										<option value="1948">1948</option>
-										<option value="1947">1947</option>
-										<option value="1946">1946</option>
-										<option value="1945">1945</option>
-										<option value="1944">1944</option>
-										<option value="1943">1943</option>
-										<option value="1942">1942</option>
-										<option value="1941">1941</option>
-										<option value="1940">1940</option>
-										<option value="1939">1939</option>
-										<option value="1938">1938</option>
-										<option value="1937">1937</option>
-										<option value="1936">1936</option>
-										<option value="1935">1935</option>
-										<option value="1934">1934</option>
-										<option value="1933">1933</option>
-										<option value="1932">1932</option>
-										<option value="1931">1931</option>
-										<option value="1930">1930</option>
-										<option value="1929">1929</option>
-										<option value="1928">1928</option>
-										<option value="1927">1927</option>
-										<option value="1926">1926</option>
-										<option value="1925">1925</option>
-										<option value="1924">1924</option>
-										<option value="1923">1923</option>
-										<option value="1922">1922</option>
-										<option value="1921">1921</option>
-										<option value="1920">1920</option></select
-									><label
-										class="form-sub-label"
-										for="input_6_year"
-										id="sublabel_6_year"
-										style="min-height: 13px"
-										aria-hidden="false"
-										>Year</label
-									></span
-								>
+									<input type="date" name="dob"
+									id="input_6_day"
+									class="form-dropdown validate[required]"
+									data-component="birthdate-day"
+									aria-labelledby="label_6 sublabel_6_day">
 							</div>
-						</div>
-					</li>
-					<li
-						class="form-line jf-required"
-						data-type="control_dropdown"
-						id="id_231"
-					>
-						<label
-							class="form-label form-label-left"
-							id="label_231"
-							for="input_231"
-							aria-hidden="false"
-						>
-							Sex<span class="form-required">*</span>
-						</label>
-						<div id="cid_231" class="form-input jf-required" data-layout="half">
-							<select
-								class="form-dropdown validate[required]"
-								id="input_231"
-								name="q231_sex"
-								style="width: 310px"
-								data-component="dropdown"
-								required=""
-								aria-label="Sex"
-							>
-								<option value="">Please Select</option>
-								<option value="Male">Male</option>
-								<option value="Female">Female</option>
-								<option value="N/A">N/A</option>
-							</select>
 						</div>
 					</li>
 					<li
@@ -1635,7 +1395,7 @@
 								><input
 									type="email"
 									id="input_225"
-									name="q225_email"
+									name="email"
 									class="form-textbox validate[required, Email]"
 									data-defaultvalue=""
 									style="width: 310px"
@@ -1669,7 +1429,7 @@
 								><input
 									type="tel"
 									id="input_5_full"
-									name="q5_contactNumber[full]"
+									name="phone"
 									data-type="mask-number"
 									class="mask-phone-number form-textbox validate[required, Fill Mask]"
 									data-defaultvalue=""
@@ -1699,9 +1459,9 @@
 						<div id="cid_242" class="form-input jf-required" data-layout="half">
 							<span class="form-sub-label-container" style="vertical-align: top"
 								><input
-									type="text"
+									type="password"
 									id="input_242"
-									name="q242_password"
+									name="password"
 									data-type="input-textbox"
 									class="form-textbox validate[required, Fill Mask, minCharLimit]"
 									data-defaultvalue=""
@@ -1749,111 +1509,61 @@
 							for="input_4_addr_line1"
 							aria-hidden="false"
 						>
-							Address:<span class="form-required">*</span>
+							Locality:<span class="form-required">*</span>
 						</label>
 						<div id="cid_4" class="form-input jf-required" data-layout="full">
 							<div summary="" class="form-address-table jsTest-addressField">
+
 								<div
 									class="form-address-line-wrapper jsTest-address-line-wrapperField"
 								>
-									<span
-										class="form-address-line form-address-street-line jsTest-address-lineField"
-										><span
-											class="form-sub-label-container"
-											style="vertical-align: top"
-											><input
-												type="text"
-												id="input_4_addr_line1"
-												name="q4_address[addr_line1]"
-												class="form-textbox validate[required] form-address-line"
-												data-defaultvalue=""
-												data-component="address_line_1"
-												aria-labelledby="label_4 sublabel_4_addr_line1"
-												required=""
-												value=""
-											/><label
-												class="form-sub-label"
-												for="input_4_addr_line1"
-												id="sublabel_4_addr_line1"
-												style="min-height: 13px"
-												aria-hidden="false"
-												>Building / house no.</label
-											></span
-										></span
-									>
-								</div>
-								<div
-									class="form-address-line-wrapper jsTest-address-line-wrapperField"
-								>
-									<span
-										class="form-address-line form-address-street-line jsTest-address-lineField"
-										><span
-											class="form-sub-label-container"
-											style="vertical-align: top"
-											><input
-												type="text"
-												id="input_4_addr_line2"
-												name="q4_address[addr_line2]"
-												class="form-textbox form-address-line"
-												data-defaultvalue=""
-												data-component="address_line_2"
-												aria-labelledby="label_4 sublabel_4_addr_line2"
-												required=""
-												value=""
-											/><label
-												class="form-sub-label"
-												for="input_4_addr_line2"
-												id="sublabel_4_addr_line2"
-												style="min-height: 13px"
-												aria-hidden="false"
-												>landmark</label
-											></span
-										></span
-									>
-								</div>
-								<div
-									class="form-address-line-wrapper jsTest-address-line-wrapperField"
-								>
-									<span
-										class="form-address-line form-address-city-line jsTest-address-lineField"
-										><span
-											class="form-sub-label-container"
-											style="vertical-align: top"
-											><input
-												type="text"
-												id="input_4_city"
-												name="q4_address[city]"
-												class="form-textbox validate[required] form-address-city"
-												data-defaultvalue=""
-												data-component="city"
-												aria-labelledby="label_4 sublabel_4_city"
-												required=""
-												value=""
-											/><label
-												class="form-sub-label"
-												for="input_4_city"
-												id="sublabel_4_city"
-												style="min-height: 13px"
-												aria-hidden="false"
-												>City</label
-											></span
-										></span
-									><span
+								<span
 										class="form-address-line form-address-state-line jsTest-address-lineField"
 										><span
 											class="form-sub-label-container"
 											style="vertical-align: top"
-											><input
-												type="text"
-												id="input_4_state"
-												name="q4_address[state]"
-												class="form-textbox validate[required] form-address-state"
-												data-defaultvalue=""
-												data-component="state"
-												aria-labelledby="label_4 sublabel_4_state"
-												required=""
-												value=""
-											/><label
+											>
+											<select class="form-dropdown validate[required]" id="inputState" name="state" style="width:150px" data-component="dropdown" required="" aria-label="State">
+												<option value="SelectState" selected disabled>Select State</option>
+												<option value="Andra Pradesh">Andra Pradesh</option>
+												<option value="Arunachal Pradesh">Arunachal Pradesh</option>
+												<option value="Assam">Assam</option>
+												<option value="Bihar">Bihar</option>
+												<option value="Chhattisgarh">Chhattisgarh</option>
+												<option value="Goa">Goa</option>
+												<option value="Gujarat">Gujarat</option>
+												<option value="Haryana">Haryana</option>
+												<option value="Himachal Pradesh">Himachal Pradesh</option>
+												<option value="Jammu and Kashmir">Jammu and Kashmir</option>
+												<option value="Jharkhand">Jharkhand</option>
+												<option value="Karnataka">Karnataka</option>
+												<option value="Kerala">Kerala</option>
+												<option value="Madya Pradesh">Madya Pradesh</option>
+												<option value="Maharashtra">Maharashtra</option>
+												<option value="Manipur">Manipur</option>
+												<option value="Meghalaya">Meghalaya</option>
+												<option value="Mizoram">Mizoram</option>
+												<option value="Nagaland">Nagaland</option>
+												<option value="Orissa">Orissa</option>
+												<option value="Punjab">Punjab</option>
+												<option value="Rajasthan">Rajasthan</option>
+												<option value="Sikkim">Sikkim</option>
+												<option value="Tamil Nadu">Tamil Nadu</option>
+												<option value="Telangana">Telangana</option>
+												<option value="Tripura">Tripura</option>
+												<option value="Uttaranchal">Uttaranchal</option>
+												<option value="Uttar Pradesh">Uttar Pradesh</option>
+												<option value="West Bengal">West Bengal</option>
+												<option disabled style="background-color:#aaa; color:#fff">UNION Territories</option>
+												<option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
+												<option value="Chandigarh">Chandigarh</option>
+												<option value="Dadar and Nagar Haveli">Dadar and Nagar Haveli</option>
+												<option value="Daman and Diu">Daman and Diu</option>
+												<option value="Delhi">Delhi</option>
+												<option value="Lakshadeep">Lakshadeep</option>
+												<option value="Pondicherry">Pondicherry</option>
+											  </select>
+											<label
 												class="form-sub-label"
 												for="input_4_state"
 												id="sublabel_4_state"
@@ -1861,34 +1571,24 @@
 												aria-hidden="false"
 												>State</label
 											></span
-										></span
-									>
-								</div>
-								<div
-									class="form-address-line-wrapper jsTest-address-line-wrapperField"
-								>
+										>
+										</span>
 									<span
-										class="form-address-line form-address-zip-line jsTest-address-lineField"
+										class="form-address-line form-address-city-line jsTest-address-lineField"
 										><span
 											class="form-sub-label-container"
 											style="vertical-align: top"
-											><input
-												type="text"
-												id="input_4_postal"
-												name="q4_address[postal]"
-												class="form-textbox validate[required] form-address-postal"
-												data-defaultvalue=""
-												data-component="zip"
-												aria-labelledby="label_4 sublabel_4_postal"
-												required=""
-												value=""
-											/><label
+											>
+											<select class="form-dropdown validate[required]" id="inputDistrict" name="city" style="width:150px" data-component="dropdown" required="" aria-label="State">
+												<option value="" disabled selected>-- select city -- </option>
+											</select>
+												<label
 												class="form-sub-label"
-												for="input_4_postal"
-												id="sublabel_4_postal"
+												for="input_4_city"
+												id="sublabel_4_city"
 												style="min-height: 13px"
 												aria-hidden="false"
-												>Zip Code</label
+												>City</label
 											></span
 										></span
 									>
@@ -1913,30 +1613,6 @@
 						data-type="control_textbox"
 						id="id_237"
 					>
-						<label
-							class="form-label form-label-left form-label-auto"
-							id="label_237"
-							for="input_237"
-							aria-hidden="false"
-						>
-							Specialization<span class="form-required">*</span>
-						</label>
-						<div id="cid_237" class="form-input jf-required" data-layout="half">
-							<input
-								type="text"
-								id="input_237"
-								name="q237_specialization"
-								data-type="input-textbox"
-								class="form-textbox validate[required]"
-								data-defaultvalue=""
-								style="width: 310px"
-								size="310"
-								data-component="textbox"
-								aria-labelledby="label_237"
-								required=""
-								value=""
-							/>
-						</div>
 					</li>
 					<li
 						class="form-line jf-required"
@@ -1955,7 +1631,7 @@
 							<select
 								class="form-dropdown validate[required]"
 								id="input_238"
-								name="q238_category"
+								name="category"
 								style="width: 310px"
 								data-component="dropdown"
 								required=""
@@ -2024,7 +1700,7 @@
 												<input
 													type="file"
 													id="input_241"
-													name="q241_fileUpload[]"
+													name="resume"
 													multiple=""
 													class="form-upload-multiple validate[required]"
 													data-imagevalidate="yes"
@@ -2053,22 +1729,14 @@
 								class="form-buttons-wrapper form-buttons-auto jsTest-button-wrapperField"
 							>
 								<button
-									id="input_235"
-									style="display: none !important"
-									type="button"
-									class="form-submit-button submit-button jf-form-buttons jsTest-submitField"
-									data-component="button"
-									data-content=""
-								>
-									Submit</button
-								><button
-									type="button"
+									type="submit"
 									class="form-submit-button submit-button jf-form-buttons jsTest-submitField useJotformSign-button useJotformSign"
 									data-component="button"
 									data-content=""
 								>
 									Submit
 								</button>
+								
 							</div>
 						</div>
 					</li>
@@ -2076,7 +1744,11 @@
 						Should be Empty: <input type="text" name="website" value="" />
 					</li>
 				</ul>
+				<div class="bg-light text-center px-2"> 
+					<span><p class="text-center text-muted">Have an account?<a href="{% url "staffLoginPage" %}" class="text-center text-danger nav-link">Login</a> </p></span>
+				</div>
 			</div>
+			
 			<script>
 				JotForm.showJotFormPowered = "new_footer";
 			</script>
@@ -2099,6 +1771,912 @@
 				}
 			</script>
 		</form>
+		{% comment %} <script src="{% static "user/js/city.js"%}"></script> {% endcomment %}
+		
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script>
+	var AndraPradesh = [
+	"Anantapur",
+	"Chittoor",
+	"East Godavari",
+	"Guntur",
+	"Kadapa",
+	"Krishna",
+	"Kurnool",
+	"Prakasam",
+	"Nellore",
+	"Srikakulam",
+	"Visakhapatnam",
+	"Vizianagaram",
+	"West Godavari",
+];
+var ArunachalPradesh = [
+	"Anjaw",
+	"Changlang",
+	"Dibang Valley",
+	"East Kameng",
+	"East Siang",
+	"Kra Daadi",
+	"Kurung Kumey",
+	"Lohit",
+	"Longding",
+	"Lower Dibang Valley",
+	"Lower Subansiri",
+	"Namsai",
+	"Papum Pare",
+	"Siang",
+	"Tawang",
+	"Tirap",
+	"Upper Siang",
+	"Upper Subansiri",
+	"West Kameng",
+	"West Siang",
+	"Itanagar",
+];
+var Assam = [
+	"Baksa",
+	"Barpeta",
+	"Biswanath",
+	"Bongaigaon",
+	"Cachar",
+	"Charaideo",
+	"Chirang",
+	"Darrang",
+	"Dhemaji",
+	"Dhubri",
+	"Dibrugarh",
+	"Goalpara",
+	"Golaghat",
+	"Hailakandi",
+	"Hojai",
+	"Jorhat",
+	"Kamrup Metropolitan",
+	"Kamrup (Rural)",
+	"Karbi Anglong",
+	"Karimganj",
+	"Kokrajhar",
+	"Lakhimpur",
+	"Majuli",
+	"Morigaon",
+	"Nagaon",
+	"Nalbari",
+	"Dima Hasao",
+	"Sivasagar",
+	"Sonitpur",
+	"South Salmara Mankachar",
+	"Tinsukia",
+	"Udalguri",
+	"West Karbi Anglong",
+];
+var Bihar = [
+	"Araria",
+	"Arwal",
+	"Aurangabad",
+	"Banka",
+	"Begusarai",
+	"Bhagalpur",
+	"Bhojpur",
+	"Buxar",
+	"Darbhanga",
+	"East Champaran",
+	"Gaya",
+	"Gopalganj",
+	"Jamui",
+	"Jehanabad",
+	"Kaimur",
+	"Katihar",
+	"Khagaria",
+	"Kishanganj",
+	"Lakhisarai",
+	"Madhepura",
+	"Madhubani",
+	"Munger",
+	"Muzaffarpur",
+	"Nalanda",
+	"Nawada",
+	"Patna",
+	"Purnia",
+	"Rohtas",
+	"Saharsa",
+	"Samastipur",
+	"Saran",
+	"Sheikhpura",
+	"Sheohar",
+	"Sitamarhi",
+	"Siwan",
+	"Supaul",
+	"Vaishali",
+	"West Champaran",
+];
+var Chhattisgarh = [
+	"Balod",
+	"Baloda Bazar",
+	"Balrampur",
+	"Bastar",
+	"Bemetara",
+	"Bijapur",
+	"Bilaspur",
+	"Dantewada",
+	"Dhamtari",
+	"Durg",
+	"Gariaband",
+	"Janjgir Champa",
+	"Jashpur",
+	"Kabirdham",
+	"Kanker",
+	"Kondagaon",
+	"Korba",
+	"Koriya",
+	"Mahasamund",
+	"Mungeli",
+	"Narayanpur",
+	"Raigarh",
+	"Raipur",
+	"Rajnandgaon",
+	"Sukma",
+	"Surajpur",
+	"Surguja",
+];
+var Goa = ["North Goa", "South Goa"];
+var Gujarat = [
+	"Ahmedabad",
+	"Amreli",
+	"Anand",
+	"Aravalli",
+	"Banaskantha",
+	"Bharuch",
+	"Bhavnagar",
+	"Botad",
+	"Chhota Udaipur",
+	"Dahod",
+	"Dang",
+	"Devbhoomi Dwarka",
+	"Gandhinagar",
+	"Gir Somnath",
+	"Jamnagar",
+	"Junagadh",
+	"Kheda",
+	"Kutch",
+	"Mahisagar",
+	"Mehsana",
+	"Morbi",
+	"Narmada",
+	"Navsari",
+	"Panchmahal",
+	"Patan",
+	"Porbandar",
+	"Rajkot",
+	"Sabarkantha",
+	"Surat",
+	"Surendranagar",
+	"Tapi",
+	"Vadodara",
+	"Valsad",
+];
+var Haryana = [
+	"Ambala",
+	"Bhiwani",
+	"Charkhi Dadri",
+	"Faridabad",
+	"Fatehabad",
+	"Gurugram",
+	"Hisar",
+	"Jhajjar",
+	"Jind",
+	"Kaithal",
+	"Karnal",
+	"Kurukshetra",
+	"Mahendragarh",
+	"Mewat",
+	"Palwal",
+	"Panchkula",
+	"Panipat",
+	"Rewari",
+	"Rohtak",
+	"Sirsa",
+	"Sonipat",
+	"Yamunanagar",
+];
+var HimachalPradesh = [
+	"Bilaspur",
+	"Chamba",
+	"Hamirpur",
+	"Kangra",
+	"Kinnaur",
+	"Kullu",
+	"Lahaul Spiti",
+	"Mandi",
+	"Shimla",
+	"Sirmaur",
+	"Solan",
+	"Una",
+];
+var JammuKashmir = [
+	"Anantnag",
+	"Bandipora",
+	"Baramulla",
+	"Budgam",
+	"Doda",
+	"Ganderbal",
+	"Jammu",
+	"Kargil",
+	"Kathua",
+	"Kishtwar",
+	"Kulgam",
+	"Kupwara",
+	"Leh",
+	"Poonch",
+	"Pulwama",
+	"Rajouri",
+	"Ramban",
+	"Reasi",
+	"Samba",
+	"Shopian",
+	"Srinagar",
+	"Udhampur",
+];
+var Jharkhand = [
+	"Bokaro",
+	"Chatra",
+	"Deoghar",
+	"Dhanbad",
+	"Dumka",
+	"East Singhbhum",
+	"Garhwa",
+	"Giridih",
+	"Godda",
+	"Gumla",
+	"Hazaribagh",
+	"Jamtara",
+	"Khunti",
+	"Koderma",
+	"Latehar",
+	"Lohardaga",
+	"Pakur",
+	"Palamu",
+	"Ramgarh",
+	"Ranchi",
+	"Sahebganj",
+	"Seraikela Kharsawan",
+	"Simdega",
+	"West Singhbhum",
+];
+var Karnataka = [
+	"Bagalkot",
+	"Bangalore Rural",
+	"Bangalore Urban",
+	"Belgaum",
+	"Bellary",
+	"Bidar",
+	"Vijayapura",
+	"Chamarajanagar",
+	"Chikkaballapur",
+	"Chikkamagaluru",
+	"Chitradurga",
+	"Dakshina Kannada",
+	"Davanagere",
+	"Dharwad",
+	"Gadag",
+	"Gulbarga",
+	"Hassan",
+	"Haveri",
+	"Kodagu",
+	"Kolar",
+	"Koppal",
+	"Mandya",
+	"Mysore",
+	"Raichur",
+	"Ramanagara",
+	"Shimoga",
+	"Tumkur",
+	"Udupi",
+	"Uttara Kannada",
+	"Yadgir",
+];
+var Kerala = [
+	"Alappuzha",
+	"Ernakulam",
+	"Idukki",
+	"Kannur",
+	"Kasaragod",
+	"Kollam",
+	"Kottayam",
+	"Kozhikode",
+	"Malappuram",
+	"Palakkad",
+	"Pathanamthitta",
+	"Thiruvananthapuram",
+	"Thrissur",
+	"Wayanad",
+];
+var MadhyaPradesh = [
+	"Agar Malwa",
+	"Alirajpur",
+	"Anuppur",
+	"Ashoknagar",
+	"Balaghat",
+	"Barwani",
+	"Betul",
+	"Bhind",
+	"Bhopal",
+	"Burhanpur",
+	"Chhatarpur",
+	"Chhindwara",
+	"Damoh",
+	"Datia",
+	"Dewas",
+	"Dhar",
+	"Dindori",
+	"Guna",
+	"Gwalior",
+	"Harda",
+	"Hoshangabad",
+	"Indore",
+	"Jabalpur",
+	"Jhabua",
+	"Katni",
+	"Khandwa",
+	"Khargone",
+	"Mandla",
+	"Mandsaur",
+	"Morena",
+	"Narsinghpur",
+	"Neemuch",
+	"Panna",
+	"Raisen",
+	"Rajgarh",
+	"Ratlam",
+	"Rewa",
+	"Sagar",
+	"Satna",
+	"Sehore",
+	"Seoni",
+	"Shahdol",
+	"Shajapur",
+	"Sheopur",
+	"Shivpuri",
+	"Sidhi",
+	"Singrauli",
+	"Tikamgarh",
+	"Ujjain",
+	"Umaria",
+	"Vidisha",
+];
+var Maharashtra = [
+	"Ahmednagar",
+	"Akola",
+	"Amravati",
+	"Aurangabad",
+	"Beed",
+	"Bhandara",
+	"Buldhana",
+	"Chandrapur",
+	"Dhule",
+	"Gadchiroli",
+	"Gondia",
+	"Hingoli",
+	"Jalgaon",
+	"Jalna",
+	"Kolhapur",
+	"Latur",
+	"Mumbai City",
+	"Mumbai Suburban",
+	"Nagpur",
+	"Nanded",
+	"Nandurbar",
+	"Nashik",
+	"Osmanabad",
+	"Palghar",
+	"Parbhani",
+	"Pune",
+	"Raigad",
+	"Ratnagiri",
+	"Sangli",
+	"Satara",
+	"Sindhudurg",
+	"Solapur",
+	"Thane",
+	"Wardha",
+	"Washim",
+	"Yavatmal",
+];
+var Manipur = [
+	"Bishnupur",
+	"Chandel",
+	"Churachandpur",
+	"Imphal East",
+	"Imphal West",
+	"Jiribam",
+	"Kakching",
+	"Kamjong",
+	"Kangpokpi",
+	"Noney",
+	"Pherzawl",
+	"Senapati",
+	"Tamenglong",
+	"Tengnoupal",
+	"Thoubal",
+	"Ukhrul",
+];
+var Meghalaya = [
+	"East Garo Hills",
+	"East Jaintia Hills",
+	"East Khasi Hills",
+	"North Garo Hills",
+	"Ri Bhoi",
+	"South Garo Hills",
+	"South West Garo Hills",
+	"South West Khasi Hills",
+	"West Garo Hills",
+	"West Jaintia Hills",
+	"West Khasi Hills",
+];
+var Mizoram = [
+	"Aizawl",
+	"Champhai",
+	"Kolasib",
+	"Lawngtlai",
+	"Lunglei",
+	"Mamit",
+	"Saiha",
+	"Serchhip",
+	"Aizawl",
+	"Champhai",
+	"Kolasib",
+	"Lawngtlai",
+	"Lunglei",
+	"Mamit",
+	"Saiha",
+	"Serchhip",
+];
+var Nagaland = [
+	"Dimapur",
+	"Kiphire",
+	"Kohima",
+	"Longleng",
+	"Mokokchung",
+	"Mon",
+	"Peren",
+	"Phek",
+	"Tuensang",
+	"Wokha",
+	"Zunheboto",
+];
+var Odisha = [
+	"Angul",
+	"Balangir",
+	"Balasore",
+	"Bargarh",
+	"Bhadrak",
+	"Boudh",
+	"Cuttack",
+	"Debagarh",
+	"Dhenkanal",
+	"Gajapati",
+	"Ganjam",
+	"Jagatsinghpur",
+	"Jajpur",
+	"Jharsuguda",
+	"Kalahandi",
+	"Kandhamal",
+	"Kendrapara",
+	"Kendujhar",
+	"Khordha",
+	"Koraput",
+	"Malkangiri",
+	"Mayurbhanj",
+	"Nabarangpur",
+	"Nayagarh",
+	"Nuapada",
+	"Puri",
+	"Rayagada",
+	"Sambalpur",
+	"Subarnapur",
+	"Sundergarh",
+];
+var Punjab = [
+	"Amritsar",
+	"Barnala",
+	"Bathinda",
+	"Faridkot",
+	"Fatehgarh Sahib",
+	"Fazilka",
+	"Firozpur",
+	"Gurdaspur",
+	"Hoshiarpur",
+	"Jalandhar",
+	"Kapurthala",
+	"Ludhiana",
+	"Mansa",
+	"Moga",
+	"Mohali",
+	"Muktsar",
+	"Pathankot",
+	"Patiala",
+	"Rupnagar",
+	"Sangrur",
+	"Shaheed Bhagat Singh Nagar",
+	"Tarn Taran",
+];
+var Rajasthan = [
+	"Ajmer",
+	"Alwar",
+	"Banswara",
+	"Baran",
+	"Barmer",
+	"Bharatpur",
+	"Bhilwara",
+	"Bikaner",
+	"Bundi",
+	"Chittorgarh",
+	"Churu",
+	"Dausa",
+	"Dholpur",
+	"Dungarpur",
+	"Ganganagar",
+	"Hanumangarh",
+	"Jaipur",
+	"Jaisalmer",
+	"Jalore",
+	"Jhalawar",
+	"Jhunjhunu",
+	"Jodhpur",
+	"Karauli",
+	"Kota",
+	"Nagaur",
+	"Pali",
+	"Pratapgarh",
+	"Rajsamand",
+	"Sawai Madhopur",
+	"Sikar",
+	"Sirohi",
+	"Tonk",
+	"Udaipur",
+];
+var Sikkim = ["East Sikkim", "North Sikkim", "South Sikkim", "West Sikkim"];
+var TamilNadu = [
+	"Ariyalur",
+	"Chennai",
+	"Coimbatore",
+	"Cuddalore",
+	"Dharmapuri",
+	"Dindigul",
+	"Erode",
+	"Kanchipuram",
+	"Kanyakumari",
+	"Karur",
+	"Krishnagiri",
+	"Madurai",
+	"Nagapattinam",
+	"Namakkal",
+	"Nilgiris",
+	"Perambalur",
+	"Pudukkottai",
+	"Ramanathapuram",
+	"Salem",
+	"Sivaganga",
+	"Thanjavur",
+	"Theni",
+	"Thoothukudi",
+	"Tiruchirappalli",
+	"Tirunelveli",
+	"Tiruppur",
+	"Tiruvallur",
+	"Tiruvannamalai",
+	"Tiruvarur",
+	"Vellore",
+	"Viluppuram",
+	"Virudhunagar",
+];
+var Telangana = [
+	"Adilabad",
+	"Bhadradri Kothagudem",
+	"Hyderabad",
+	"Jagtial",
+	"Jangaon",
+	"Jayashankar",
+	"Jogulamba",
+	"Kamareddy",
+	"Karimnagar",
+	"Khammam",
+	"Komaram Bheem",
+	"Mahabubabad",
+	"Mahbubnagar",
+	"Mancherial",
+	"Medak",
+	"Medchal",
+	"Nagarkurnool",
+	"Nalgonda",
+	"Nirmal",
+	"Nizamabad",
+	"Peddapalli",
+	"Rajanna Sircilla",
+	"Ranga Reddy",
+	"Sangareddy",
+	"Siddipet",
+	"Suryapet",
+	"Vikarabad",
+	"Wanaparthy",
+	"Warangal Rural",
+	"Warangal Urban",
+	"Yadadri Bhuvanagiri",
+];
+var Tripura = [
+	"Dhalai",
+	"Gomati",
+	"Khowai",
+	"North Tripura",
+	"Sepahijala",
+	"South Tripura",
+	"Unakoti",
+	"West Tripura",
+];
+var UttarPradesh = [
+	"Agra",
+	"Aligarh",
+	"Allahabad",
+	"Ambedkar Nagar",
+	"Amethi",
+	"Amroha",
+	"Auraiya",
+	"Azamgarh",
+	"Baghpat",
+	"Bahraich",
+	"Ballia",
+	"Balrampur",
+	"Banda",
+	"Barabanki",
+	"Bareilly",
+	"Basti",
+	"Bhadohi",
+	"Bijnor",
+	"Budaun",
+	"Bulandshahr",
+	"Chandauli",
+	"Chitrakoot",
+	"Deoria",
+	"Etah",
+	"Etawah",
+	"Faizabad",
+	"Farrukhabad",
+	"Fatehpur",
+	"Firozabad",
+	"Gautam Buddha Nagar",
+	"Ghaziabad",
+	"Ghazipur",
+	"Gonda",
+	"Gorakhpur",
+	"Hamirpur",
+	"Hapur",
+	"Hardoi",
+	"Hathras",
+	"Jalaun",
+	"Jaunpur",
+	"Jhansi",
+	"Kannauj",
+	"Kanpur Dehat",
+	"Kanpur Nagar",
+	"Kasganj",
+	"Kaushambi",
+	"Kheri",
+	"Kushinagar",
+	"Lalitpur",
+	"Lucknow",
+	"Maharajganj",
+	"Mahoba",
+	"Mainpuri",
+	"Mathura",
+	"Mau",
+	"Meerut",
+	"Mirzapur",
+	"Moradabad",
+	"Muzaffarnagar",
+	"Pilibhit",
+	"Pratapgarh",
+	"Raebareli",
+	"Rampur",
+	"Saharanpur",
+	"Sambhal",
+	"Sant Kabir Nagar",
+	"Shahjahanpur",
+	"Shamli",
+	"Shravasti",
+	"Siddharthnagar",
+	"Sitapur",
+	"Sonbhadra",
+	"Sultanpur",
+	"Unnao",
+	"Varanasi",
+];
+var Uttarakhand = [
+	"Almora",
+	"Bageshwar",
+	"Chamoli",
+	"Champawat",
+	"Dehradun",
+	"Haridwar",
+	"Nainital",
+	"Pauri",
+	"Pithoragarh",
+	"Rudraprayag",
+	"Tehri",
+	"Udham Singh Nagar",
+	"Uttarkashi",
+];
+var WestBengal = [
+	"Alipurduar",
+	"Bankura",
+	"Birbhum",
+	"Cooch Behar",
+	"Dakshin Dinajpur",
+	"Darjeeling",
+	"Hooghly",
+	"Howrah",
+	"Jalpaiguri",
+	"Jhargram",
+	"Kalimpong",
+	"Kolkata",
+	"Malda",
+	"Murshidabad",
+	"Nadia",
+	"North 24 Parganas",
+	"Paschim Bardhaman",
+	"Paschim Medinipur",
+	"Purba Bardhaman",
+	"Purba Medinipur",
+	"Purulia",
+	"South 24 Parganas",
+	"Uttar Dinajpur",
+];
+var AndamanNicobar = ["Nicobar", "North Middle Andaman", "South Andaman"];
+var Chandigarh = ["Chandigarh"];
+var DadraHaveli = ["Dadra Nagar Haveli"];
+var DamanDiu = ["Daman", "Diu"];
+var Delhi = [
+	"Central Delhi",
+	"East Delhi",
+	"New Delhi",
+	"North Delhi",
+	"North East Delhi",
+	"North West Delhi",
+	"Shahdara",
+	"South Delhi",
+	"South East Delhi",
+	"South West Delhi",
+	"West Delhi",
+];
+var Lakshadweep = ["Lakshadweep"];
+var Puducherry = ["Karaikal", "Mahe", "Puducherry", "Yanam"];
+
+$("#inputState").change(function () {
+	var StateSelected = $(this).val();
+	var optionsList;
+	var htmlString = "";
+
+	switch (StateSelected) {
+		case "Andra Pradesh":
+			optionsList = AndraPradesh;
+			break;
+		case "Arunachal Pradesh":
+			optionsList = ArunachalPradesh;
+			break;
+		case "Assam":
+			optionsList = Assam;
+			break;
+		case "Bihar":
+			optionsList = Bihar;
+			break;
+		case "Chhattisgarh":
+			optionsList = Chhattisgarh;
+			break;
+		case "Goa":
+			optionsList = Goa;
+			break;
+		case "Gujarat":
+			optionsList = Gujarat;
+			break;
+		case "Haryana":
+			optionsList = Haryana;
+			break;
+		case "Himachal Pradesh":
+			optionsList = HimachalPradesh;
+			break;
+		case "Jammu and Kashmir":
+			optionsList = JammuKashmir;
+			break;
+		case "Jharkhand":
+			optionsList = Jharkhand;
+			break;
+		case "Karnataka":
+			optionsList = Karnataka;
+			break;
+		case "Kerala":
+			optionsList = Kerala;
+			break;
+		case "Madya Pradesh":
+			optionsList = MadhyaPradesh;
+			break;
+		case "Maharashtra":
+			optionsList = Maharashtra;
+			break;
+		case "Manipur":
+			optionsList = Manipur;
+			break;
+		case "Meghalaya":
+			optionsList = Meghalaya;
+			break;
+		case "Mizoram":
+			optionsList = Mizoram;
+			break;
+		case "Nagaland":
+			optionsList = Nagaland;
+			break;
+		case "Orissa":
+			optionsList = Orissa;
+			break;
+		case "Punjab":
+			optionsList = Punjab;
+			break;
+		case "Rajasthan":
+			optionsList = Rajasthan;
+			break;
+		case "Sikkim":
+			optionsList = Sikkim;
+			break;
+		case "Tamil Nadu":
+			optionsList = TamilNadu;
+			break;
+		case "Telangana":
+			optionsList = Telangana;
+			break;
+		case "Tripura":
+			optionsList = Tripura;
+			break;
+		case "Uttaranchal":
+			optionsList = Uttaranchal;
+			break;
+		case "Uttar Pradesh":
+			optionsList = UttarPradesh;
+			break;
+		case "West Bengal":
+			optionsList = WestBengal;
+			break;
+		case "Andaman and Nicobar Islands":
+			optionsList = AndamanNicobar;
+			break;
+		case "Chandigarh":
+			optionsList = Chandigarh;
+			break;
+		case "Dadar and Nagar Haveli":
+			optionsList = DadraHaveli;
+			break;
+		case "Daman and Diu":
+			optionsList = DamanDiu;
+			break;
+		case "Delhi":
+			optionsList = Delhi;
+			break;
+		case "Lakshadeep":
+			optionsList = Lakshadeep;
+			break;
+		case "Pondicherry":
+			optionsList = Pondicherry;
+			break;
+	}
+
+	for (var i = 0; i < optionsList.length; i++) {
+		htmlString =
+			htmlString +
+			"<option value='" +
+			optionsList[i] +
+			"'>" +
+			optionsList[i] +
+			"</option>";
+	}
+	$("#inputDistrict").html(htmlString);
+});
+
+</script>
 	</body>
 </html>
 <script type="text/javascript">

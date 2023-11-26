@@ -5,7 +5,10 @@ from django.conf.urls.static import static
 from .views import *
 
 urlpatterns = [
-    path("registerform/", staffLoginPage, name="staffLoginPage"),
+    path("registerform/", staffRegisterPage, name="staffRegisterPage"),
+    path("staffregister/", staffRegistration, name="staffRegistration"),
+    path("stafflogin/", staffLoginPage, name="staffLoginPage"),
+    path("staffAuth/", staffLogin, name="staffLogin"),
 ]
 
 if settings.DEBUG:

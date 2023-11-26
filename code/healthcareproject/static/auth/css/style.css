@@ -219,6 +219,11 @@ body{
   background-color: #254ebf;
   color: #f6f6f6 !important;
   border-radius: 4px;
+  text-decoration: none;
+  padding: 10px;
+  text-align: center!important;
+  margin: 2px;
+  transition: 0.5s all;
 }
 
 .btn-admin:hover{
@@ -227,11 +232,21 @@ body{
 
 
 .btn-staff{
+  transition: 0.5s all;
   background-color: #54B4D3;
   color: #f6f6f6 !important;
+  margin: 2px;
   border-radius: 4px;
+  text-decoration: none;
+  padding: 10px;
+  text-align: center!important;
 }
 
 .btn-staff:hover{
   background-color: #1a335b;
+}
+
+.logins{
+  display: flex;
+  justify-content: center;
 }
