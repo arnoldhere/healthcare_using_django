@@ -118,13 +118,6 @@ def waitForLoginPage(request):
 
 
 ### STAFF CRUD ###
-def del_staff(request, req_id):
-    print(req_id)
-    res = StaffModel.objects.get(id=req_id)
-    res.delete()
-    # check the deleted record
-    print("staff deleted")
-    return redirect("staff")
 
 def update_staff(request, req_id):
     firstname = request.POST['firstname']

@@ -30,6 +30,10 @@ def adminDashboard(request):
     print("Dashboard doneee !")
     return render(request, 'dashboard.html', {'user_count': user_count, 'users': users, 'staff_count': staff_count})
 
+def logout(request):
+    request.session.clear()
+    logout(request)
+    return redirect('LoginPage')
 
 def del_user(request, req_id):
     print(req_id)
@@ -172,10 +176,7 @@ def delete_service(request, nm):
     print("removed")
     return redirect("services")
 
-def logout(request):
-    request.session.clear()
-    logout(request)
-    return redirect('LoginPage')
+### APPOINTMENT ###
 
 def appointmentPage(request):
     appointments = Appointment.objects.all()
@@ -209,6 +210,39 @@ def del_appointments(request,aid):
     # check the deleted record
     print("removed")
     return redirect("appointmentpage")
+
+### STAFF ###
+def staffPage(request):
+    staff = StaffModel.objects.all()
+    return render(request, 'staff.html' , {'staff': staff})
+
+def view_staff(request):
+    sid = request.POST['id']
+    print(sid)
+    staff = StaffModel.objects.filter(id=sid).first()
+    print(staff)
+    name = staff.first_name + ' ' + staff.last_name
+    email = staff.email
+    phone = staff.phone
+    category = staff.category
+    photo = staff.profile_photo
+    resume = staff.resume
+    location = staff.city + ',' + staff.state
+    joined = staff.date_joined
+    status = staff.status
+    return render(request, 'view_staff.html', {
+        'name': name , 'email': email , 'phone': phone , 'category': category , 
+        'photo': photo , resume : resume, 'location': location , 'joined': joined , 'status': status   
+    })
+    
+def del_staff(request, req_id):
+    print(req_id)
+    res = StaffModel.objects.get(id=req_id)
+    res.delete()
+    # check the deleted record
+    print("staff deleted")
+    return redirect("staff")
+
 
 ################################################################
 #excel file upload & download
