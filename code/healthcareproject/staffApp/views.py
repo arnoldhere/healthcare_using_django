@@ -1,9 +1,12 @@
+from django.core.mail import send_mail
 import os
+import random
 from django.contrib.auth.hashers import *
 from django.conf import settings
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from .models import *
+from healthcareapp.models import *
 from django.contrib import messages
 
 # Create your views here.
@@ -28,18 +31,20 @@ def staffLogin(request):
                 # authenticate the user
                 # validate the password
                 if staff is not None and check_password(password, fetchpwd):
-                    print("user validated in the db")
-    
-                    # save the session token of the user
-                    fullname = staff.first_name + staff.last_name
-                    request.session['staffname'] = fullname
-                    request.session['email_user'] = staff.email
-                    # Save session data explicitly (usually done automatically)
-                    request.session.save()
-    
-                    messages.success(request, "User logged in successfully")
-                    # return HttpResponseRedirect(reverse('index'))
-                    return HttpResponse("staff screen")
+                    if staff.status == "PENDING" :
+                        return redirect('waiting')
+                    else:
+                        print("user validated in the db")
+                        # save the session token of the user
+                        fullname = staff.first_name + staff.last_name
+                        request.session['staffname'] = fullname
+                        request.session['email_user'] = staff.email
+                        # Save session data explicitly (usually done automatically)
+                        request.session.save()
+        
+                        messages.success(request, "User logged in successfully")
+                        # return redirect("")
+                        return HttpResponse("okaie")
                 else:
                     messages.error(request , "Authentication failed ! Invalid credentials ")
                     # return HttpResponse("invalid credentials !! try again")
@@ -100,14 +105,17 @@ def staffRegistration(request):
                 )
                 staff.save()
                 print("Staff created !!")
-                # return redirect('staff')
-                return HttpResponse("Donneee")
+                # return redirect('staff') 
+                return redirect('waiting')
             else:
                 messages.error(request,'Resume must be in pdf format')
                 return render(request , 'staffregister.html')
-
         except Exception as e:
             return HttpResponse(e)
+
+def waitForLoginPage(request):
+    return render(request, 'wait.html')
+
 
 ### STAFF CRUD ###
 def del_staff(request, req_id):
@@ -141,3 +149,78 @@ def update_staff(request, req_id):
 
     except Exception as e:
         return HttpResponse(e)
+
+
+
+
+
+####### PASSWORD RESET #########
+
+def forgotpwdPage(request):
+    return render(request, "forgotpwd.html")
+
+def OTP_generate():
+    # token = ''.join(random.choices(string.ascii_letters + string.digits, k=6))
+    # return token
+    return str(random.randint(100000, 999999))
+ 
+def reset_password(request):
+    if request.method == 'POST':
+        email = request.POST['email']
+        print(email)
+
+        user = StaffModel.objects.filter(email=email).first()
+        print(user)
+        if user:
+            otp = OTP_generate()
+            user = StaffModel.objects.get(email=email)
+            token = passwordToken.objects.create(
+                email=user.email,
+                otp=otp,
+            )
+            token.save()
+            print(otp)
+            # send the otp in email
+            subject = "OTP for reset the password"
+            message = f"Please verify and check the OTP to reset the password is \n OTP : {otp}"
+            from_email = "official.arnold.mac.2004@gmail.com"
+            recivers = [user]
+
+            send_mail(subject, message, from_email, recivers)
+            # return HttpResponse(f"OTP SENT >>>{otp}")
+            return render(request, 'otp.html', {'email': user.email})
+        else:
+            msg = "Provide valid email address"
+            messages.error(request,msg)
+            return render(request,'forgotpwd.html' )
+            # return HttpResponse("Email does not exists !!")
+
+def verify_otp(request, email):
+    if request.method == 'POST':
+        otp = request.POST['otp']
+        user = passwordToken.objects.filter(email=email).first()
+        email = user.email
+        if user.otp == otp:
+            print("OTP matched")
+            user.delete()
+            return render(request, 'resetpwd.html', {'email': email})
+        else:
+            messages.error(request,"Entered OTP is not valid !!")
+            return render(request, 'otp.html', {'email': user.email})
+
+def new_password(request, email):
+    if request.method == 'POST':
+        password = request.POST['password']
+        user = UserModel.objects.filter(email=email).first()
+        pwd = make_password(password)
+        chnge = UserModel.objects.filter(email=user.email).update(password=pwd)
+
+        if chnge:
+            passwordToken.objects.filter(email=email).delete()
+            print("Password changed")
+            return redirect('show_succes')
+        else:
+            return HttpResponse("Unable to reset password")
+
+def show_msg_pwd(request):
+    return render(request , 'pwdmsg.html')

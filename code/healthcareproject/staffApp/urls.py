@@ -9,6 +9,14 @@ urlpatterns = [
     path("staffregister/", staffRegistration, name="staffRegistration"),
     path("stafflogin/", staffLoginPage, name="staffLoginPage"),
     path("staffAuth/", staffLogin, name="staffLogin"),
+    path("wait/", waitForLoginPage, name="waiting"),
+
+    path("pwdchanged/",show_msg_pwd, name="show_succes"),
+    path("reset/", reset_password,  name="reset_password"),
+    path("forgotpassword/", forgotpwdPage, name="forgotpassword"),
+    path("verify_otp/<str:email>", verify_otp, name="verify_otp"),
+    path("newpassword/<str:email>", new_password, name="newpassword"),
+    
 ]
 
 if settings.DEBUG:
