@@ -1,4 +1,5 @@
 import os
+from django.core.mail import *
 from django.conf import settings
 import pymongo
 from django.shortcuts import render, redirect
@@ -185,17 +186,25 @@ def appointmentPage(request):
     return render(request, 'appointment.html' , {'appointments':appointments})
 
 def appointment_status(request,aid):
+    user = request.POST['user']
     a = Appointment.objects.filter(aid=aid).first()
     if a.status == 'PENDING':
-        a.objects.filter(aid=aid).update(
+        res = Appointment.objects.filter(aid=aid).update(
             status = "CONFIRMED"
         )
+        if res:
+            subject = "Approved"
+            message = f"Your request for home visit has been accepted and our team will reach you soon. "
+            from_email ="official.arnold.mac.2004@gmail.com" 
+            reciver =[user]
+            send_mail(subject, message, from_email, reciver)
+            print("mail sent")
+            messages.success(request,"Email sent !")
+            return redirect('appointmentpage')
     else:
         Appointment.objects.filter(aid=aid).update(
             status = "PENDING"
         ) 
-
-    print("done")
     return redirect('appointmentpage')
 
 def del_appointments(request,aid):

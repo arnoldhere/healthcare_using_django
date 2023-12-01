@@ -10,6 +10,10 @@ urlpatterns = [
     path("stafflogin/", staffLoginPage, name="staffLoginPage"),
     path("staffAuth/", staffLogin, name="staffLogin"),
     path("wait/", waitForLoginPage, name="waiting"),
+    path("index/", staffIndex, name="staffIndex"),
+    path("profile/", staffProfile, name="staffProfile"),
+    path("photo/", addPic, name="addPic"),
+    path("visitedit/<vid>", visit_edit, name="visit_edit"),
 
     path("pwdchanged/",show_msg_pwd, name="show_succes"),
     path("reset/", reset_password,  name="reset_password"),

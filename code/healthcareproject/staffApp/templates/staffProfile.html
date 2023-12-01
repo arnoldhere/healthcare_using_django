@@ -1,0 +1,97 @@
+{% extends "staffindex.html" %}
+{% block title %}Profile{% endblock title %}
+{% block content %}
+
+</div>
+<div class="bg-light m-5 p-3 rounded">
+  <h3 class="text-muted text-center mb-5">{{request.session.staffname}} </h3>
+  <div class="d-flex justify-content-center">
+    <img src="/media/staff/profiles/{{profile}}" alt="not set" width="100" height="100"
+      class="img img-thumbnail rounded  mx-auto">
+  </div>
+  <div class="d-flex justify-content-center m-2">
+    <button type="button" class="btn   btn-primary" data-mdb-ripple-init data-mdb-modal-init
+      data-mdb-target="#exampleModal">
+      Add Photo
+    </button>
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Profile </h5>
+            <button type="button" class="btn-close" data-mdb-ripple-init data-mdb-dismiss="modal"
+              aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form method="post" action="{% url "addPic" %}" enctype="multipart/form-data">
+              {% csrf_token %}
+              <div class="form-group">
+                <label class="form-label"> Your Profile Photo [jpg]</label>
+                <input type="file" name="pic" class="form-control">
+              </div>
+
+              <div class="modal-footer">
+                <button type="button" class="btn btn-md btn-secondary" data-mdb-ripple-init
+                  data-mdb-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary" data-mdb-ripple-init>Save changes</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<hr>
+<div class="row mt-4 ">
+  <div class="col-lg-14 mb-lg-0 mb-4">
+  <div class="card ">
+    <div class="card-header pb-0 p-3">
+    <div class="d-flex justify-content-center">
+      <h6 class="mb-3 text-center">Requests</h6>
+    </div>
+    </div>
+    <div class="container">
+    <table class="table align-items-center  table-hover table-bordered">
+      <thead class="table-light text-center">
+        <tr>
+          <th>From</th>
+          <th>Status</th>
+          <th>TimeStamp</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody class="table-bordered">
+        {% for i in visits %}
+        {% if i.to_staff == request.session.email_user %}
+        <tr class="text-center">
+          <td>{{i.user}}</td>
+          <td>{{i.status}}</td>
+          <td>{{i.timestamp}}</td>
+          <td>
+            <form action="{% url "visit_edit"  i.vid %}" method="post">
+              {% csrf_token %}
+                <input type="hidden" name="req_from" value="{{i.user}}">
+                <button type="submit" class="btn btn-info" >
+                  Accept
+                </button>
+            </form>
+          </td>
+          
+        </tr>
+        {% else %}
+          {{break}}
+        {% endif %}
+        
+        {% endfor %}
+      </tbody>
+    </table>
+    </div>
+  </div>
+  </div>
+</div>
+<hr>
+
+
+{% endblock content %}

@@ -15,4 +15,5 @@ class StaffModel(models.Model):
     status = models.CharField(max_length=15,null=True)
     city = models.CharField(max_length=25,null=True)
     state = models.CharField(max_length=25,null=True)
-    date_joined = models.DateTimeField(default=timezone.now)
+    date_joined = models.DateTimeField(default=timezone.now())
+    total_visit = models.IntegerField(null=True)

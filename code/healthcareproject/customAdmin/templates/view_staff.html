@@ -79,7 +79,7 @@
     <section class="profile">
         <header class="header">
           <div class="details">
-            <img src="" alt="not set yet" width="150px" height="250px" class="img img-thumbnail rounded-circle">
+            <img src="/media/staff/profiles/{{photo}}" alt="not set yet" width="150px" height="250px" class="img img-thumbnail rounded-circle">
             <h1 class="heading">{{name}}</h1>
             <hr>
             <div class=" px-2 rounded mt-4 date "> <span class="join"><a href="{% url "view_pdf" resume %}" class="btn btn-md btn-danger mb-3" target="_blank"> View Resume </a></span> </div>
@@ -93,7 +93,7 @@
             <hr>
             <div class=" px-2 rounded mt-4 date "> <span class="join">Phone : {{phone}}</span> </div>
             </div>
-            <div class="stats">
+            {% comment %} <div class="stats">
               <div class="col-4">
                 <h4>20</h4>
                 <p>Reviews</p>
@@ -107,7 +107,7 @@
                 <p>Discussions</p>
               </div>
             </div>
-          </div>
+          </div> {% endcomment %}
         </header>
       </section>
 </body>

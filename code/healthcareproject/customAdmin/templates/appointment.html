@@ -9,29 +9,28 @@
             <table class="table align-items-center ">
                 <thead class="table-light text-center">
                     <tr>
-                        <th>Phone</th>
-                        <th>Services</th>
+                        <th>From</th>
                         <th>Date</th>
                         <th>Timings</th>
-                        {% comment %} <th>Status</th> {% endcomment %}
+                        <th>Status</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody class="text-center">
                     {% for item in appointments %}
                     <tr>
-                        <td>{{item.phone }}</td>
-                        <td>{{item.service}}</td>
+                        <td>{{item.user}}</td>
                         <td>{{item.date}}</td>
                         <td>{{item.time}}</td>
-                        {% comment %} <td>
+                        <td>
                             {{item.status}}
-                        </td> {% endcomment %}
-                        <td> 
-                        {% comment %} <form method="post" action="{% url "appointment_status" item.aid %}">
+                        </td> 
+                        <td class="d-flex justify-content-center"> 
+                         <form method="post" action="{% url "appointment_status" item.aid %}">
                             {% csrf_token %}
-                                <button class="btn btn-sm btn-success my-2" type="submit">CHANGE</button>
-                        </form> {% endcomment %}
+                            <input type="hidden" name="user" value="{{item.user}}">
+                                <button class="btn btn-sm btn-success mx-2" type="submit">Accept</button>
+                        </form> 
                         <form action="{% url "delete_appointment" item.aid %}" method="get" class="">
                             {% csrf_token %}
                             <button type="submit" class="text-white bg-info border-0 rounded"

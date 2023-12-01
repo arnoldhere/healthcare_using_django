@@ -35,7 +35,13 @@
 						<h3>{{i.first_name}} {{i.last_name}}</h3>
 						<span class="position mb-2">{{i.category}}</span>
 						<div class="faded">
-							<p>I am an ambitious workaholic, but apart from that, pretty simple person.</p>
+							<span> 
+									<form method="post" action="{% url "bookVisit" %}"> 
+										{% csrf_token %}
+										<input type="hidden" name="staff" value="{{i.email}}" />
+										<button type="submit" class="btn btn-md btn-info">Book Visit </button>
+									</form>
+							</span>
 							<ul class="ftco-social text-center">
 								<li class="ftco-animate"><a href="#"
 										class="d-flex align-items-center justify-content-center"><span

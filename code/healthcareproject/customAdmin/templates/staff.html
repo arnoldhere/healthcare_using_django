@@ -32,7 +32,7 @@
 						<td>{{user.phone}}</td>
 						<td>{{user.category}}</td>
 						<td>{{user.status}}</td>
-						<td> <img src="./media/staff/profiles/{{user.profile_photo}}" width="100px" height="100px" class="img img-thumbnail" alt="Not set"> </td>
+						<td> <img src="/media/staff/profiles/{{user.profile_photo}}" width="100px" height="100px" class="img img-thumbnail" alt="Not set"> </td>
 						<td class="d-flex text-center">
 							<form action="{% url "del_staff" user.id %}" method="post">
 								{% csrf_token %}

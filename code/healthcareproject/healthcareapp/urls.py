@@ -29,6 +29,11 @@ urlpatterns = [
     path("feedback/", feedback, name="feedback"),
     path("about/", aboutPage, name="aboutPage"),
     path("team/", teampage, name="team"),
+    path("bookvisit/", bookVisit, name="bookVisit"),
+
+    path("service/", servicepg, name="service"),
+    path("servicebook/", bookService, name="bookService"),
+    path("booktest/<str:name>", bookTest, name="bookTest"),
 
     #### appointment
     path("appointment/", saveappointment, name="bookappointment"),

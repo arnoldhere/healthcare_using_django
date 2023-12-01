@@ -43,8 +43,8 @@ def staffLogin(request):
                         request.session.save()
         
                         messages.success(request, "User logged in successfully")
-                        # return redirect("")
-                        return HttpResponse("okaie")
+                        return redirect("staffProfile")
+                        # return HttpResponse("okaie")
                 else:
                     messages.error(request , "Authentication failed ! Invalid credentials ")
                     # return HttpResponse("invalid credentials !! try again")
@@ -146,6 +146,45 @@ def update_staff(request, req_id):
 
 
 
+def staffIndex(request):
+    return render(request, 'staffindex.html')
+    
+def staffProfile(request):
+    email = request.session.get('email_user')
+    staff = StaffModel.objects.filter(email=email).first()
+    visits = Visit.objects.all()
+    visits_count = Visit.objects.count()
+    
+
+    return render(request, 'staffProfile.html' , {'profile': staff.profile_photo , 'visits' : visits , 'visits_count': visits_count})
+
+def addPic(request):
+    email = request.session.get('email_user')
+    staff = StaffModel.objects.filter(email=email).first()
+    img = request.FILES['pic']
+    if img.name.endswith(".jpg"):
+        imgnm = img.name.split(".")
+        imgnameext = email.split('@')
+        filename = str(imgnm[0]) + '-' + str(imgnameext[0]) + '.jpg'
+        # Define the folder where you want to save the image.
+        upload_folder = os.path.join('media/staff/', 'profiles')
+        os.makedirs(upload_folder, exist_ok=True)
+        # Construct the file path and save the image.
+        file_path = os.path.join(upload_folder, filename)
+        with open(file_path, 'wb+') as destination:
+            for chunk in img.chunks():
+                destination.write(chunk)
+
+        res = StaffModel.objects.filter(email=email).update(profile_photo=filename)
+        if res:
+            messages.success(request,'Image saved successfully')
+            return redirect('staffProfile')
+        else:
+            messages.error(request,'Image not saved successfully')
+            return redirect('staffProfile')
+    else:
+        return HttpResponse("Not valid image")           
+    
 
 
 ####### PASSWORD RESET #########
@@ -218,3 +257,27 @@ def new_password(request, email):
 
 def show_msg_pwd(request):
     return render(request , 'pwdmsg.html')
+
+def visit_edit(request , vid):
+    if request.method == 'POST':
+        staff = request.session.get('email_user') 
+        req_from = request.POST['req_from']
+        print(vid)
+        res = Visit.objects.filter(vid=vid).update(
+            status = "CONFIRMED"
+        )
+        if res:
+            i = Visit.objects.filter(vid=vid).first()
+            if i.status =="CONFIRMED":
+                #send mail
+                subject = "Approved"
+                message = f"Your request for home visit has been accepted by  : {staff}"
+                from_email ="official.arnold.mac.2004@gmail.com" 
+                reciver =[req_from]
+                send_mail(subject, message, from_email, reciver)
+                print("mail sent")
+                messages.success(request,"Email sent !")
+                return redirect('staffProfile')
+        else:
+            messages.success(request,"Error in approval !")
+            return redirect('staffProfile')

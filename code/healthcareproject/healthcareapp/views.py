@@ -205,7 +205,8 @@ def show_msg_pwd(request):
 
 def index(request):
     services = Services.objects.all()
-    return render(request, "userend/home.html" , {'services': services})
+    staffs = StaffModel.objects.all()
+    return render(request, "userend/home.html" , {'services': services , 'staffs': staffs})
 
 def userProfile(request):
     if request.session.get('username') is not None:
@@ -291,15 +292,13 @@ def editProfile(request):
 #### SAVE APPOINTMENT #####
 def saveappointment(request):
     if request.method == "POST":
-        phone = request.POST['phone']
-        service = request.POST['services_list']
+        user = request.session.get('email_user')
         date = request.POST['date']
         time = request.POST['time']
         
         try:
             query  = Appointment.objects.create(
-                phone=phone,
-                service=service,
+                user=user,
                 time=time,
                 date = date,
                 status = "PENDING",
@@ -341,3 +340,47 @@ def aboutPage(request):
 def teampage(request):
     staffs = StaffModel.objects.all()
     return render(request , 'userend/team.html' , {'staffs':staffs})
+
+
+def bookVisit(request):
+    email = request.session.get('email_user')
+    to_staff = request.POST['staff']
+    status = "PENDING"
+    
+    Visit.objects.create(
+        user=email,
+        to_staff = to_staff,
+        status =status
+    )
+    messages.success(request , "Visit Booked !")
+    return redirect('index')
+    
+
+def servicepg(request):
+    srv = Services.objects.all()
+    tests = LabTestModel.objects.all()
+    return render(request, 'userend/services.html' , {'srv':srv , 'tests':tests})
+
+def bookService(request):
+    user = request.session.get('email_user')
+    service = request.POST['service']
+    subject = "Approved"
+    message = f"Your request for : {service} has been approved !!"
+    from_email ="official.arnold.mac.2004@gmail.com" 
+    reciver =[user]
+    send_mail(subject, message, from_email, reciver)
+    print("mail sent")
+    messages.success(request,"Service Booked !")
+    return redirect('index')
+    
+def bookTest(request,name):
+    user = request.session.get('email_user')
+    subject = "Approved"
+    message = f"Your request for : {name} has been approved !!"
+    from_email ="official.arnold.mac.2004@gmail.com" 
+    reciver =[user]
+    send_mail(subject, message, from_email, reciver)
+    print("mail sent")
+    messages.success(request,"Test Booked !")
+    return redirect('index')
+    

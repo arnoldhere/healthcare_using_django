@@ -32,11 +32,11 @@ class passwordToken(models.Model):
 
 class Appointment(models.Model):
     aid = models.AutoField(primary_key=True)
-    phone = models.CharField(max_length=10) 
-    service = models.CharField(max_length=25)
     date = models.DateField()
     time = models.CharField(max_length=20 , null=True)
     created = timezone.now()
+    staff = models.CharField(max_length=50 , null=True)
+    user = models.CharField(max_length=50, null=True)
     status = models.CharField(max_length=15 , default="PENDING")
 
 
@@ -45,3 +45,12 @@ class Feedback(models.Model):
     subject = models.CharField(max_length=50)
     message = models.TextField(max_length=500)
     user = models.CharField(max_length=25)
+
+
+class Visit(models.Model):
+    vid = models.AutoField(primary_key=True)
+    to_staff = models.CharField(max_length=50)
+    user = models.CharField(max_length=50)
+    status = models.CharField(max_length=15)
+    timestamp=models.DateTimeField(auto_now_add=True)
+
