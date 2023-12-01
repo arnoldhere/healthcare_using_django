@@ -38,3 +38,10 @@ class Appointment(models.Model):
     time = models.CharField(max_length=20 , null=True)
     created = timezone.now()
     status = models.CharField(max_length=15 , default="PENDING")
+
+
+class Feedback(models.Model):
+    fid = models.AutoField(primary_key=True)
+    subject = models.CharField(max_length=50)
+    message = models.TextField(max_length=500)
+    user = models.CharField(max_length=25)

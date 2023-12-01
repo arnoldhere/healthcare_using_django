@@ -1,6 +1,8 @@
+import os
+from django.conf import settings
 import pymongo
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.http import HttpResponse , FileResponse
 from healthcareapp.models import UserModel, LabTestModel , Appointment
 from staffApp.models import *
 from .models import Services
@@ -232,8 +234,50 @@ def view_staff(request):
     status = staff.status
     return render(request, 'view_staff.html', {
         'name': name , 'email': email , 'phone': phone , 'category': category , 
-        'photo': photo , resume : resume, 'location': location , 'joined': joined , 'status': status   
+        'photo': photo , 'resume' : resume, 'location': location , 'joined': joined , 'status': status   
     })
+    
+def view_pdf(request,resume):
+    file_path = os.path.join('media/staff/resumes' , resume)
+    # Ensure the file exists
+    if os.path.exists(file_path):
+        with open(file_path, 'rb') as pdf_file:
+            response = FileResponse(pdf_file.read(), content_type='application/pdf')
+            response['Content-Disposition'] = f'inline; filename="{resume}"'
+            return response
+    else:
+        messages.error(request , 'File not found')
+        return redirect('staffPage')
+
+def update_staff(request):
+    sid = request.POST['id']
+    print(sid)
+    staff = StaffModel.objects.filter(id=sid).first()
+    if staff :
+        if staff.status == "PENDING":
+            res = StaffModel.objects.filter(id=sid).update(
+                status = "CONFIRMED"
+            )
+            if res:
+                messages.success(request , "Staff Activated !")
+                return redirect('staffPage')
+            else:
+                messages.error(request , "Error")
+                return redirect('staffPage')    
+        elif staff.status == "CONFIRMED":
+            res = StaffModel.objects.filter(id=sid).update(
+                status = "PENDING"
+            )
+            if res:
+                messages.success(request , "Staff deactivated !")
+                return redirect('staffPage')
+            else:
+                messages.error(request , "Error")
+            return redirect('staffPage')    
+    else:
+        messages.error(request , 'Try again !')
+        return redirect('staffPage')
+    
     
 def del_staff(request, req_id):
     print(req_id)
@@ -241,7 +285,7 @@ def del_staff(request, req_id):
     res.delete()
     # check the deleted record
     print("staff deleted")
-    return redirect("staff")
+    return redirect("staffPage")
 
 
 ################################################################

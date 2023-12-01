@@ -27,8 +27,10 @@ urlpatterns = [
 
     path("staff/", staffPage, name="staffPage"),
     path("viewstaff/", view_staff, name="view_staff"),
-    path("del_staff/<int:id>", del_staff, name="del_staff"),
+    path("del_staff/<int:req_id>", del_staff, name="del_staff"),
+    path("updatestaff/", update_staff, name="updatestaff"),
 
+    path("view_pdf/<str:resume>", view_pdf, name="view_pdf"),
     
     path("delete_app/<aid>", del_appointments, name="delete_appointment"),
     path("appointmentpage/", appointmentPage, name="appointmentpage"),

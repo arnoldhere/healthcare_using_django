@@ -81,7 +81,8 @@ def staffRegistration(request):
         try:
             if resume.name.endswith(".pdf"):
                 imgnameext = email.split('@')
-                filenm = resume.name + '-' + str(imgnameext[0])
+                filenmfinal = resume.name.split('.') 
+                filenm =  str(filenmfinal[0]) + '-' + str(imgnameext[0]) + '.pdf'
                 # Define the folder where you want to save the image.
                 upload_folder = os.path.join(settings.MEDIA_ROOT, 'staff/resumes')
                 os.makedirs(upload_folder, exist_ok=True)

@@ -46,7 +46,23 @@
                     View
 									</button>
 							</form>
-              
+              {% if user.status == 'PENDING' %}
+              <form action="{% url "updatestaff" %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="id" value="{{user.id}}"> 
+                <button type="submit" class="text-white bg-success border-0 rounded">
+                  Enable
+                </button>
+							</form>
+              {% else  %}
+              <form action="{% url "updatestaff" %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="id" value="{{user.id}}"> 
+                <button type="submit" class="text-white bg-success border-0 rounded">
+                  Disable
+                </button>
+							</form>
+              {% endif %}
             </td>
 					</tr>
 					{% endfor %}

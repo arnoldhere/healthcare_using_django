@@ -3,60 +3,75 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profile |</title>
+    <title>Profile | {{name}}</title>
+<!-- Font Awesome -->
+<link
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+  rel="stylesheet"
+/>
+<!-- Google Fonts -->
+<link
+  href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+  rel="stylesheet"
+/>
+<!-- MDB -->
+<link
+  href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.0.0/mdb.min.css"
+  rel="stylesheet"
+/>
     <style>
         @import url("https://fonts.googleapis.com/css?family=Lato:400,400i,700");
 
-body {
-  margin: 0;
-  font-family: 'Lato', sans-serif;
-}
+      body {
+        margin: 0;
+        font-family: 'Lato', sans-serif;
+      }
 
-.header {
-  min-height: 60vh;
-  background: #009FFF;
-background: linear-gradient(to right, #ec2F4B, #009FFF);
-  color: white;
-  clip-path: ellipse(100vw 60vh at 50% 50%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+      .header {
+        min-height: 60vh;
+        background: #009FFF;
+      background: linear-gradient(to right, #ec2F4B, #009FFF);
+        color: white;
+        clip-path: ellipse(100vw 60vh at 50% 50%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
 
-.details {
-  text-align: center;
-}
+      .details {
+        text-align: center;
+      }
 
-.profile-pic {
-  height: 6rem;
-  width: 6rem;
-  object-fit: center;
-  border-radius: 50%;
-  border: 2px solid #fff;
-}
+      .profile-pic {
+        height: 6rem;
+        width: 6rem;
+        object-fit: center;
+        border-radius: 50%;
+        border: 2px solid #fff;
+      }
 
-.location p {
-  display: inline-block;
-}
+      .location p {
+        display: inline-block;
+      }
 
-.location svg {
-  vertical-align: middle;
-}
+      .location svg {
+        vertical-align: middle;
+      }
 
-.stats {
-  display: flex;
-}
+      .stats {
+        display: flex;
+      }
 
-.stats .col-4 {
-  width: 10rem;
-  text-align: center;
-}
+      .stats .col-4 {
+        width: 10rem;
+        text-align: center;
+      }
 
-.heading {
-  font-weight: 400;
-  font-size: 1.3rem;
-  margin: 1rem 0;
-}
+      .heading {
+        font-weight: 400;
+        font-size: 1.3rem;
+        margin: 1rem 0;
+      }
 
     </style>
 </head>
@@ -64,8 +79,10 @@ background: linear-gradient(to right, #ec2F4B, #009FFF);
     <section class="profile">
         <header class="header">
           <div class="details">
-            <img src="" alt="not set yet">
+            <img src="" alt="not set yet" width="150px" height="250px" class="img img-thumbnail rounded-circle">
             <h1 class="heading">{{name}}</h1>
+            <hr>
+            <div class=" px-2 rounded mt-4 date "> <span class="join"><a href="{% url "view_pdf" resume %}" class="btn btn-md btn-danger mb-3" target="_blank"> View Resume </a></span> </div>
             <div class="location">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
         <path d="M12,11.5A2.5,2.5 0 0,1 9.5,9A2.5,2.5 0 0,1 12,6.5A2.5,2.5 0 0,1 14.5,9A2.5,2.5 0 0,1 12,11.5M12,2A7,7 0 0,0 5,9C5,14.25 12,22 12,22C12,22 19,14.25 19,9A7,7 0 0,0 12 ,2Z"></path>
@@ -73,6 +90,8 @@ background: linear-gradient(to right, #ec2F4B, #009FFF);
               <p>{{location}}</p>
               
             <div class=" px-2 rounded mt-4 date "> <span class="join">Joined : {{joined}}</span> </div>
+            <hr>
+            <div class=" px-2 rounded mt-4 date "> <span class="join">Phone : {{phone}}</span> </div>
             </div>
             <div class="stats">
               <div class="col-4">

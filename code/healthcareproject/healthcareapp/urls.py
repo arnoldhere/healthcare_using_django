@@ -25,6 +25,11 @@ urlpatterns = [
     path("completeprofile/", completeProfile, name="completeProfile"),
     path("editProfile/", editProfile, name="editProfile"),
     
+    path("contact/", contactpage, name="contactpage"),
+    path("feedback/", feedback, name="feedback"),
+    path("about/", aboutPage, name="aboutPage"),
+    path("team/", teampage, name="team"),
+
     #### appointment
     path("appointment/", saveappointment, name="bookappointment"),
 

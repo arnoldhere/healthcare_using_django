@@ -1,12 +1,13 @@
 from django.conf import settings
+from staffApp.models import *
 import os
 from django.shortcuts import render, redirect
 from django.contrib.auth.hashers import make_password, check_password
 import pymongo
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
-from .models import UserModel,passwordToken,Appointment 
-from customAdmin.models import Services
+from .models import * 
+from customAdmin.models import *
 from django.core.mail import send_mail
 import random
 from django.contrib import messages
@@ -246,8 +247,9 @@ def editProfile(request):
         email = request.session.get('email_user')
     
         if img.name.endswith(".jpg"):
+            imgnm = img.name.split(".")
             imgnameext = email.split('@')
-            filename = img.name + '-' + str(imgnameext[0]) 
+            filename = str(imgnm[0]) + '-' + str(imgnameext[0]) + '.jpg'
             # Define the folder where you want to save the image.
             upload_folder = os.path.join(settings.MEDIA_ROOT, 'userProfiles')
             os.makedirs(upload_folder, exist_ok=True)
@@ -308,3 +310,34 @@ def saveappointment(request):
             return redirect('index')
         except Exception as e:
             return HttpResponse(e)
+
+
+def contactpage(request):
+    return render(request, 'userend/contact.html')
+
+def feedback(request):
+    sub = request.POST['subject']
+    message = request.POST['message']
+    user = request.session.get('username')
+        
+    res = Feedback.objects.create(
+        subject = sub,
+        message = message,
+        user = user,
+    )
+    if res :
+        messages.success(request , 'Feedback Saved !!')
+        return redirect('index')
+    else:
+        messages.error(request , 'Try again !!')
+        return redirect('index')
+
+def aboutPage(request):
+    users = UserModel.objects.count()
+    staffs = StaffModel.objects.count()
+    feedbacks = Feedback.objects.all()
+    return render(request, 'userend/about.html' , {'users': users , 'staffs':staffs ,'feedbacks': feedbacks})
+
+def teampage(request):
+    staffs = StaffModel.objects.all()
+    return render(request , 'userend/team.html' , {'staffs':staffs})
