@@ -152,6 +152,6 @@ EMAIL_PORT = 587  # Port for TLS (587 for TLS, 465 for SSL)
 EMAIL_USE_TLS = True  # Use TLS for secure connection
 
 #EMAIL CREDENTIALS
-EMAIL_HOST_USER = "official.arnold.mac.2004@gmail.com"
-EMAIL_HOST_PASSWORD = "qkot kakm npxm jkic" # APP PASSWORD
+EMAIL_HOST_USER = ""
+EMAIL_HOST_PASSWORD = "" # APP PASSWORD
 # DEFAULT_FROM_EMAIL = "official.arnold.mac.2004@gmail.com"
